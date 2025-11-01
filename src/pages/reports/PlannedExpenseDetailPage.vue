@@ -1573,18 +1573,8 @@ const totalPaid = computed(() => {
 })
 
 const myAssignedExpenses = computed(() => {
-  // Calcola il totale delle spese assegnate a me
-  return plannedExpenses.value.reduce((total, expense) => {
-    if (expense.payment_type === 'individual' && expense.paid_by_user === authStore.user?.id) {
-      // Spesa individuale pagata da me: conto tutto
-      return total + parseFloat(expense.amount || 0)
-    } else if (expense.payment_type === 'partial') {
-      // Spesa parziale: conto la mia quota
-      return total + parseFloat(expense.my_share || 0)
-    }
-    // Spese condivise o individuali di altri: non conto
-    return total
-  }, 0)
+  // Usa il valore calcolato dal backend
+  return parseFloat(currentPlan.value?.my_assigned_total || 0)
 })
 
 const totalRemaining = computed(() => {
@@ -2219,12 +2209,8 @@ const handleUpdatePaymentType = async ({ expense, paymentType }) => {
 
     await reportsAPI.updatePlannedExpense(expense.id, updateData)
 
-    // Aggiorna localmente la spesa nella lista
-    const index = plannedExpenses.value.findIndex(e => e.id === expense.id)
-    if (index !== -1) {
-      plannedExpenses.value[index].payment_type = paymentType
-      plannedExpenses.value[index].paid_by_user = updateData.paid_by_user
-    }
+    // Ricarica il piano per aggiornare my_assigned_total
+    await loadPlanData(activeTab.value, false)
 
     const typeLabel = paymentType === 'individual' ? 'Individuale' : 'Parziale'
     snackbar.success(`Spesa marcata come ${typeLabel}`)
@@ -2251,12 +2237,8 @@ const updateExpensePaymentType = async (expense, paymentType) => {
   try {
     await reportsAPI.updatePlannedExpense(expense.id, updateData)
 
-    // Aggiorna localmente
-    const index = plannedExpenses.value.findIndex(e => e.id === expense.id)
-    if (index !== -1) {
-      plannedExpenses.value[index].payment_type = paymentType
-      plannedExpenses.value[index].paid_by_user = updateData.paid_by_user
-    }
+    // Ricarica il piano per aggiornare my_assigned_total
+    await loadPlanData(activeTab.value, false)
 
     const typeLabel = paymentType === 'individual' ? 'Individuale' : paymentType === 'partial' ? 'Parziale' : 'Condivisa'
     snackbar.success(`Spesa marcata come ${typeLabel}`)

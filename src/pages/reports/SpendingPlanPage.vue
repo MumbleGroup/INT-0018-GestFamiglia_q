@@ -87,7 +87,7 @@
               @update:model-value="onFilterChange"
             />
             <span class="filter-label">
-              {{ showAllFuturePlans ? 'Limita ai prossimi 3 mesi' : 'Mostra tutti i piani futuri' }}
+              {{ showAllFuturePlans ? 'Mostra tutti i piani futuri' : 'Limita ai prossimi 3 mesi' }}
             </span>
           </div>
           <div v-if="filteredPlansCount !== totalPlansCount" class="filter-info">
