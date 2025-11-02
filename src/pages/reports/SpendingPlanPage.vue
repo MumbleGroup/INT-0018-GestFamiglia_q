@@ -77,31 +77,48 @@
 
       <!-- Filtri e Controlli -->
       <div class="mcf-filters-section">
-        <div class="filter-row">
-          <div class="filter-item">
-            <q-toggle
-              v-model="showAllFuturePlans"
-              left-label
-              icon="event"
-              color="primary"
+        <div class="filters-container">
+          <!-- Filtro Periodo -->
+          <div class="filter-group">
+            <div class="filter-label-header">
+              <q-icon name="event" size="18px" />
+              <span>Periodo</span>
+            </div>
+            <q-btn-toggle
+              v-model="periodFilter"
+              toggle-color="primary"
+              unelevated
+              no-caps
+              :options="[
+                { label: '3 Mesi', value: '3months' },
+                { label: 'Tutti', value: 'all' }
+              ]"
               @update:model-value="onFilterChange"
+              class="filter-toggle"
             />
-            <span class="filter-label">
-              {{ showAllFuturePlans ? 'Mostra tutti i piani futuri' : 'Limita ai prossimi 3 mesi' }}
-            </span>
           </div>
-          <div class="filter-item">
-            <q-toggle
-              v-model="showHiddenPlans"
-              left-label
-              icon="visibility_off"
-              color="secondary"
+
+          <!-- Filtro Visibilità -->
+          <div class="filter-group">
+            <div class="filter-label-header">
+              <q-icon name="visibility" size="18px" />
+              <span>Visibilità</span>
+            </div>
+            <q-btn-toggle
+              v-model="visibilityFilter"
+              toggle-color="primary"
+              unelevated
+              no-caps
+              :options="[
+                { label: 'Visibili', value: 'visible' },
+                { label: 'Nascosti', value: 'hidden' }
+              ]"
               @update:model-value="onFilterChange"
+              class="filter-toggle"
             />
-            <span class="filter-label">
-              {{ showHiddenPlans ? 'Mostra solo piani nascosti' : 'Mostra piani visibili' }}
-            </span>
           </div>
+
+          <!-- Counter piani -->
           <div v-if="filteredPlansCount !== totalPlansCount" class="filter-info">
             <q-chip
               color="grey-4"
@@ -259,8 +276,8 @@ const familyBalanceText = computed(() => {
 const loadingBalance = ref(false)
 
 // Filtri
-const showAllFuturePlans = ref(false)
-const showHiddenPlans = ref(false)
+const periodFilter = ref('3months') // '3months' | 'all'
+const visibilityFilter = ref('visible') // 'visible' | 'hidden'
 
 const authStore = useAuthStore()
 const contributionsStore = useContributionsStore()
@@ -288,16 +305,21 @@ const allPlansCount = ref(0) // Memorizza il totale dei piani quando showAll è 
 
 // Metodi
 const onFilterChange = async () => {
-  console.log('📅 Filtro piani cambiato:', showAllFuturePlans.value ? 'Tutti i piani' : 'Solo 3 mesi')
+  console.log('📅 Filtri cambiati - Periodo:', periodFilter.value, '- Visibilità:', visibilityFilter.value)
   await loadSpendingPlans()
 }
 
 const loadSpendingPlans = async () => {
   try {
     loading.value = true
-    console.log('🔄 Caricamento piani con parametri - show_all:', showAllFuturePlans.value, '- show_hidden:', showHiddenPlans.value)
 
-    const response = await reportsAPI.getSpendingPlans(showAllFuturePlans.value, showHiddenPlans.value)
+    // Converti i filtri nei parametri API
+    const showAll = periodFilter.value === 'all'
+    const showHidden = visibilityFilter.value === 'hidden'
+
+    console.log('🔄 Caricamento piani con parametri - show_all:', showAll, '- show_hidden:', showHidden)
+
+    const response = await reportsAPI.getSpendingPlans(showAll, showHidden)
 
     // Supporta sia il nuovo formato con metadati che il vecchio formato
     if (response.results) {
@@ -314,7 +336,7 @@ const loadSpendingPlans = async () => {
     }
 
     console.log('📋 Piani di spesa caricati:', spendingPlans.value.length, 'di', allPlansCount.value, 'totali')
-    console.log('📅 Filtro attivo:', showAllFuturePlans.value ? 'Tutti i piani' : 'Solo 3 mesi')
+    console.log('📅 Filtri attivi - Periodo:', periodFilter.value, '- Visibilità:', visibilityFilter.value)
   } catch (error) {
     console.error('Errore nel caricamento dei piani:', error)
     snackbar.error('Errore nel caricamento dei piani di spesa')
@@ -700,39 +722,61 @@ onMounted(async () => {
   }
 }
 
-.filter-row {
+.filters-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
-  padding: 12px 16px;
+  padding: 16px;
   background: rgba(var(--q-primary-rgb), 0.05);
   border-radius: 12px;
   border: 1px solid rgba(var(--q-primary-rgb), 0.1);
+  align-items: flex-start;
 
   @media (min-width: 768px) {
-    padding: 16px 20px;
+    padding: 20px;
+    gap: 24px;
   }
 }
 
-.filter-item {
+.filter-group {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.filter-label {
-  font-size: 14px;
-  font-weight: 500;
+.filter-label-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--q-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 
   @media (min-width: 768px) {
-    font-size: 15px;
+    font-size: 13px;
+  }
+}
+
+.filter-toggle {
+  :deep(.q-btn) {
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+
+    @media (min-width: 768px) {
+      padding: 10px 20px;
+      font-size: 15px;
+    }
   }
 }
 
 .filter-info {
   flex-shrink: 0;
+  margin-left: auto;
+  align-self: center;
 }
 
 .container {
