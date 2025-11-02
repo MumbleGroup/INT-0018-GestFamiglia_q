@@ -47,36 +47,13 @@
         </div>
       </q-banner>
 
-      <!-- Bilancio Famiglia -->
-      <q-card
-        v-if="authStore.user?.family && familyBalanceText !== null"
-        bordered
-        class="balance-card shadow-1"
+      <!-- Filtri e Controlli - Expansion -->
+      <q-expansion-item
+        icon="tune"
+        label="Filtri"
+        header-class="filters-expansion-header"
+        class="mcf-filters-section"
       >
-        <q-card-section class="balance-content">
-          <div class="balance-info">
-            <q-icon name="account_balance_wallet" size="24px" color="primary" />
-            <div class="balance-details">
-              <div class="balance-label">Disponibilità Cash</div>
-              <div class="balance-amount" v-html="familyBalanceText"></div>
-            </div>
-          </div>
-          <q-btn
-            flat
-            round
-            icon="refresh"
-            size="sm"
-            @click="loadFamilyBalance"
-            :loading="loadingBalance"
-            class="balance-refresh"
-          >
-            <q-tooltip>Aggiorna bilancio</q-tooltip>
-          </q-btn>
-        </q-card-section>
-      </q-card>
-
-      <!-- Filtri e Controlli -->
-      <div class="mcf-filters-section">
         <div class="filters-container">
           <!-- Filtro Periodo -->
           <div class="filter-group">
@@ -117,19 +94,40 @@
               class="filter-toggle"
             />
           </div>
-
-          <!-- Counter piani -->
-          <div v-if="filteredPlansCount !== totalPlansCount" class="filter-info">
-            <q-chip
-              color="grey-4"
-              text-color="grey-8"
-              size="sm"
-              icon="filter_list"
-            >
-              {{ filteredPlansCount }} di {{ totalPlansCount }} piani
-            </q-chip>
-          </div>
         </div>
+      </q-expansion-item>
+
+      <!-- Bilancio Famiglia -->
+      <q-card
+        v-if="authStore.user?.family && familyBalanceText !== null"
+        bordered
+        class="balance-card shadow-1"
+      >
+        <q-card-section class="balance-content">
+          <div class="balance-info">
+            <q-icon name="account_balance_wallet" size="24px" color="primary" />
+            <div class="balance-details">
+              <div class="balance-label">Disponibilità Cash</div>
+              <div class="balance-amount" v-html="familyBalanceText"></div>
+            </div>
+          </div>
+          <q-btn
+            flat
+            round
+            icon="refresh"
+            size="sm"
+            @click="loadFamilyBalance"
+            :loading="loadingBalance"
+            class="balance-refresh"
+          >
+            <q-tooltip>Aggiorna bilancio</q-tooltip>
+          </q-btn>
+        </q-card-section>
+      </q-card>
+
+      <!-- Counter piani filtrati -->
+      <div v-if="filteredPlansCount !== totalPlansCount" class="plans-counter-section">
+        Visualizzati {{ filteredPlansCount }} di {{ totalPlansCount }} piani
       </div>
 
       <!-- Lista Piani di Spesa -->
@@ -715,10 +713,38 @@ onMounted(async () => {
 
 // === FILTERS SECTION ===
 .mcf-filters-section {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(var(--q-primary-rgb), 0.1);
+  border-radius: 12px;
+  overflow: hidden;
 
   @media (min-width: 768px) {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  :deep(.q-item) {
+    background: rgba(var(--q-primary-rgb), 0.05);
+    padding: 8px 16px;
+    min-height: auto;
+
+    @media (min-width: 768px) {
+      padding: 10px 20px;
+    }
+  }
+
+  :deep(.q-item__section--avatar) {
+    min-width: auto;
+    padding-right: 12px;
+  }
+
+  :deep(.q-item__label) {
+    font-weight: 600;
+    color: var(--q-primary);
+    font-size: 14px;
+
+    @media (min-width: 768px) {
+      font-size: 15px;
+    }
   }
 }
 
@@ -726,14 +752,12 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  padding: 16px;
-  background: rgba(var(--q-primary-rgb), 0.05);
-  border-radius: 12px;
-  border: 1px solid rgba(var(--q-primary-rgb), 0.1);
+  padding: 12px 16px;
+  background: white;
   align-items: flex-start;
 
   @media (min-width: 768px) {
-    padding: 20px;
+    padding: 16px 20px;
     gap: 24px;
   }
 }
@@ -773,10 +797,23 @@ onMounted(async () => {
   }
 }
 
-.filter-info {
-  flex-shrink: 0;
-  margin-left: auto;
-  align-self: center;
+// === PLANS COUNTER ===
+.plans-counter-section {
+  width: 100%;
+  text-align: center;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  background: rgba(var(--q-primary-rgb), 0.08);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--q-primary);
+
+  @media (min-width: 768px) {
+    padding: 10px 20px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
 }
 
 .container {

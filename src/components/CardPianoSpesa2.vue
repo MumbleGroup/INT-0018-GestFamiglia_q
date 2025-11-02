@@ -642,7 +642,6 @@ const getProgressClass = (percentage) => {
 // Expansion Content
 .expansion-content {
   padding: 16px 24px;
-  border-top: 1px solid #e5e7eb;
   background: #f9fafb;
 }
 

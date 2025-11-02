@@ -2251,9 +2251,9 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background-color: var(--mcf-bg-secondary);
+  background: linear-gradient(135deg, rgba(var(--q-primary-rgb), 0.12) 0%, rgba(var(--q-primary-rgb), 0.08) 100%);
   border-radius: 8px;
-  border: 1px solid var(--mcf-border-light);
+  border: 1px solid rgba(var(--q-primary-rgb), 0.2);
   margin-bottom: 4px;
 
   @media (min-width: 768px) {
@@ -2265,8 +2265,8 @@ onMounted(async () => {
 
 .mcf-date-label {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--mcf-text-primary);
+  font-weight: 700;
+  color: var(--q-primary);
   text-transform: capitalize;
 
   @media (min-width: 768px) {
@@ -2276,9 +2276,9 @@ onMounted(async () => {
 
 .mcf-date-count {
   font-size: 12px;
-  font-weight: 500;
-  color: var(--mcf-text-secondary);
-  opacity: 0.8;
+  font-weight: 600;
+  color: var(--q-primary);
+  opacity: 0.85;
 
   @media (min-width: 768px) {
     font-size: 13px;
@@ -2290,14 +2290,15 @@ onMounted(async () => {
   border-radius: 10px !important;
   transition: all 0.2s ease;
   cursor: pointer;
-  padding: 12px 16px;
+  padding: 10px 14px;
 
   @media (min-width: 768px) {
     border-radius: 12px !important;
+    padding: 10px 16px;
   }
 
   @media (max-width: 768px) {
-    padding: 10px 14px;
+    padding: 8px 12px;
   }
 
   &:hover {
@@ -2332,7 +2333,7 @@ onMounted(async () => {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .expense-left {
@@ -2436,8 +2437,7 @@ onMounted(async () => {
   display: flex;
   justify-content: flex-end;
   gap: 4px;
-  padding-top: 8px;
-  border-top: 1px solid #f3f4f6;
+  padding-top: 4px;
 }
 
 // Swipe styles
