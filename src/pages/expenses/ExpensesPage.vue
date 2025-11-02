@@ -131,7 +131,7 @@
               {{ formatDateHeader(group.date) }}
             </div>
             <div class="mcf-date-count">
-              {{ group.expenses.length }} spesa{{ group.expenses.length !== 1 ? 'e' : '' }}
+              {{ group.expenses.length }} {{ group.expenses.length === 1 ? 'spesa' : 'spese' }}
             </div>
           </div>
 
