@@ -31,9 +31,12 @@ export const reportsAPI = {
   },
 
   // ===== SPENDING PLANS =====
-  async getSpendingPlans(showAll = false) {
-    const params = showAll ? '?show_all=true' : ''
-    const response = await apiClient.get(`/spending-plans/${params}`)
+  async getSpendingPlans(showAll = false, showHidden = false) {
+    const params = new URLSearchParams()
+    if (showAll) params.append('show_all', 'true')
+    if (showHidden) params.append('show_hidden', 'true')
+    const queryString = params.toString() ? `?${params.toString()}` : ''
+    const response = await apiClient.get(`/spending-plans/${queryString}`)
     return response.data
   },
 

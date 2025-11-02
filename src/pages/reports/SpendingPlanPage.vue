@@ -90,6 +90,18 @@
               {{ showAllFuturePlans ? 'Mostra tutti i piani futuri' : 'Limita ai prossimi 3 mesi' }}
             </span>
           </div>
+          <div class="filter-item">
+            <q-toggle
+              v-model="showHiddenPlans"
+              left-label
+              icon="visibility_off"
+              color="secondary"
+              @update:model-value="onFilterChange"
+            />
+            <span class="filter-label">
+              {{ showHiddenPlans ? 'Mostra solo piani nascosti' : 'Mostra piani visibili' }}
+            </span>
+          </div>
           <div v-if="filteredPlansCount !== totalPlansCount" class="filter-info">
             <q-chip
               color="grey-4"
@@ -248,6 +260,7 @@ const loadingBalance = ref(false)
 
 // Filtri
 const showAllFuturePlans = ref(false)
+const showHiddenPlans = ref(false)
 
 const authStore = useAuthStore()
 const contributionsStore = useContributionsStore()
@@ -282,9 +295,9 @@ const onFilterChange = async () => {
 const loadSpendingPlans = async () => {
   try {
     loading.value = true
-    console.log('🔄 Caricamento piani con parametro show_all:', showAllFuturePlans.value)
+    console.log('🔄 Caricamento piani con parametri - show_all:', showAllFuturePlans.value, '- show_hidden:', showHiddenPlans.value)
 
-    const response = await reportsAPI.getSpendingPlans(showAllFuturePlans.value)
+    const response = await reportsAPI.getSpendingPlans(showAllFuturePlans.value, showHiddenPlans.value)
 
     // Supporta sia il nuovo formato con metadati che il vecchio formato
     if (response.results) {
