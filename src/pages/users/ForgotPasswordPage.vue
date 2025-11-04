@@ -48,31 +48,31 @@
 
             <!-- Forgot Password Form Section -->
             <div class="event-info">
-              <div class="info-title">RECUPERA PASSWORD</div>
+              <div class="info-title">{{ $t('auth.recoverPassword').toUpperCase() }}</div>
               <div class="info-description">
-                Inserisci la tua email per ricevere il link di reset della password
+                {{ $t('auth.recoverPasswordDescription') }}
               </div>
 
-              <div class="info-label">INSERT EMAIL</div>
+              <div class="info-label">{{ $t('auth.insertEmail') }}</div>
               <q-input
                 v-model="email"
                 type="email"
                 outlined
                 dense
                 class="login-input"
-                placeholder="your.email@example.com"
+                :placeholder="$t('auth.emailPlaceholder')"
               />
 
               <!-- Success Message -->
               <div v-if="showSuccess" class="success-message">
                 <q-icon name="check_circle" color="positive" size="24px" />
-                <span>Email inviata con successo!</span>
+                <span>{{ $t('auth.emailSentSuccess') }}</span>
               </div>
 
               <!-- Send Button -->
               <div class="login-actions">
                 <q-btn
-                  label="INVIA LINK"
+                  :label="$t('auth.sendLink').toUpperCase()"
                   flat
                   icon-right="arrow_forward"
                   class="login-btn full-width-btn"
@@ -91,13 +91,13 @@
             <!-- Bottom Section -->
             <div class="ticket-bottom">
               <div class="bottom-left">
-                <div class="info-label">TI SEI RICORDATO?</div>
-                <router-link to="/login" class="info-value reset-link">ACCEDI</router-link>
-                <div class="info-label">NON HAI UN ACCOUNT?</div>
-                <router-link to="/register" class="info-value reset-link">REGISTRATI</router-link>
+                <div class="info-label">{{ $t('auth.remembered').toUpperCase() }}</div>
+                <router-link to="/login" class="info-value reset-link">{{ $t('auth.login').toUpperCase() }}</router-link>
+                <div class="info-label">{{ $t('auth.dontHaveAccount').toUpperCase() }}</div>
+                <router-link to="/register" class="info-value reset-link">{{ $t('auth.register').toUpperCase() }}</router-link>
               </div>
               <div class="bottom-right">
-                <div class="info-label">APP VERSION</div>
+                <div class="info-label">{{ $t('auth.appVersion') }}</div>
                 <div class="seat-number">V{{ versionNumber }}</div>
               </div>
             </div>
@@ -119,9 +119,11 @@ import { useRouter } from 'vue-router'
 import { usersAPI } from 'src/services/api/users.js'
 import { useSnackbar } from 'src/composables/useSnackbar'
 import { useAppVersion } from 'src/composables/useAppVersion'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const snackbar = useSnackbar()
+const { t } = useI18n()
 
 const email = ref('')
 const loading = ref(false)
@@ -132,7 +134,7 @@ const { versionNumber } = useAppVersion()
 
 const handleSubmit = async () => {
   if (!email.value) {
-    snackbar.error('Email richiesta')
+    snackbar.error(t('auth.emailRequired'))
     return
   }
 
@@ -140,14 +142,14 @@ const handleSubmit = async () => {
   try {
     await usersAPI.requestPasswordReset(email.value)
     showSuccess.value = true
-    snackbar.success('Email inviata! Controlla la tua casella di posta.')
+    snackbar.success(t('auth.emailSentCheck'))
 
     setTimeout(() => {
       router.push('/login')
     }, 3000)
   } catch (error) {
     console.error('Errore reset password:', error)
-    snackbar.error('Errore durante l\'invio. Riprova.')
+    snackbar.error(t('auth.emailSendError'))
   } finally {
     loading.value = false
   }

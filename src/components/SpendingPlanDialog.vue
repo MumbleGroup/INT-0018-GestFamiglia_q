@@ -26,23 +26,23 @@
         <!-- Avviso mancanza famiglia -->
         <q-banner
           v-if="!authStore.user?.family"
-          class="bg-warning text-white q-mb-md"
+          class="bg-info text-white q-mb-md"
           rounded
         >
           <template v-slot:avatar>
-            <q-icon name="warning" />
+            <q-icon name="info" />
           </template>
-          <div class="text-weight-medium">Attenzione: Famiglia richiesta</div>
+          <div class="text-weight-medium">Piano Personale</div>
           <div class="text-body2 q-mt-xs">
-            Prima di creare un piano di spesa, è necessario
+            Stai creando un <strong>piano personale</strong>.
+            Per condividere piani con altri,
             <router-link to="/settings" class="text-white text-decoration-underline">
-              creare o unirti a una famiglia
+              unisciti a una famiglia
             </router-link>.
-            I piani di spesa senza famiglia non saranno visibili nell'app.
           </div>
         </q-banner>
 
-        <q-form @submit="onSubmit" class="q-gutter-xs" :disable="!authStore.user?.family">
+        <q-form @submit="onSubmit" class="q-gutter-xs">
 
           <MCFInput
             v-model="formData.name"
@@ -196,7 +196,8 @@ const formData = ref({
   plan_type: 'custom',
   start_date: '',
   end_date: '',
-  plan_scope: 'family'
+  // Default a 'personal' se non c'è famiglia, altrimenti 'family'
+  plan_scope: authStore.user?.family ? 'family' : 'personal'
 })
 
 // Options
@@ -213,8 +214,7 @@ const canSubmit = computed(() => {
   return formData.value.name &&
          formData.value.start_date &&
          formData.value.end_date &&
-         !props.saving &&
-         !!authStore.user?.family  // Richiede famiglia
+         !props.saving
 })
 
 // Methods (defined before watchers to avoid hoisting issues)
@@ -226,7 +226,8 @@ const resetForm = () => {
     plan_type: 'custom',
     start_date: '',
     end_date: '',
-    plan_scope: 'family'
+    // Default a 'personal' se non c'è famiglia, altrimenti 'family'
+    plan_scope: authStore.user?.family ? 'family' : 'personal'
   }
 }
 

@@ -48,76 +48,76 @@
 
             <!-- Registration Form Section -->
             <div class="event-info">
-              <div class="info-label">NOME</div>
+              <div class="info-label">{{ $t('users.firstName').toUpperCase() }}</div>
               <q-input
                 v-model="firstName"
                 type="text"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Il tuo nome"
+                :placeholder="$t('users.firstNamePlaceholder')"
               />
 
-              <div class="info-label">COGNOME</div>
+              <div class="info-label">{{ $t('users.lastName').toUpperCase() }}</div>
               <q-input
                 v-model="lastName"
                 type="text"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Il tuo cognome"
+                :placeholder="$t('users.lastNamePlaceholder')"
               />
 
-              <div class="info-label">EMAIL</div>
+              <div class="info-label">{{ $t('auth.email').toUpperCase() }}</div>
               <q-input
                 v-model="email"
                 type="email"
                 outlined
                 dense
                 class="login-input"
-                placeholder="your.email@example.com"
+                :placeholder="$t('auth.emailPlaceholder')"
               />
 
-              <div class="info-label">PASSWORD</div>
+              <div class="info-label">{{ $t('auth.password').toUpperCase() }}</div>
               <q-input
                 v-model="password"
                 type="password"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Crea una password"
+                :placeholder="$t('auth.passwordPlaceholderCreate')"
               />
 
-              <div class="info-label">CONFERMA PASSWORD</div>
+              <div class="info-label">{{ $t('auth.confirmPassword').toUpperCase() }}</div>
               <q-input
                 v-model="confirmPassword"
                 type="password"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Ripeti la password"
+                :placeholder="$t('auth.passwordPlaceholderRepeat')"
               />
 
-              <div class="info-label">CODICE INVITO FAMIGLIA (OPZIONALE)</div>
+              <div class="info-label">{{ $t('auth.invitationCode').toUpperCase() }}</div>
               <q-input
                 v-model="invitationCode"
                 type="text"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Codice invito"
+                :placeholder="$t('auth.invitationCodePlaceholder')"
               />
 
               <!-- Terms & Register Button -->
               <div class="login-actions">
                 <q-checkbox
                   v-model="acceptTerms"
-                  label="Accetto i termini"
+                  :label="$t('auth.acceptTerms')"
                   dense
                   class="remember-checkbox"
                 />
                 <q-btn
-                  label="REGISTRATI"
+                  :label="$t('auth.register').toUpperCase()"
                   flat
                   icon-right="arrow_forward"
                   class="login-btn"
@@ -136,11 +136,11 @@
             <!-- Bottom Section -->
             <div class="ticket-bottom">
               <div class="bottom-left">
-                <div class="info-label">HAI GIÀ UN ACCOUNT?</div>
-                <router-link to="/login" class="info-value reset-link">ACCEDI</router-link>
+                <div class="info-label">{{ $t('auth.alreadyHaveAccount').toUpperCase() }}</div>
+                <router-link to="/login" class="info-value reset-link">{{ $t('auth.login').toUpperCase() }}</router-link>
               </div>
               <div class="bottom-right">
-                <div class="info-label">APP VERSION</div>
+                <div class="info-label">{{ $t('auth.appVersion') }}</div>
                 <div class="seat-number">V{{ versionNumber }}</div>
               </div>
             </div>
@@ -163,10 +163,12 @@ import { useAuthStore } from 'stores/auth.js'
 import { authAPI } from 'src/services/api/auth.js'
 import { useSnackbar } from 'src/composables/useSnackbar'
 import { useAppVersion } from 'src/composables/useAppVersion'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const snackbar = useSnackbar()
+const { t } = useI18n()
 
 const firstName = ref('')
 const lastName = ref('')
@@ -210,7 +212,7 @@ const register = async () => {
     }
 
     const response = await authAPI.register(userData)
-    snackbar.success('Registrazione completata con successo!')
+    snackbar.success(t('auth.registerSuccess'))
 
     if (response.access && response.refresh) {
       authStore.accessToken = response.access
@@ -227,13 +229,13 @@ const register = async () => {
     }
   } catch (error) {
     console.error('Errore registrazione:', error)
-    let errorMessage = 'Errore durante la registrazione. Riprova.'
+    let errorMessage = t('auth.registerError')
 
     if (error.response?.data) {
       if (error.response.data.email) {
-        errorMessage = 'Email già registrata'
+        errorMessage = t('auth.emailAlreadyRegistered')
       } else if (error.response.data.invitation_code) {
-        errorMessage = 'Codice invito non valido'
+        errorMessage = t('auth.invalidInvitationCode')
       } else if (error.response.data.detail) {
         errorMessage = error.response.data.detail
       } else if (error.response.data.non_field_errors) {

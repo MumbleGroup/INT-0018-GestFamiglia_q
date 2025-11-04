@@ -3,8 +3,8 @@
     <!-- Loading State -->
     <MCFLoading
       v-if="loading"
-      message="Caricamento dashboard..."
-      submessage="Preparazione dei dati finanziari"
+      :message="$t('dashboard.loading')"
+      :submessage="$t('dashboard.loadingSubtitle')"
     />
 
     <!-- Dashboard Content -->
@@ -24,21 +24,21 @@
           <div class="mcf-action-icon-large mcf-action-icon--primary">
             <q-icon name="add_circle" size="32px" />
           </div>
-          <div class="mcf-action-label">Nuova spesa</div>
+          <div class="mcf-action-label">{{ $t('dashboard.quickActions.newExpense') }}</div>
         </div>
 
         <div class="mcf-action-widget" @click="goToScanner">
           <div class="mcf-action-icon-large mcf-action-icon--accent">
             <q-icon name="document_scanner" size="32px" />
           </div>
-          <div class="mcf-action-label">Scansiona</div>
+          <div class="mcf-action-label">{{ $t('dashboard.quickActions.scan') }}</div>
         </div>
 
         <div class="mcf-action-widget" @click="goToBudget">
           <div class="mcf-action-icon-large mcf-action-icon--tertiary">
             <q-icon name="account_balance_wallet" size="32px" />
           </div>
-          <div class="mcf-action-label">Piani Spesa</div>
+          <div class="mcf-action-label">{{ $t('dashboard.quickActions.spendingPlans') }}</div>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="mcf-widget-content">
           <div class="mcf-widget-value">{{ totalSpendingPlans }}</div>
-          <div class="mcf-widget-label">Piani di Spesa</div>
+          <div class="mcf-widget-label">{{ $t('dashboard.stats.spendingPlans') }}</div>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
         </div>
         <div class="mcf-widget-content">
           <div class="mcf-widget-value">€{{ monthExpenses }}</div>
-          <div class="mcf-widget-label">Speso {{ currentMonth }}</div>
+          <div class="mcf-widget-label">{{ $t('dashboard.stats.spentThisMonth', { month: currentMonth }) }}</div>
         </div>
       </div>
     </div>
@@ -71,13 +71,13 @@
     <!-- Modern Recent Expenses -->
     <div class="mcf-recent-expenses">
       <div class="mcf-section-header-inline">
-        <h2 class="mcf-section-title">Ultime spese</h2>
+        <h2 class="mcf-section-title">{{ $t('dashboard.recentExpenses.title') }}</h2>
         <q-btn
           flat
           dense
           no-caps
           class="mcf-btn-link"
-          label="Vedi tutte"
+          :label="$t('dashboard.recentExpenses.viewAll')"
           icon-right="arrow_forward"
           @click="goToExpenses"
         />
@@ -121,8 +121,8 @@
 
         <div v-if="recentExpenses.length === 0" class="mcf-empty-state">
           <q-icon name="receipt_long" size="48px" class="mcf-empty-icon" />
-          <div class="mcf-empty-title">Nessuna spesa registrata</div>
-          <div class="mcf-empty-subtitle">Inizia aggiungendo la tua prima spesa</div>
+          <div class="mcf-empty-title">{{ $t('dashboard.recentExpenses.noExpenses') }}</div>
+          <div class="mcf-empty-subtitle">{{ $t('dashboard.recentExpenses.startAdding') }}</div>
         </div>
       </div>
     </div>
@@ -139,19 +139,19 @@
         <q-fab-action
           class="mcf-fab-action mcf-fab-action--accent"
           icon="add_shopping_cart"
-          label="Spesa manuale"
+          :label="$t('dashboard.quickActions.manualExpense')"
           @click="goToAddExpense"
         />
         <q-fab-action
           class="mcf-fab-action mcf-fab-action--secondary"
           icon="document_scanner"
-          label="Scansiona"
+          :label="$t('dashboard.quickActions.scan')"
           @click="goToScanner"
         />
         <q-fab-action
           class="mcf-fab-action mcf-fab-action--warning"
           icon="account_balance_wallet"
-          label="Piani Spesa"
+          :label="$t('dashboard.quickActions.spendingPlans')"
           @click="goToBudget"
         />
       </q-fab>
@@ -168,12 +168,14 @@ import { useAuthStore } from 'stores/auth'
 import { useExpensesStore } from 'stores/expenses'
 import { reportsAPI } from 'src/services/api/reports.js'
 import MCFLoading from 'src/components/MCFLoading.vue'
+import { useI18n } from 'vue-i18n'
 // import { useSnackbar } from 'src/composables/useSnackbar' - not used yet
 
 const $q = useQuasar()
 const router = useRouter()
 const authStore = useAuthStore()
 const expensesStore = useExpensesStore()
+const { t, locale } = useI18n()
 // const snackbar = useSnackbar() - not used yet
 
 // Data
@@ -191,22 +193,56 @@ const budgetRemaining = ref(0)
 // Computed
 const greeting = computed(() => {
   const hour = new Date().getHours()
-  if (hour < 12) return 'Buongiorno'
-  if (hour < 18) return 'Buon pomeriggio'
-  return 'Buonasera'
+  if (hour < 12) return t('dashboard.greeting.morning')
+  if (hour < 18) return t('dashboard.greeting.afternoon')
+  return t('dashboard.greeting.evening')
 })
 
 const currentDate = computed(() => {
+  const weekdays = [
+    t('time.weekdays.sunday'),
+    t('time.weekdays.monday'),
+    t('time.weekdays.tuesday'),
+    t('time.weekdays.wednesday'),
+    t('time.weekdays.thursday'),
+    t('time.weekdays.friday'),
+    t('time.weekdays.saturday')
+  ]
+  const months = [
+    t('time.monthNames.january'),
+    t('time.monthNames.february'),
+    t('time.monthNames.march'),
+    t('time.monthNames.april'),
+    t('time.monthNames.may'),
+    t('time.monthNames.june'),
+    t('time.monthNames.july'),
+    t('time.monthNames.august'),
+    t('time.monthNames.september'),
+    t('time.monthNames.october'),
+    t('time.monthNames.november'),
+    t('time.monthNames.december')
+  ]
   return date.formatDate(new Date(), 'dddd D MMMM YYYY', {
-    days: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
-    months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-             'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre']
+    days: weekdays,
+    months: months
   })
 })
 
 const currentMonth = computed(() => {
-  const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-                  'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre']
+  const months = [
+    t('time.monthNames.january'),
+    t('time.monthNames.february'),
+    t('time.monthNames.march'),
+    t('time.monthNames.april'),
+    t('time.monthNames.may'),
+    t('time.monthNames.june'),
+    t('time.monthNames.july'),
+    t('time.monthNames.august'),
+    t('time.monthNames.september'),
+    t('time.monthNames.october'),
+    t('time.monthNames.november'),
+    t('time.monthNames.december')
+  ]
   return months[new Date().getMonth()]
 })
 
@@ -288,7 +324,7 @@ const loadDashboardData = async () => {
     console.error('Errore caricamento dashboard:', error)
     $q.notify({
       type: 'negative',
-      message: 'Errore nel caricamento dei dati'
+      message: t('dashboard.errorLoading')
     })
   } finally {
     loading.value = false
@@ -370,9 +406,9 @@ const getExpenseStatusClass = (expense) => {
 
 const getStatusText = (status) => {
   const statusMap = {
-    'pagata': 'Pagata',
-    'in_sospeso': 'In Sospeso',
-    'non_pagata': 'Da Pagare'
+    'pagata': t('dashboard.expenseStatus.paid'),
+    'in_sospeso': t('dashboard.expenseStatus.pending'),
+    'non_pagata': t('dashboard.expenseStatus.unpaid')
   }
   return statusMap[status] || status
 }

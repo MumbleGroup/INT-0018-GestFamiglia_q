@@ -5,7 +5,7 @@
       <div class="mcf-action-header">
         <q-btn-dropdown
           icon="add"
-          label="Nuova Spesa"
+          :label="$t('expenses.newExpense')"
           class="mcf-btn-primary mcf-btn-fullwidth"
           dropdown-icon="expand_more"
         >
@@ -15,8 +15,8 @@
                 <q-icon name="edit" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Inserimento Manuale</q-item-label>
-                <q-item-label caption>Inserisci i dati della spesa manualmente</q-item-label>
+                <q-item-label>{{ $t('expenses.manualEntry') }}</q-item-label>
+                <q-item-label caption>{{ $t('expenses.manualEntryCaption') }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -25,8 +25,8 @@
                 <q-icon name="document_scanner" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Scansiona Ricevuta</q-item-label>
-                <q-item-label caption>Usa la fotocamera per scansionare</q-item-label>
+                <q-item-label>{{ $t('expenses.scanReceipt') }}</q-item-label>
+                <q-item-label caption>{{ $t('expenses.scanReceiptCaption') }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -35,8 +35,8 @@
                 <q-icon name="photo_camera" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Scatta Foto</q-item-label>
-                <q-item-label caption>Fotografa la ricevuta</q-item-label>
+                <q-item-label>{{ $t('expenses.takePhoto') }}</q-item-label>
+                <q-item-label caption>{{ $t('expenses.takePhotoCaption') }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -50,7 +50,7 @@
           <q-input
             ref="searchInputRef"
             v-model="searchQuery"
-            placeholder="Cerca per nome o categoria..."
+            :placeholder="$t('expenses.searchPlaceholder')"
             outlined
             dense
             clearable
@@ -73,7 +73,7 @@
             @click="filterByCategory(null)"
             class="mcf-filter-chip"
           >
-            Tutte ({{ expenses.length }})
+            {{ $t('expenses.all') }} ({{ expenses.length }})
           </q-chip>
 
           <q-chip
@@ -86,7 +86,7 @@
             @click="filterByCategory(category.id)"
             class="mcf-filter-chip"
           >
-            {{ category.name }}
+            {{ category.translatedName }}
           </q-chip>
 
           <q-chip
@@ -98,7 +98,7 @@
             @click="showAllCategories = true"
             class="mcf-filter-chip mcf-more-chip"
           >
-            ... ({{ categories.length - 3 }} altre)
+            ... ({{ categories.length - 3 }} {{ $t('expenses.more') }})
           </q-chip>
 
           <q-chip
@@ -110,7 +110,7 @@
             @click="showAllCategories = false"
             class="mcf-filter-chip mcf-less-chip"
           >
-            meno
+            {{ $t('expenses.less') }}
           </q-chip>
         </div>
       </div>
@@ -118,8 +118,8 @@
       <!-- Loading -->
       <MCFLoading
         v-if="loading"
-        message="Caricamento spese..."
-        submessage="Attendere mentre vengono caricate le spese"
+        :message="$t('expenses.loading')"
+        :submessage="$t('expenses.loadingSubtitle')"
       />
 
       <!-- Lista spese moderna -->
@@ -131,7 +131,7 @@
               {{ formatDateHeader(group.date) }}
             </div>
             <div class="mcf-date-count">
-              {{ group.expenses.length }} {{ group.expenses.length === 1 ? 'spesa' : 'spese' }}
+              {{ $t('expenses.count', group.expenses.length, { n: group.expenses.length }) }}
             </div>
           </div>
 
@@ -147,7 +147,7 @@
             <template v-slot:left>
               <div class="row items-center q-gutter-sm">
                 <q-icon name="delete" size="24px" />
-                <span class="text-weight-medium">Elimina</span>
+                <span class="text-weight-medium">{{ $t('expenses.delete') }}</span>
               </div>
             </template>
 
@@ -184,7 +184,7 @@
                         color="blue-grey-5"
                         size="14px"
                       >
-                        <q-tooltip>Spesa individuale - Pagata da te</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.personalExpense') }}</q-tooltip>
                       </q-icon>
                       <q-icon
                         v-if="expense.payment_type === 'partial'"
@@ -192,7 +192,7 @@
                         color="amber-7"
                         size="14px"
                       >
-                        <q-tooltip>Spesa parziale - Divisa ({{ expense.my_share ? '€' + expense.my_share : 'metà ciascuno' }})</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.sharedExpense') }} ({{ expense.my_share ? '€' + expense.my_share : $t('expenses.equalSplit') }})</q-tooltip>
                       </q-icon>
                       <q-icon
                         v-if="expense.status === 'pagata'"
@@ -200,13 +200,13 @@
                         color="positive"
                         size="14px"
                       >
-                        <q-tooltip>Pagata</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.status.paid') }}</q-tooltip>
                       </q-icon>
                     </span>
                     <span class="date-text">{{ formatDate(expense.date) }}</span>
                     <span v-if="expense.shared_with && expense.shared_with.length > 0" class="shared-indicator">
                       <q-icon name="people" size="12px" />
-                      Condivisa
+                      {{ $t('expenses.sharedExpense') }}
                     </span>
                   </div>
                 </div>
@@ -229,7 +229,7 @@
                   color="positive"
                   @click="openPaymentDialog(expense)"
                 >
-                  <q-tooltip>Paga spesa</q-tooltip>
+                  <q-tooltip>{{ $t('expenses.pay') }}</q-tooltip>
                 </q-btn>
                 <!-- Delete button only on desktop -->
                 <q-btn
@@ -241,7 +241,7 @@
                   color="negative"
                   @click="deleteExpense(expense)"
                 >
-                  <q-tooltip>Elimina spesa</q-tooltip>
+                  <q-tooltip>{{ $t('expenses.deleteExpense') }}</q-tooltip>
                 </q-btn>
               </div>
             </q-card>
@@ -287,7 +287,7 @@
                         color="blue-grey-5"
                         size="14px"
                       >
-                        <q-tooltip>Spesa individuale - Pagata da te</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.personalExpense') }}</q-tooltip>
                       </q-icon>
                       <q-icon
                         v-if="expense.payment_type === 'partial'"
@@ -295,7 +295,7 @@
                         color="amber-7"
                         size="14px"
                       >
-                        <q-tooltip>Spesa parziale - Divisa ({{ expense.my_share ? '€' + expense.my_share : 'metà ciascuno' }})</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.sharedExpense') }} ({{ expense.my_share ? '€' + expense.my_share : $t('expenses.equalSplit') }})</q-tooltip>
                       </q-icon>
                       <q-icon
                         v-if="expense.status === 'pagata'"
@@ -303,13 +303,13 @@
                         color="positive"
                         size="14px"
                       >
-                        <q-tooltip>Pagata</q-tooltip>
+                        <q-tooltip>{{ $t('expenses.status.paid') }}</q-tooltip>
                       </q-icon>
                     </span>
                     <span class="date-text">{{ formatDate(expense.date) }}</span>
                     <span v-if="expense.shared_with && expense.shared_with.length > 0" class="shared-indicator">
                       <q-icon name="people" size="12px" />
-                      Condivisa
+                      {{ $t('expenses.sharedExpense') }}
                     </span>
                   </div>
                 </div>
@@ -332,7 +332,7 @@
                   color="positive"
                   @click="openPaymentDialog(expense)"
                 >
-                  <q-tooltip>Paga spesa</q-tooltip>
+                  <q-tooltip>{{ $t('expenses.pay') }}</q-tooltip>
                 </q-btn>
                 <!-- Delete button only on desktop -->
                 <q-btn
@@ -344,7 +344,7 @@
                   color="negative"
                   @click="deleteExpense(expense)"
                 >
-                  <q-tooltip>Elimina spesa</q-tooltip>
+                  <q-tooltip>{{ $t('expenses.deleteExpense') }}</q-tooltip>
                 </q-btn>
               </div>
             </q-card>
@@ -360,14 +360,14 @@
           style="color: #d1d5db;"
           class="q-mb-md"
         />
-        <div class="text-h6 q-mb-sm text-weight-semibold" style="color: #374151;">Nessuna spesa trovata</div>
+        <div class="text-h6 q-mb-sm text-weight-semibold" style="color: #374151;">{{ $t('expenses.noExpenses') }}</div>
         <div class="text-body2 q-mb-lg" style="color: #6b7280;">
-          Inizia aggiungendo la tua prima spesa!
+          {{ $t('expenses.emptySubtitle') }}
         </div>
         <div class="row q-gutter-md justify-center">
           <q-btn
             icon="document_scanner"
-            label="Scansiona Ricevuta"
+            :label="$t('expenses.scanReceipt')"
             class="mcf-btn-secondary"
             size="lg"
             @click="$router.push('/scanner')"
@@ -380,7 +380,7 @@
         <q-fab-action
           @click="openManualForm()"
           icon="edit"
-          label="Manuale"
+          :label="$t('expenses.manualEntry')"
           external-label
           label-position="left"
           class="mcf-fab-action mcf-fab-manual"
@@ -388,7 +388,7 @@
         <q-fab-action
           @click="$router.push('/scanner')"
           icon="document_scanner"
-          label="Scanner"
+          :label="$t('expenses.scanReceipt')"
           external-label
           label-position="left"
           class="mcf-fab-action mcf-fab-scanner"
@@ -396,7 +396,7 @@
         <q-fab-action
           @click="openQuickExpense"
           icon="flash_on"
-          label="Rapida"
+          :label="$t('expenses.saveQuick')"
           external-label
           label-position="left"
           class="mcf-fab-action mcf-fab-quick"
@@ -414,8 +414,8 @@
       >
         <q-card class="full-width" style="margin: 0; border-radius: 0 0 16px 16px; max-height: 90vh; display: flex; flex-direction: column;">
           <q-card-section class="flex-shrink-0 bg-grey-2" style="border-radius: 0 0 12px 12px;">
-            <div class="text-h6">Nuova Spesa</div>
-            <div class="text-caption text-grey-6">Scegli come inserire la spesa</div>
+            <div class="text-h6">{{ $t('expenses.newExpense') }}</div>
+            <div class="text-caption text-grey-6">{{ $t('expenses.manualEntryCaption') }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none flex-grow-1" style="overflow-y: auto;">
@@ -431,8 +431,8 @@
                 color="grey-3"
                 text-color="grey-8"
                 :options="[
-                  {label: 'Manuale', value: 'manual', icon: 'edit'},
-                  {label: 'Scanner', value: 'scanner', icon: 'document_scanner'}
+                  {label: $t('expenses.manualEntry'), value: 'manual', icon: 'edit'},
+                  {label: $t('expenses.scanReceipt'), value: 'scanner', icon: 'document_scanner'}
                 ]"
                 class="mcf-toggle-buttons"
               />
@@ -445,25 +445,25 @@
               <q-form @submit.prevent="submitManualExpense" class="q-gutter-md">
                 <MCFInput
                 v-model="manualExpense.description"
-                label="Descrizione *"
+                :label="$t('expenses.descriptionRequired')"
                 required
-                :rules="[val => val && val.length > 0 || 'Descrizione richiesta']"
+                :rules="[val => val && val.length > 0 || t('validation.required')]"
               />
 
               <MCFInput
                 v-model="manualExpense.amount"
-                label="Importo *"
+                :label="$t('expenses.amountRequired')"
                 type="number"
                 step="0.01"
                 required
                 prefix="€"
-                :rules="[val => val > 0 || 'Importo deve essere maggiore di 0']"
+                :rules="[val => val > 0 || t('expenses.invalidAmount')]"
               />
 
               <CategorySelect
                 v-model="categorySelection"
-                label="Categoria *"
-                subcategory-label="Sottocategoria"
+                :label="$t('expenses.categoryRequired')"
+                :subcategory-label="$t('expenses.subcategory')"
                 return-object
                 bg-color="white"
                 @category-changed="onCategoryChanged"
@@ -473,14 +473,14 @@
               <MCFAutocomplete
                 v-model="manualExpense.spending_plan"
                 :options="spendingPlanOptions"
-                label="Piano di Spesa"
+                :label="$t('expenses.spendingPlan')"
                 outlined
                 bg-color="white"
                 option-value="value"
                 option-label="label"
                 clearable
                 prepend-icon="event_note"
-                :hint="manualExpense.spending_plan ? 'Spesa collegata a un piano' : 'Spesa generica (non collegata a nessun piano)'"
+                :hint="manualExpense.spending_plan ? t('budget.plannedExpenses') : t('budget.unplannedExpenses')"
                 :multiple="false"
               >
                 <template v-slot:option="scope">
@@ -508,23 +508,23 @@
                       size="sm"
                       class="q-mr-sm"
                     />
-                    <span class="text-grey-6">Nessun piano</span>
+                    <span class="text-grey-6">{{ $t('budget.spendingPlan') }}</span>
                   </div>
                 </template>
               </MCFAutocomplete>
 
               <MCFDatePicker
                 v-model="manualExpense.date"
-                label="Data *"
+                :label="$t('expenses.dateRequired')"
                 required
                 outlined
                 bg-color="white"
-                :rules="[val => val && val.length > 0 || 'Data richiesta']"
+                :rules="[val => val && val.length > 0 || t('validation.required')]"
               />
 
               <MCFInput
                 v-model="manualExpense.notes"
-                label="Note"
+                :label="$t('expenses.notes')"
                 type="textarea"
                 rows="3"
               />
@@ -535,14 +535,14 @@
               <div class="mcf-payment-section">
                 <div class="mcf-payment-header">
                   <q-icon name="payment" size="20px" color="primary" />
-                  <span class="mcf-payment-title">Metodo di Pagamento</span>
+                  <span class="mcf-payment-title">{{ $t('payments.paymentMethod') }}</span>
                 </div>
 
                 <div class="row q-gutter-md">
                   <div class="col-12 col-md-6">
                     <MCFSelect
                       v-model="manualExpense.payment_method"
-                      label="Metodo *"
+                      :label="$t('expenses.paymentMethodRequired')"
                       :options="paymentMethodOptions"
                       option-value="value"
                       option-label="label"
@@ -555,7 +555,7 @@
                   <div class="col-12 col-md-6">
                     <MCFSelect
                       v-model="manualExpense.payment_source"
-                      label="Fonte *"
+                      :label="$t('expenses.paymentSourceRequired')"
                       :options="paymentSourceOptions"
                       option-value="value"
                       option-label="label"
@@ -576,12 +576,12 @@
                   <template v-slot:avatar>
                     <q-icon name="warning" />
                   </template>
-                  <div class="text-weight-medium">Attenzione: Bilancio Famiglia Insufficiente</div>
+                  <div class="text-weight-medium">{{ $t('messages.warning') }}</div>
                   <div class="text-body2">
-                    Il bilancio famiglia attuale è €0.00.
+                    {{ $t('contributions.insufficientBalance') }}
                     <router-link to="/spending-plans" class="text-white text-decoration-underline">
-                      Aggiungi contributi
-                    </router-link> prima di pagare con questo metodo.
+                      {{ $t('contributions.addContribution') }}
+                    </router-link>
                   </div>
                 </q-banner>
 
@@ -593,7 +593,7 @@
                     icon="account_balance_wallet"
                     size="sm"
                   >
-                    Bilancio disponibile: €{{ formatAmount(familyBalance) }}
+                    {{ $t('contributions.availableBalance') }}: €{{ formatAmount(familyBalance) }}
                   </q-chip>
                 </div>
               </div>
@@ -603,12 +603,12 @@
               <div class="mcf-receipt-section">
                 <div class="mcf-receipt-header">
                   <q-icon name="receipt" size="20px" color="primary" />
-                  <span class="mcf-receipt-title">Ricevuta (opzionale)</span>
+                  <span class="mcf-receipt-title">{{ $t('expenses.uploadReceipt') }}</span>
                 </div>
 
                 <MCFFile
                   v-model="manualExpense.receiptFile"
-                  label="Carica ricevuta"
+                  :label="$t('expenses.uploadReceipt')"
                   accept="image/*"
                   max-file-size="5242880"
                   @rejected="onReceiptRejected"
@@ -642,7 +642,7 @@
                     dense
                     size="sm"
                     icon="photo_camera"
-                    label="Scatta foto"
+                    :label="$t('expenses.takePhoto')"
                     color="primary"
                     @click="takeReceiptPhoto"
                   />
@@ -653,7 +653,7 @@
 
               <q-checkbox
                 v-model="manualExpense.shared"
-                label="Spesa condivisa con la famiglia"
+                :label="$t('expenses.sharedWithFamily')"
               />
               </q-form>
             </div>
@@ -665,31 +665,30 @@
                 <template v-slot:avatar>
                   <q-icon name="info" size="24px" />
                 </template>
-                <div class="text-subtitle1 q-mb-xs"><strong>Funzionalità in Sviluppo</strong></div>
+                <div class="text-subtitle1 q-mb-xs"><strong>{{ $t('messages.developmentFeature') }}</strong></div>
                 <div class="text-body2">
-                  Lo scanner automatico e l'upload delle ricevute sono in fase di sviluppo.
-                  Usa il metodo manuale per inserire le spese.
+                  {{ $t('expenses.scanReceiptCaption') }}
                 </div>
               </q-banner>
 
               <div class="mcf-scanner-section">
                 <div class="mcf-scanner-header">
                   <q-icon name="document_scanner" size="48px" color="primary" />
-                  <h6 class="mcf-scanner-title">Scansiona Ricevuta</h6>
-                  <p class="mcf-scanner-subtitle">Fotografa o carica un'immagine della ricevuta per estrarre automaticamente i dati</p>
+                  <h6 class="mcf-scanner-title">{{ $t('expenses.scanReceipt') }}</h6>
+                  <p class="mcf-scanner-subtitle">{{ $t('expenses.takePhotoCaption') }}</p>
                 </div>
 
                 <div class="mcf-scanner-actions">
                   <q-btn
                     icon="photo_camera"
-                    label="Scatta Foto"
+                    :label="$t('expenses.takePhoto')"
                     class="mcf-btn-primary"
                     size="lg"
                     @click="openCamera"
                   />
                   <q-btn
                     icon="upload_file"
-                    label="Carica Immagine"
+                    :label="$t('expenses.uploadImage')"
                     class="mcf-btn-secondary"
                     size="lg"
                     @click="uploadImage"
@@ -698,7 +697,7 @@
 
                 <div class="mcf-scanner-note">
                   <q-icon name="info" size="16px" color="grey-6" />
-                  <span>Assicurati che la ricevuta sia ben illuminata e leggibile</span>
+                  <span>{{ $t('help.tips') }}</span>
                 </div>
               </div>
             </div>
@@ -708,14 +707,14 @@
           <q-card-actions align="right" class="flex-shrink-0 bg-grey-2" style="border-radius: 12px 12px 0 0;">
             <q-btn
               flat
-              label="Annulla"
+              :label="$t('expenses.cancel')"
               color="grey"
               v-close-popup
               @click="closeManualForm"
             />
             <q-btn
               v-if="inputMethod === 'manual'"
-              label="Salva Spesa"
+              :label="$t('expenses.save')"
               color="primary"
               :loading="saving"
               @click="submitManualExpense"
@@ -735,37 +734,37 @@
       >
         <q-card class="full-width" style="margin: 0; border-radius: 0 0 16px 16px; max-height: 90vh; display: flex; flex-direction: column;">
           <q-card-section class="flex-shrink-0 bg-grey-2" style="border-radius: 0 0 12px 12px;">
-            <div class="text-h6">Modifica Spesa</div>
-            <div class="text-caption text-grey-6">Modifica i dati della spesa</div>
+            <div class="text-h6">{{ $t('expenses.editExpense') }}</div>
+            <div class="text-caption text-grey-6">{{ $t('expenses.expenseDetails') }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none flex-grow-1" style="overflow-y: auto;">
             <q-form @submit.prevent="submitEditExpense" class="q-gutter-sm">
               <MCFInput
                 v-model="editForm.description"
-                label="Descrizione *"
+                :label="$t('expenses.descriptionRequired')"
                 required
-                :rules="[val => val && val.length > 0 || 'Descrizione richiesta']"
+                :rules="[val => val && val.length > 0 || t('validation.required')]"
               />
 
               <MCFInput
                 v-model="editForm.amount"
-                label="Importo *"
+                :label="$t('expenses.amountRequired')"
                 required
                 type="number"
                 step="0.01"
                 min="0"
                 prefix="€"
                 :rules="[
-                  val => val && val > 0 || 'Importo richiesto',
-                  val => val <= 999999 || 'Importo troppo alto'
+                  val => val && val > 0 || t('validation.required'),
+                  val => val <= 999999 || t('validation.maxValue', { max: 999999 })
                 ]"
               />
 
               <CategorySelect
                 v-model="editCategorySelection"
-                label="Categoria *"
-                subcategory-label="Sottocategoria"
+                :label="$t('expenses.categoryRequired')"
+                :subcategory-label="$t('expenses.subcategory')"
                 return-object
                 @category-changed="onEditCategoryChanged"
                 @subcategory-changed="onEditSubcategoryChanged"
@@ -773,7 +772,7 @@
 
               <MCFDatePicker
                 v-model="editForm.date"
-                label="Data *"
+                :label="$t('expenses.dateRequired')"
                 :required="true"
                 icon="event"
               />
@@ -781,7 +780,7 @@
               <MCFAutocomplete
                 v-model="editForm.spending_plan"
                 :options="spendingPlanOptions"
-                label="Piano di Spesa"
+                :label="$t('expenses.spendingPlan')"
                 icon="event_note"
                 :multiple="false"
               >
@@ -810,14 +809,14 @@
                       size="sm"
                       class="q-mr-sm"
                     />
-                    <span class="text-grey-6">Nessun piano</span>
+                    <span class="text-grey-6">{{ $t('budget.spendingPlan') }}</span>
                   </div>
                 </template>
               </MCFAutocomplete>
 
               <MCFInput
                 v-model="editForm.notes"
-                label="Note (opzionale)"
+                :label="$t('expenses.notesOptional')"
                 type="textarea"
                 rows="3"
               />
@@ -828,7 +827,7 @@
               <div class="mcf-recurring-section">
                 <q-toggle
                   v-model="editForm.is_recurring"
-                  label="Rendi questa spesa ricorrente"
+                  :label="$t('expenses.makeRecurring')"
                   color="primary"
                   @update:model-value="onRecurringToggle"
                 />
@@ -837,7 +836,7 @@
                   <MCFSelect
                     v-model="editForm.frequency"
                     :options="frequencyOptions"
-                    label="Frequenza *"
+                    :label="$t('expenses.frequencyRequired')"
                     required
                     emit-value
                     map-options
@@ -845,31 +844,31 @@
 
                   <MCFDatePicker
                     v-model="editForm.start_date"
-                    label="Data inizio ricorrenza *"
+                    :label="$t('expenses.startDateRecurring')"
                     required
                     outlined
-                    :rules="[val => val && val.length > 0 || 'Data inizio richiesta']"
+                    :rules="[val => val && val.length > 0 || t('validation.required')]"
                   />
 
                   <MCFDatePicker
                     v-model="editForm.end_date"
-                    label="Data fine ricorrenza (opzionale)"
+                    :label="$t('expenses.endDateRecurring')"
                     outlined
-                    hint="Lascia vuoto per ricorrenza senza fine"
+                    :hint="$t('expenses.installmentsHint')"
                   />
 
                   <MCFInput
                     v-model.number="editForm.total_installments"
-                    label="Numero rate totali (opzionale)"
+                    :label="$t('expenses.totalInstallments')"
                     type="number"
                     min="1"
                     max="120"
-                    hint="Es: 12 per rate mensili per un anno"
+                    :hint="$t('expenses.installmentsHint')"
                   />
 
                   <q-toggle
                     v-model="editForm.generate_immediately"
-                    label="Genera spese future immediatamente"
+                    :label="$t('expenses.generateImmediately')"
                     color="primary"
                   />
                 </div>
@@ -878,10 +877,10 @@
           </q-card-section>
 
           <q-card-actions align="right" class="flex-shrink-0 bg-grey-2" style="border-radius: 12px 12px 0 0;">
-            <q-btn flat label="Annulla" v-close-popup @click="closeEditForm" />
+            <q-btn flat :label="$t('expenses.cancel')" v-close-popup @click="closeEditForm" />
             <q-btn
               flat
-              label="Salva Modifiche"
+              :label="$t('expenses.saveChanges')"
               color="primary"
               @click="submitEditExpense"
               :loading="saving"
@@ -899,8 +898,8 @@
           <q-card-section class="row items-center">
             <q-icon name="flash_on" color="orange" size="28px" class="q-mr-sm" />
             <div>
-              <div class="text-h6">Spesa Rapida</div>
-              <div class="text-caption text-grey-6">Inserimento veloce per poi gestire dopo</div>
+              <div class="text-h6">{{ $t('expenses.saveQuick') }}</div>
+              <div class="text-caption text-grey-6">{{ $t('expenses.manualEntryCaption') }}</div>
             </div>
           </q-card-section>
 
@@ -908,24 +907,24 @@
             <q-form @submit.prevent="submitQuickExpense" class="q-gutter-md">
               <q-input
                 v-model="quickExpense.description"
-                label="Cosa hai comprato? *"
+                :label="$t('expenses.whatBought')"
                 required
                 autofocus
                 outlined
-                :rules="[val => val && val.length > 0 || 'Descrizione richiesta']"
-                placeholder="es. Spesa supermercato"
+                :rules="[val => val && val.length > 0 || t('validation.required')]"
+                :placeholder="$t('expenses.descriptionPlaceholder')"
               />
 
               <q-input
                 v-model="quickExpense.amount"
-                label="Quanto hai speso? *"
+                :label="$t('expenses.howMuchSpent')"
                 type="number"
                 step="0.01"
                 required
                 outlined
                 prefix="€"
-                :rules="[val => val > 0 || 'Importo deve essere maggiore di 0']"
-                placeholder="es. 25.50"
+                :rules="[val => val > 0 || t('expenses.invalidAmount')]"
+                :placeholder="$t('expenses.amountPlaceholder')"
               />
             </q-form>
           </q-card-section>
@@ -933,12 +932,12 @@
           <q-card-actions align="right">
             <q-btn
               flat
-              label="Annulla"
+              :label="$t('expenses.cancel')"
               color="grey"
               @click="closeQuickForm"
             />
             <q-btn
-              label="Salva Veloce"
+              :label="$t('expenses.saveQuick')"
               color="orange"
               :loading="saving"
               @click="submitQuickExpense"
@@ -954,7 +953,7 @@
           <q-card-section class="bg-primary text-white">
             <div class="text-h6">
               <q-icon name="payments" class="q-mr-sm" />
-              Paga Spesa
+              {{ $t('expenses.pay') }}
             </div>
           </q-card-section>
 
@@ -965,7 +964,7 @@
             <!-- Metodo di Pagamento -->
             <MCFSelect
               v-model="paymentForm.payment_method"
-              label="Metodo di Pagamento *"
+              :label="$t('payments.paymentMethod')"
               :options="paymentMethodOptions"
               option-value="value"
               option-label="label"
@@ -978,7 +977,7 @@
             <!-- Fonte di Pagamento -->
             <MCFSelect
               v-model="paymentForm.payment_source"
-              label="Fonte di Pagamento *"
+              :label="$t('expenses.paymentSource')"
               :options="paymentSourceOptions"
               option-value="value"
               option-label="label"
@@ -997,10 +996,10 @@
               <template v-slot:avatar>
                 <q-icon name="warning" />
               </template>
-              <div class="text-weight-medium">Bilancio insufficiente</div>
+              <div class="text-weight-medium">{{ $t('contributions.insufficientBalance') }}</div>
               <div class="text-body2">
-                Bilancio disponibile: €{{ formatAmount(familyBalance) }}
-                <br>Importo richiesto: €{{ formatAmount(expenseToPay.amount) }}
+                {{ $t('contributions.availableBalance') }}: €{{ formatAmount(familyBalance) }}
+                <br>{{ $t('expenses.amount') }}: €{{ formatAmount(expenseToPay.amount) }}
               </div>
             </q-banner>
 
@@ -1012,7 +1011,7 @@
                 icon="account_balance_wallet"
                 size="sm"
               >
-                Bilancio disponibile: €{{ formatAmount(familyBalance) }}
+                {{ $t('contributions.availableBalance') }}: €{{ formatAmount(familyBalance) }}
               </q-chip>
             </div>
           </q-card-section>
@@ -1020,13 +1019,13 @@
           <q-card-actions align="right">
             <q-btn
               flat
-              label="Annulla"
+              :label="$t('expenses.cancel')"
               color="grey"
               @click="closePaymentDialog"
               :disable="saving"
             />
             <q-btn
-              label="Paga Spesa"
+              :label="$t('expenses.pay')"
               color="primary"
               :loading="saving"
               :disable="!canPayExpense"
@@ -1051,6 +1050,7 @@
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useSnackbar } from 'src/composables/useSnackbar'
 import { useAuthStore } from 'src/stores/auth.js'
 import { expensesAPI } from 'src/services/api/expenses.js'
@@ -1060,6 +1060,7 @@ import { categoriesAPI } from 'src/services/api/categories.js'
 import MCFAutocomplete from 'components/forms/MCFAutocomplete.vue'
 
 const $q = useQuasar()
+const { t } = useI18n()
 import MCFSelect from 'components/forms/MCFSelect.vue'
 import MCFDatePicker from 'components/MCFDatePicker.vue'
 import DeleteExpenseModal from 'components/DeleteExpenseModal.vue'
@@ -1100,21 +1101,21 @@ const paymentForm = ref({
   payment_source: 'personal'
 })
 
-// Opzioni per metodi di pagamento
-const paymentMethodOptions = [
-  { label: 'Carta di Credito/Debito', value: 'carta' },
-  { label: 'Contanti', value: 'contanti' },
-  { label: 'Bonifico', value: 'bonifico' },
-  { label: 'PayPal', value: 'paypal' },
-  { label: 'Apple Pay', value: 'apple_pay' },
-  { label: 'Google Pay', value: 'google_pay' },
-  { label: 'Altro', value: 'altro' }
-]
+// Opzioni per metodi di pagamento (computed per reattività i18n)
+const paymentMethodOptions = computed(() => [
+  { label: t('payments.methods.card'), value: 'carta' },
+  { label: t('payments.methods.cash'), value: 'contanti' },
+  { label: t('payments.methods.transfer'), value: 'bonifico' },
+  { label: t('payments.methods.paypal'), value: 'paypal' },
+  { label: t('payments.methods.applePay'), value: 'apple_pay' },
+  { label: t('payments.methods.googlePay'), value: 'google_pay' },
+  { label: t('payments.methods.other'), value: 'altro' }
+])
 
-const paymentSourceOptions = [
-  { label: 'Fondi Personali', value: 'personal' },
-  { label: 'Da Contributo Famiglia', value: 'contribution' }
-]
+const paymentSourceOptions = computed(() => [
+  { label: t('payments.sources.personal'), value: 'personal' },
+  { label: t('payments.sources.contribution'), value: 'contribution' }
+])
 
 // Computed per validazione pagamento
 const canPayExpense = computed(() => {
@@ -1130,25 +1131,33 @@ const canPayExpense = computed(() => {
   return true
 })
 
-// Opzioni per la frequenza di ricorrenza
-const frequencyOptions = [
-  { label: 'Giornaliera', value: 'giornaliera' },
-  { label: 'Settimanale', value: 'settimanale' },
-  { label: 'Bisettimanale', value: 'bisettimanale' },
-  { label: 'Mensile', value: 'mensile' },
-  { label: 'Bimestrale', value: 'bimestrale' },
-  { label: 'Trimestrale', value: 'trimestrale' },
-  { label: 'Semestrale', value: 'semestrale' },
-  { label: 'Annuale', value: 'annuale' }
-]
+// Opzioni per la frequenza di ricorrenza (computed per reattività i18n)
+const frequencyOptions = computed(() => [
+  { label: t('expenses.frequencyOptions.daily'), value: 'giornaliera' },
+  { label: t('expenses.frequencyOptions.weekly'), value: 'settimanale' },
+  { label: t('expenses.frequencyOptions.biweekly'), value: 'bisettimanale' },
+  { label: t('expenses.frequencyOptions.monthly'), value: 'mensile' },
+  { label: t('expenses.frequencyOptions.bimonthly'), value: 'bimestrale' },
+  { label: t('expenses.frequencyOptions.quarterly'), value: 'trimestrale' },
+  { label: t('expenses.frequencyOptions.semiannual'), value: 'semestrale' },
+  { label: t('expenses.frequencyOptions.annual'), value: 'annuale' }
+])
 
-// Computed properties for category filtering UI
+// Helper to translate category names
+const translateCategoryName = (categoryName) => {
+  // Try to find translation in categories.names
+  const translated = t(`categories.names.${categoryName}`, categoryName)
+  // If translation key doesn't exist, return original name
+  return translated === categoryName ? categoryName : translated
+}
+
+// Computed properties for category filtering UI with translated names
 const visibleCategories = computed(() => {
-  if (showAllCategories.value) {
-    return categories.value
-  }
-  // Mostra solo i primi 3 categorie
-  return categories.value.slice(0, 3)
+  const cats = showAllCategories.value ? categories.value : categories.value.slice(0, 3)
+  return cats.map(cat => ({
+    ...cat,
+    translatedName: translateCategoryName(cat.name)
+  }))
 })
 
 const hasMoreCategories = computed(() => {
@@ -1268,7 +1277,7 @@ const loadExpenses = async (filters = {}) => {
 }
 
 const formatDate = (dateString) => {
-  if (!dateString) return 'Data non specificata'
+  if (!dateString) return t('validation.invalidDate')
 
   try {
     const date = new Date(dateString)
@@ -1283,7 +1292,7 @@ const formatDate = (dateString) => {
 }
 
 const formatDateHeader = (dateString) => {
-  if (!dateString) return 'Data non specificata'
+  if (!dateString) return t('time.today')
 
   try {
     const date = new Date(dateString)
@@ -1298,9 +1307,9 @@ const formatDateHeader = (dateString) => {
     const normalizedYesterday = normalize(yesterday)
 
     if (normalizedDate.getTime() === normalizedToday.getTime()) {
-      return 'Oggi'
+      return t('time.today')
     } else if (normalizedDate.getTime() === normalizedYesterday.getTime()) {
-      return 'Ieri'
+      return t('time.yesterday')
     } else {
       return date.toLocaleDateString('it-IT', {
         weekday: 'long',
@@ -1322,9 +1331,9 @@ const getPaymentStatusClass = (expense) => {
 
 const getStatusText = (status) => {
   const statusMap = {
-    'pagata': 'Pagata',
-    'in_sospeso': 'In Sospeso',
-    'non_pagata': 'Da Pagare'
+    'pagata': t('expenses.status.paid'),
+    'in_sospeso': t('expenses.status.pending'),
+    'non_pagata': t('dashboard.expenseStatus.unpaid')
   }
   return statusMap[status] || status
 }
@@ -1367,7 +1376,7 @@ const loadSpendingPlans = async () => {
 
     // Create options for spending plans (already filtered by API)
     spendingPlanOptions.value = [
-      { label: 'Nessun piano (spesa generica)', value: null },
+      { label: t('budget.unplannedExpenses'), value: null },
       ...allPlans.map(plan => ({
         label: plan.name,
         value: plan.id,
@@ -1441,7 +1450,7 @@ const openManualForm = async () => {
 // Scanner functions
 const openCamera = () => {
   // Reindirizza alla pagina scanner
-  snackbar.info('Apertura fotocamera...')
+  snackbar.info(t('expenses.uploading'))
   closeManualForm()
   // Qui potresti implementare la logica della fotocamera o reindirizzare
   // router.push('/scanner?mode=camera')
@@ -1449,7 +1458,7 @@ const openCamera = () => {
 
 const uploadImage = () => {
   // Implementa il caricamento di immagini
-  snackbar.info('Caricamento immagine...')
+  snackbar.info(t('expenses.uploading'))
   closeManualForm()
   // Qui potresti implementare il file picker per le immagini
   // router.push('/scanner?mode=upload')
@@ -1457,12 +1466,12 @@ const uploadImage = () => {
 
 // Receipt handling functions
 const onReceiptRejected = () => {
-  snackbar.error(`File troppo grande o formato non supportato. Max 5MB, solo immagini.`)
+  snackbar.error(t('errors.badRequest'))
 }
 
 const takeReceiptPhoto = () => {
   // Implementa l'apertura della fotocamera
-  snackbar.info('Funzionalità fotocamera in sviluppo')
+  snackbar.info(t('messages.developmentFeature'))
 }
 
 const submitManualExpense = async () => {
@@ -1471,7 +1480,7 @@ const submitManualExpense = async () => {
 
     // Validate form
     if (!manualExpense.value.description || !manualExpense.value.amount || !manualExpense.value.category || !manualExpense.value.date) {
-      snackbar.warning('Compila tutti i campi obbligatori')
+      snackbar.warning(t('expenses.requiredFields'))
       return
     }
 
@@ -1481,11 +1490,11 @@ const submitManualExpense = async () => {
     // Validation per pagamento con contributi
     if (manualExpense.value.payment_source === 'contribution') {
       if (familyBalance.value <= 0) {
-        snackbar.warning('Bilancio famiglia insufficiente per questo metodo di pagamento')
+        snackbar.warning(t('contributions.insufficientBalance'))
         return
       }
       if (manualExpense.value.amount > familyBalance.value) {
-        snackbar.warning(`Importo troppo elevato. Bilancio disponibile: €${formatAmount(familyBalance.value)}`)
+        snackbar.warning(`${t('contributions.insufficientBalance')}. ${t('contributions.availableBalance')}: €${formatAmount(familyBalance.value)}`)
         return
       }
     }
@@ -1525,7 +1534,7 @@ const submitManualExpense = async () => {
       await expensesAPI.createExpense(expenseData)
     }
 
-    snackbar.success('Spesa salvata con successo!')
+    snackbar.success(t('expenses.expenseCreated'))
 
     // Se la spesa è stata pagata con contributi, aggiorna il bilancio famiglia
     if (manualExpense.value.payment_source === 'contribution') {
@@ -1544,9 +1553,9 @@ const submitManualExpense = async () => {
   } catch (error) {
     console.error('Failed to save manual expense:', error)
 
-    let errorMessage = 'Errore nel salvataggio della spesa'
+    let errorMessage = t('expenses.errorCreating')
     if (error.response?.status === 401) {
-      errorMessage = 'Accesso negato. Effettua il login.'
+      errorMessage = t('errors.unauthorized')
     } else if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -1566,7 +1575,7 @@ const loadCategories = async () => {
     categories.value = response.results || response || []
   } catch (error) {
     console.error('Error loading categories:', error)
-    snackbar.error('Errore nel caricamento delle categorie')
+    snackbar.error(t('categories.noCategories'))
   }
 }
 
@@ -1702,19 +1711,19 @@ const submitEditExpense = async () => {
 
     // Validate form
     if (!editForm.value.description || !editForm.value.amount || !editForm.value.category || !editForm.value.date) {
-      snackbar.warning('Compila tutti i campi obbligatori')
+      snackbar.warning(t('expenses.requiredFields'))
       return
     }
 
     // Validazione specifica per ricorrenza
     if (editForm.value.is_recurring) {
       if (!editForm.value.start_date || !editForm.value.frequency) {
-        snackbar.warning('Compila tutti i campi obbligatori per la ricorrenza')
+        snackbar.warning(t('expenses.requiredFields'))
         return
       }
 
       if (editForm.value.end_date && editForm.value.start_date >= editForm.value.end_date) {
-        snackbar.warning('La data di fine deve essere successiva alla data di inizio')
+        snackbar.warning(t('validation.invalidDate'))
         return
       }
     }
@@ -1749,9 +1758,9 @@ const submitEditExpense = async () => {
       const recurringResponse = await expensesAPI.convertToRecurring(editingExpense.value.id, conversionData)
       console.log('✅ Converted to recurring:', recurringResponse)
 
-      snackbar.success(`Spesa convertita in ricorrente! Generate ${recurringResponse.generated_count} spese future.`)
+      snackbar.success(t('expenses.expenseUpdated'))
     } else {
-      snackbar.success('Spesa modificata con successo!')
+      snackbar.success(t('expenses.expenseUpdated'))
     }
 
     closeEditForm()
@@ -1766,7 +1775,7 @@ const submitEditExpense = async () => {
   } catch (error) {
     console.error('❌ Error updating expense:', error)
 
-    let errorMessage = 'Errore durante la modifica della spesa'
+    let errorMessage = t('expenses.errorUpdating')
     if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -1808,11 +1817,11 @@ const handleUpdateExpensePaymentType = async ({ expense, paymentType }) => {
       updatedExpense.paid_by_user = updateData.paid_by_user
     }
 
-    const typeLabel = paymentType === 'individual' ? 'Individuale' : 'Parziale'
-    snackbar.success(`Spesa marcata come ${typeLabel}`)
+    const typeLabel = paymentType === 'individual' ? t('expenses.personalExpense') : t('expenses.sharedExpense')
+    snackbar.success(`${t('common.update')}: ${typeLabel}`)
   } catch (error) {
     console.error('Errore nell\'aggiornamento del tipo di pagamento:', error)
-    snackbar.error('Errore nell\'aggiornamento del tipo di pagamento')
+    snackbar.error(t('errors.genericError'))
   }
 }
 
@@ -1823,7 +1832,7 @@ const confirmDeleteExpense = async () => {
   try {
     await expensesAPI.deleteExpense(expenseToDelete.value.id)
 
-    snackbar.success('Spesa eliminata con successo')
+    snackbar.success(t('expenses.expenseDeleted'))
 
     // Ricarica le spese
     const currentFilters = {}
@@ -1839,7 +1848,7 @@ const confirmDeleteExpense = async () => {
   } catch (error) {
     console.error('❌ Error deleting expense:', error)
 
-    let errorMessage = 'Errore durante l\'eliminazione della spesa'
+    let errorMessage = t('expenses.errorDeleting')
     if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -1883,7 +1892,7 @@ const submitQuickExpense = async () => {
 
     // Validate form
     if (!quickExpense.value.description || !quickExpense.value.amount) {
-      snackbar.warning('Compila tutti i campi')
+      snackbar.warning(t('expenses.requiredFields'))
       return
     }
 
@@ -1905,7 +1914,7 @@ const submitQuickExpense = async () => {
 
     await expensesAPI.createExpense(expenseData)
 
-    snackbar.success('Spesa rapida salvata! Ricordati di completarla dopo.')
+    snackbar.success(t('expenses.expenseCreated'))
 
     // Close form and reload expenses
     closeQuickForm()
@@ -1914,9 +1923,9 @@ const submitQuickExpense = async () => {
   } catch (error) {
     console.error('Failed to save quick expense:', error)
 
-    let errorMessage = 'Errore nel salvataggio della spesa rapida'
+    let errorMessage = t('expenses.errorCreating')
     if (error.response?.status === 401) {
-      errorMessage = 'Accesso negato. Effettua il login.'
+      errorMessage = t('errors.unauthorized')
     } else if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {

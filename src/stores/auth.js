@@ -5,6 +5,10 @@ import { storage, STORAGE_KEYS } from 'src/services/storage'
 import CryptoJS from 'crypto-js'
 import { useContributionsStore } from './contributions'
 import { useExpensesStore } from './expenses'
+import { i18nInstance } from 'src/boot/i18n.js'
+import { LocalStorage, Quasar } from 'quasar'
+import quasarLangIt from 'quasar/lang/it'
+import quasarLangEnUS from 'quasar/lang/en-US'
 
 // Chiave segreta per criptare (in produzione usa una chiave più sicura)
 const SECRET_KEY = 'mcf-2024-secret-key'
@@ -28,6 +32,37 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
+    // Helper: Applica la lingua preferita dell'utente
+    async applyUserLanguage(preferredLanguage) {
+      if (!preferredLanguage) return
+
+      try {
+        console.log('🌍 Applying user language preference:', preferredLanguage)
+
+        // Update vue-i18n locale
+        i18nInstance.global.locale.value = preferredLanguage
+
+        // Update Quasar language pack
+        const quasarLangMap = {
+          'it-IT': quasarLangIt,
+          'en-US': quasarLangEnUS
+        }
+
+        const langPack = quasarLangMap[preferredLanguage]
+        if (langPack) {
+          Quasar.lang.set(langPack)
+          console.log('✅ Quasar language pack loaded:', preferredLanguage)
+        }
+
+        // Save to LocalStorage
+        LocalStorage.set('user-locale', preferredLanguage)
+
+        console.log('✅ User language applied:', preferredLanguage)
+      } catch (error) {
+        console.error('❌ Error applying user language:', error)
+      }
+    },
+
     // Inizializza lo store con dati salvati
     async initialize() {
       // Carica dati dal storage sicuro
@@ -65,6 +100,11 @@ export const useAuthStore = defineStore('auth', {
             await storage.clearAuth()
           }
         }
+      }
+
+      // Apply user's language preference if user is logged in
+      if (this.user?.preferred_language) {
+        await this.applyUserLanguage(this.user.preferred_language)
       }
 
       // Marca lo store come inizializzato
@@ -139,6 +179,11 @@ export const useAuthStore = defineStore('auth', {
           const profile = await authAPI.getUserProfile()
           this.user = { ...this.user, ...profile }
           await storage.saveUserData(this.user)
+
+          // Apply user's language preference
+          if (this.user.preferred_language) {
+            await this.applyUserLanguage(this.user.preferred_language)
+          }
         } catch (error) {
           console.log('Could not load user profile:', error)
         }
@@ -236,6 +281,11 @@ export const useAuthStore = defineStore('auth', {
               const profile = await authAPI.getUserProfile()
               this.user = { ...this.user, ...profile }
               await storage.saveUserData(this.user)
+
+              // Apply user's language preference
+              if (this.user.preferred_language) {
+                await this.applyUserLanguage(this.user.preferred_language)
+              }
             } catch (error) {
               console.log('Could not load user profile:', error)
             }

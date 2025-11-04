@@ -7,17 +7,16 @@
         <div class="action-buttons-grid">
           <q-btn
             icon="event_note"
-            label="Add Piano"
+            :label="$t('budget.addPlan')"
             unelevated
             color="primary"
             no-caps
             class="action-btn"
             @click="showCreateDialog = true"
-            :disable="!authStore.user?.family"
           />
           <q-btn
             icon="account_balance_wallet"
-            label="Contributo"
+            :label="$t('budget.contribution')"
             outline
             color="primary"
             no-caps
@@ -31,26 +30,25 @@
       <!-- Avviso mancanza famiglia -->
       <q-banner
         v-if="!authStore.user?.family"
-        class="bg-warning text-white q-mb-md"
+        class="bg-info text-white q-mb-md"
         rounded
       >
         <template v-slot:avatar>
-          <q-icon name="warning" />
+          <q-icon name="info" />
         </template>
-        <div class="text-weight-medium">Attenzione: Famiglia richiesta</div>
+        <div class="text-weight-medium">{{ $t('budget.personalPlansAvailable') }}</div>
         <div class="text-body2 q-mt-xs">
-          Prima di creare un piano di spesa, è necessario
+          {{ $t('budget.createPersonalPlansDescription') }}
           <router-link to="/settings" class="text-white text-decoration-underline">
-            creare o unirti a una famiglia
+            {{ $t('budget.joinFamily') }}
           </router-link>.
-          I piani di spesa senza famiglia non saranno visibili nell'app.
         </div>
       </q-banner>
 
       <!-- Filtri e Controlli - Expansion -->
       <q-expansion-item
         icon="tune"
-        label="Filtri"
+        :label="$t('budget.filters')"
         header-class="filters-expansion-header"
         class="mcf-filters-section"
       >
@@ -59,17 +57,14 @@
           <div class="filter-group">
             <div class="filter-label-header">
               <q-icon name="event" size="18px" />
-              <span>Periodo</span>
+              <span>{{ $t('budget.period') }}</span>
             </div>
             <q-btn-toggle
               v-model="periodFilter"
               toggle-color="primary"
               unelevated
               no-caps
-              :options="[
-                { label: '3 Mesi', value: '3months' },
-                { label: 'Tutti', value: 'all' }
-              ]"
+              :options="periodFilterOptions"
               @update:model-value="onFilterChange"
               class="filter-toggle"
             />
@@ -79,17 +74,14 @@
           <div class="filter-group">
             <div class="filter-label-header">
               <q-icon name="visibility" size="18px" />
-              <span>Visibilità</span>
+              <span>{{ $t('budget.visibility') }}</span>
             </div>
             <q-btn-toggle
               v-model="visibilityFilter"
               toggle-color="primary"
               unelevated
               no-caps
-              :options="[
-                { label: 'Visibili', value: 'visible' },
-                { label: 'Nascosti', value: 'hidden' }
-              ]"
+              :options="visibilityFilterOptions"
               @update:model-value="onFilterChange"
               class="filter-toggle"
             />
@@ -107,7 +99,7 @@
           <div class="balance-info">
             <q-icon name="account_balance_wallet" size="24px" color="primary" />
             <div class="balance-details">
-              <div class="balance-label">Disponibilità Cash</div>
+              <div class="balance-label">{{ $t('budget.cashAvailability') }}</div>
               <div class="balance-amount" v-html="familyBalanceText"></div>
             </div>
           </div>
@@ -120,21 +112,21 @@
             :loading="loadingBalance"
             class="balance-refresh"
           >
-            <q-tooltip>Aggiorna bilancio</q-tooltip>
+            <q-tooltip>{{ $t('budget.refreshBalance') }}</q-tooltip>
           </q-btn>
         </q-card-section>
       </q-card>
 
       <!-- Counter piani filtrati -->
       <div v-if="filteredPlansCount !== totalPlansCount" class="plans-counter-section">
-        Visualizzati {{ filteredPlansCount }} di {{ totalPlansCount }} piani
+        {{ $t('budget.plansCounterDisplay', { filtered: filteredPlansCount, total: totalPlansCount }) }}
       </div>
 
       <!-- Lista Piani di Spesa -->
         <MCFLoading
           v-if="loading"
-          message="Caricamento piani di spesa..."
-          submessage="Recupero pianificazioni e spese future"
+          :message="$t('budget.loadingPlans')"
+          :submessage="$t('budget.loadingPlansSubtitle')"
         />
 
         <div v-else-if="filteredSpendingPlans.length === 0" class="mcf-empty-state">
@@ -150,24 +142,23 @@
           </div>
 
           <div class="mcf-empty-content">
-            <h3 class="mcf-empty-title">Inizia a Pianificare</h3>
+            <h3 class="mcf-empty-title">{{ $t('budget.startPlanning') }}</h3>
             <p class="mcf-empty-description">
-              Crea il tuo primo piano di spesa per organizzare meglio le tue finanze.
-              <br>Perfetto per eventi, vacanze o spese mensili!
+              {{ $t('budget.firstPlanDescription') }}
             </p>
 
             <div class="mcf-empty-features">
               <div class="mcf-feature-item">
                 <q-icon name="schedule" class="mcf-feature-icon" />
-                <span>Organizza per periodo</span>
+                <span>{{ $t('budget.organizeByPeriod') }}</span>
               </div>
               <div class="mcf-feature-item">
                 <q-icon name="content_copy" class="mcf-feature-icon" />
-                <span>Clona i piani</span>
+                <span>{{ $t('budget.clonePlans') }}</span>
               </div>
               <div class="mcf-feature-item">
                 <q-icon name="trending_up" class="mcf-feature-icon" />
-                <span>Monitora i progressi</span>
+                <span>{{ $t('budget.monitorProgress') }}</span>
               </div>
             </div>
           </div>
@@ -225,6 +216,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { reportsAPI } from 'src/services/api/reports.js'
 import { useContributionsStore } from 'src/stores/contributions.js'
 import { useAuthStore } from 'stores/auth.js'
@@ -235,6 +227,7 @@ import ContributionForm from 'src/components/contributions/ContributionForm.vue'
 import CardPianoSpesa2 from 'src/components/CardPianoSpesa2.vue'
 import MCFLoading from 'src/components/MCFLoading.vue'
 
+const { t } = useI18n()
 const $q = useQuasar()
 const router = useRouter()
 const snackbar = useSnackbar()
@@ -281,13 +274,24 @@ const authStore = useAuthStore()
 const contributionsStore = useContributionsStore()
 
 // Opzioni per il tipo piano (per le funzioni helper)
-const planTypeOptions = [
-  { label: 'Mensile', value: 'monthly' },
-  { label: 'Trimestrale', value: 'quarterly' },
-  { label: 'Semestrale', value: 'semester' },
-  { label: 'Annuale', value: 'yearly' },
-  { label: 'Personalizzato', value: 'custom' }
-]
+const planTypeOptions = computed(() => [
+  { label: t('budget.planTypes.monthly'), value: 'monthly' },
+  { label: t('budget.planTypes.quarterly'), value: 'quarterly' },
+  { label: t('budget.planTypes.semester'), value: 'semester' },
+  { label: t('budget.planTypes.yearly'), value: 'yearly' },
+  { label: t('budget.planTypes.custom'), value: 'custom' }
+])
+
+// Opzioni per i filtri
+const periodFilterOptions = computed(() => [
+  { label: t('budget.threeMonths'), value: '3months' },
+  { label: t('common.all'), value: 'all' }
+])
+
+const visibilityFilterOptions = computed(() => [
+  { label: t('budget.visible'), value: 'visible' },
+  { label: t('budget.hidden'), value: 'hidden' }
+])
 
 // Computed Properties
 const filteredSpendingPlans = computed(() => {
@@ -337,7 +341,7 @@ const loadSpendingPlans = async () => {
     console.log('📅 Filtri attivi - Periodo:', periodFilter.value, '- Visibilità:', visibilityFilter.value)
   } catch (error) {
     console.error('Errore nel caricamento dei piani:', error)
-    snackbar.error('Errore nel caricamento dei piani di spesa')
+    snackbar.error(t('budget.errorLoadingPlans'))
   } finally {
     loading.value = false
   }
@@ -360,8 +364,10 @@ const handlePlanSubmit = async (planData) => {
 
     await reportsAPI.createSpendingPlan(submitData)
 
-    const planTypeMessage = planData.plan_scope === 'personal' ? 'Piano Personale' : 'Piano Familiare'
-    snackbar.success(`${planTypeMessage} creato con successo!`)
+    const planTypeMessage = planData.plan_scope === 'personal'
+      ? t('budget.personalPlan')
+      : t('budget.familyPlan')
+    snackbar.success(t('budget.planCreatedSuccess', { type: planTypeMessage }))
 
     showCreateDialog.value = false
     await loadSpendingPlans()
@@ -369,7 +375,7 @@ const handlePlanSubmit = async (planData) => {
   } catch (error) {
     console.error('Errore nella creazione del piano:', error)
 
-    let errorMessage = 'Errore nella creazione del piano'
+    let errorMessage = t('budget.errorCreatingPlan')
     if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -398,7 +404,7 @@ const handlePlanUpdate = async (planData) => {
 
     await reportsAPI.updateSpendingPlan(planData.id, submitData)
 
-    snackbar.success('Piano di spesa aggiornato con successo!')
+    snackbar.success(t('budget.planUpdatedSuccess'))
 
     showEditDialog.value = false
     editingPlan.value = null
@@ -407,7 +413,7 @@ const handlePlanUpdate = async (planData) => {
   } catch (error) {
     console.error('Errore nell\'aggiornamento del piano:', error)
 
-    let errorMessage = 'Errore nell\'aggiornamento del piano'
+    let errorMessage = t('budget.errorUpdatingPlan')
     if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -442,7 +448,8 @@ const togglePinPlan = async (plan) => {
 
     // Mostra notifica solo su desktop
     if (!$q.platform.is.mobile && !$q.platform.is.capacitor) {
-      snackbar.success(response.detail || `Piano ${response.is_pinned_by_user ? 'pinnato' : 'spinnato'} con successo`)
+      const message = response.is_pinned_by_user ? t('budget.planPinned') : t('budget.planUnpinned')
+      snackbar.success(response.detail || message)
     }
 
     // Ricarica per aggiornare l'ordinamento
@@ -451,26 +458,26 @@ const togglePinPlan = async (plan) => {
     // Rollback in caso di errore
     plan.is_pinned_by_user = !plan.is_pinned_by_user
     console.error('Errore nel toggle pin del piano:', error)
-    snackbar.error('Errore nell\'aggiornamento del piano')
+    snackbar.error(t('budget.errorUpdatingPlan'))
   }
 }
 
 const deletePlan = (plan) => {
   $q.dialog({
-    title: 'Conferma Eliminazione',
-    message: `Sei sicuro di voler eliminare il piano "${plan.name}"?`,
+    title: t('budget.confirmDeletePlan'),
+    message: t('budget.confirmDeletePlanMessage', { name: plan.name }),
     cancel: true,
     persistent: true
   }).onOk(async () => {
     try {
       await reportsAPI.deleteSpendingPlan(plan.id)
 
-      snackbar.success('Piano eliminato con successo')
+      snackbar.success(t('budget.planDeletedSuccess'))
 
       await loadSpendingPlans()
     } catch (error) {
       console.error('Errore nell\'eliminazione del piano:', error)
-      snackbar.error('Errore nell\'eliminazione del piano')
+      snackbar.error(t('budget.errorDeletingPlan'))
     }
   })
 }
@@ -481,7 +488,7 @@ const clonePlan = (plan) => {
 }
 
 const handlePlanCloned = async (clonedPlan) => {
-  snackbar.success(`Piano "${clonedPlan.name}" clonato con successo!`)
+  snackbar.success(t('budget.planClonedSuccess', { name: clonedPlan.name }))
 
   // Ricarica la lista dei piani per mostrare il nuovo piano clonato
   await loadSpendingPlans()
@@ -492,7 +499,7 @@ const handlePlanCloned = async (clonedPlan) => {
 }
 
 const handleContributionSaved = async () => {
-  snackbar.success('Contributo aggiunto con successo!')
+  snackbar.success(t('contributions.contributionAddedSuccess'))
 
   // Ricarica il bilancio famiglia dopo aver aggiunto un contributo
   contributionsStore.invalidateBalanceCache()

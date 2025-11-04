@@ -20,8 +20,8 @@
           class="mcf-brand-logo"
         />
         <div class="mcf-brand-text">
-          <div class="mcf-brand-title">MyCrisisFamily</div>
-          <div class="mcf-brand-subtitle">Gestione Spese</div>
+          <div class="mcf-brand-title">{{ $t('layout.appName') }}</div>
+          <div class="mcf-brand-subtitle">{{ $t('layout.appSubtitle') }}</div>
         </div>
       </div>
 

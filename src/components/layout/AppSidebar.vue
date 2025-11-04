@@ -16,9 +16,9 @@
           />
         </div>
         <div class="mcf-sidebar-title">
-          <div class="mcf-sidebar-name">MyCrisisFamily</div>
+          <div class="mcf-sidebar-name">{{ $t('layout.appName') }}</div>
           <div class="mcf-sidebar-subtitle">
-            Gestione Spese
+            {{ $t('layout.appSubtitle') }}
             <div v-if="currentUser" class="mcf-user-info">
               {{ currentUser.first_name }} {{ currentUser.last_name }}
               <div class="mcf-user-chips">
@@ -50,7 +50,7 @@
     <div class="mcf-sidebar-content">
       <q-list class="mcf-nav-list">
         <div class="mcf-nav-section">
-          <div class="mcf-nav-section-title">Principale</div>
+          <div class="mcf-nav-section-title">{{ $t('layout.menu.sections.main') }}</div>
           <EssentialLink
             v-for="link in mainLinks"
             :key="link.title"
@@ -60,7 +60,7 @@
         </div>
 
         <div class="mcf-nav-section">
-          <div class="mcf-nav-section-title">Strumenti</div>
+          <div class="mcf-nav-section-title">{{ $t('layout.menu.sections.tools') }}</div>
           <EssentialLink
             v-for="link in toolLinks"
             :key="link.title"
@@ -70,7 +70,7 @@
         </div>
 
         <div class="mcf-nav-section">
-          <div class="mcf-nav-section-title">Impostazioni</div>
+          <div class="mcf-nav-section-title">{{ $t('layout.menu.sections.settings') }}</div>
           <EssentialLink
             v-for="link in settingsLinks"
             :key="link.title"
@@ -87,22 +87,18 @@
 import { computed } from 'vue'
 import EssentialLink from './EssentialLink.vue'
 import { useAuthStore } from 'src/stores/auth'
+import { useI18n } from 'vue-i18n'
 
 const authStore = useAuthStore()
+const { t } = useI18n()
 
 const currentUser = computed(() => {
   return authStore.user
 })
 
 const formatRole = (role) => {
-  const roles = {
-    padre: 'Padre',
-    madre: 'Madre',
-    figlio: 'Figlio',
-    figlia: 'Figlia',
-    altro: 'Altro'
-  }
-  return roles[role] || role
+  const roleKey = `users.roles.${role}`
+  return t(roleKey)
 }
 
 const props = defineProps({
@@ -119,51 +115,51 @@ const isOpen = computed({
   set: (value) => emit('update:modelValue', value)
 })
 
-// Organized navigation links
-const mainLinks = [
+// Organized navigation links (computed to be reactive to language changes)
+const mainLinks = computed(() => [
   {
-    title: 'Dashboard',
-    caption: 'Panoramica generale',
+    title: t('layout.menu.dashboard.title'),
+    caption: t('layout.menu.dashboard.caption'),
     icon: 'dashboard',
     link: '/dashboard',
   },
   {
-    title: 'Spese',
-    caption: 'Gestisci le spese',
+    title: t('layout.menu.expenses.title'),
+    caption: t('layout.menu.expenses.caption'),
     icon: 'receipt_long',
     link: '/expenses',
   },
   {
-    title: 'Piani di Spesa',
-    caption: 'Organizza le tue spese',
+    title: t('layout.menu.spendingPlans.title'),
+    caption: t('layout.menu.spendingPlans.caption'),
     icon: 'list_alt',
     link: '/budget',
   },
-]
+])
 
-const toolLinks = [
+const toolLinks = computed(() => [
   {
-    title: 'Scanner',
-    caption: 'Scansiona ricevute',
+    title: t('layout.menu.scanner.title'),
+    caption: t('layout.menu.scanner.caption'),
     icon: 'document_scanner',
     link: '/scanner',
   },
   {
-    title: 'Aiuto',
-    caption: 'Guida e supporto',
+    title: t('layout.menu.help.title'),
+    caption: t('layout.menu.help.caption'),
     icon: 'help_outline',
     link: '/help',
   },
-]
+])
 
-const settingsLinks = [
+const settingsLinks = computed(() => [
   {
-    title: 'Impostazioni',
-    caption: 'Configura l\'app',
+    title: t('layout.menu.settings.title'),
+    caption: t('layout.menu.settings.caption'),
     icon: 'settings',
     link: '/settings',
   },
-]
+])
 </script>
 
 <style lang="scss">

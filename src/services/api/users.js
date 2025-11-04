@@ -62,6 +62,24 @@ export const usersAPI = {
     return response.data
   },
 
+  // ===== UTENTI =====
+  async getUser(id) {
+    const response = await apiClient.get(`/users/${id}/`)
+    return response.data
+  },
+
+  async updateUser(id, userData) {
+    // Per l'utente corrente, usa l'endpoint profile che è più sicuro
+    const response = await apiClient.patch(`/users/${id}/`, userData)
+    return response.data
+  },
+
+  async updateCurrentUserProfile(userData) {
+    // Endpoint per aggiornare il profilo dell'utente corrente
+    const response = await apiClient.patch('/auth/profile/', userData)
+    return response.data
+  },
+
   // ===== ACCOUNT =====
   async changePassword(passwordData) {
     const response = await apiClient.post('/users/change_password/', passwordData)

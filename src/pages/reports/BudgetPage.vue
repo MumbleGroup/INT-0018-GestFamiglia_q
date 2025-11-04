@@ -6,7 +6,7 @@
       <div class="mcf-action-header">
         <q-btn
           icon="add"
-          label="Nuovo Piano di Spesa"
+          :label="$t('budget.newSpendingPlan')"
           class="mcf-btn-primary mcf-btn-fullwidth"
           @click="showCreateDialog = true"
         />
@@ -16,8 +16,8 @@
       <div class="container">
         <MCFLoading
           v-if="loading"
-          message="Caricamento piani di spesa..."
-          submessage="Recupero dati di budget e pianificazione"
+          :message="$t('budget.loadingBudgets')"
+          :submessage="$t('budget.loadingBudgetsSubtitle')"
         />
 
         <div v-else-if="budgets.length === 0" class="empty-state">
@@ -26,11 +26,11 @@
             size="80px"
             color="grey-4"
           />
-          <h3>Nessun Piano di Spesa Creato</h3>
-          <p>Inizia creando il tuo primo piano di spesa personalizzato!</p>
+          <h3>{{ $t('budget.noBudgetCreated') }}</h3>
+          <p>{{ $t('budget.noBudgetDescription') }}</p>
           <q-btn
             icon="add"
-            label="Crea Primo Piano"
+            :label="$t('budget.createFirstPlan')"
             class="mcf-btn-primary"
             size="lg"
             @click="showCreateDialog = true"
@@ -68,13 +68,13 @@
                       <q-item-section avatar>
                         <q-icon name="edit" />
                       </q-item-section>
-                      <q-item-section>Modifica</q-item-section>
+                      <q-item-section>{{ $t('budget.modify') }}</q-item-section>
                     </q-item>
                     <q-item clickable v-close-popup @click="deleteBudget(budget)">
                       <q-item-section avatar>
                         <q-icon name="delete" color="red" />
                       </q-item-section>
-                      <q-item-section class="text-red">Elimina</q-item-section>
+                      <q-item-section class="text-red">{{ $t('budget.delete') }}</q-item-section>
                     </q-item>
                   </q-list>
                 </q-btn-dropdown>
@@ -85,15 +85,15 @@
             <div class="budget-progress">
               <div class="budget-amounts">
                 <div class="amount-item">
-                  <div class="amount-label">Budget Totale</div>
+                  <div class="amount-label">{{ $t('budget.totalBudget') }}</div>
                   <div class="amount-value primary">€{{ formatAmount(budget.total_amount) }}</div>
                 </div>
                 <div class="amount-item">
-                  <div class="amount-label">Speso</div>
+                  <div class="amount-label">{{ $t('budget.spent') }}</div>
                   <div class="amount-value">€{{ formatAmount(budget.spent_amount || 0) }}</div>
                 </div>
                 <div class="amount-item">
-                  <div class="amount-label">Rimanente</div>
+                  <div class="amount-label">{{ $t('budget.remaining') }}</div>
                   <div class="amount-value" :class="remainingClass(budget)">
                     €{{ formatAmount(budget.total_amount - (budget.spent_amount || 0)) }}
                   </div>
@@ -109,7 +109,7 @@
                   class="progress-bar"
                 />
                 <div class="progress-text">
-                  {{ Math.round(getProgressValue(budget) * 100) }}% utilizzato
+                  {{ Math.round(getProgressValue(budget) * 100) }}% {{ $t('budget.used') }}
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@
                 color="green"
                 text-color="white"
                 size="sm"
-                label="Attivo"
+                :label="$t('budget.active')"
               />
             </div>
           </div>
@@ -144,32 +144,32 @@
     >
       <q-card :style="$q.screen.lt.md ? '' : 'min-width: 500px; max-width: 600px;'">
         <q-card-section>
-          <div class="text-h6">Nuovo Piano di Spesa</div>
-          <div class="text-caption text-grey-6">Crea un piano di spesa personalizzato per il periodo che preferisci</div>
+          <div class="text-h6">{{ $t('budget.newPlanDialogTitle') }}</div>
+          <div class="text-caption text-grey-6">{{ $t('budget.newPlanDialogSubtitle') }}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
           <q-form @submit.prevent="createBudget" class="q-gutter-sm">
             <MCFInput
               v-model="newBudget.name"
-              label="Nome Piano di Spesa *"
+              :label="$t('budget.planName')"
               required
-              placeholder="es. Ottobre 2025, Estate 2026, Natale 2025..."
-              :rules="[val => val && val.length > 0 || 'Nome richiesto']"
+              :placeholder="$t('budget.planNamePlaceholder')"
+              :rules="[val => val && val.length > 0 || t('budget.nameRequired')]"
             />
 
             <MCFInput
               v-model="newBudget.description"
-              label="Descrizione (opzionale)"
+              :label="$t('budget.descriptionOptional')"
               type="textarea"
               rows="2"
-              placeholder="Descrivi a cosa serve questo piano di spesa..."
+              :placeholder="$t('budget.descriptionPlaceholder')"
             />
 
             <MCFSelect
               v-model="newBudget.budget_type"
               :options="budgetTypeOptions"
-              label="Tipo Piano *"
+              :label="$t('budget.planType')"
               emit-value
               map-options
             />
@@ -178,39 +178,39 @@
               <div class="col">
                 <MCFDatePicker
                   v-model="newBudget.start_date"
-                  label="Data Inizio *"
+                  :label="$t('budget.startDate')"
                   required
-                  :rules="[val => val && val.length > 0 || 'Data inizio richiesta']"
+                  :rules="[val => val && val.length > 0 || t('budget.startDateRequired')]"
                 />
               </div>
               <div class="col">
                 <MCFDatePicker
                   v-model="newBudget.end_date"
-                  label="Data Fine *"
+                  :label="$t('budget.endDate')"
                   required
-                  :rules="[val => val && val.length > 0 || 'Data fine richiesta']"
+                  :rules="[val => val && val.length > 0 || t('budget.endDateRequired')]"
                 />
               </div>
             </div>
 
             <MCFInput
               v-model.number="newBudget.total_amount"
-              label="Importo Totale *"
+              :label="$t('budget.totalAmount')"
               type="number"
               step="0.01"
               min="0"
               required
               prefix="€"
-              :rules="[val => val > 0 || 'Importo deve essere maggiore di 0']"
+              :rules="[val => val > 0 || t('budget.amountGreaterThanZero')]"
             />
           </q-form>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Annulla" v-close-popup @click="resetForm" />
+          <q-btn flat :label="$t('common.cancel')" v-close-popup @click="resetForm" />
           <q-btn
             flat
-            label="Crea Piano"
+            :label="$t('budget.createPlan')"
             color="primary"
             @click="createBudget"
             :loading="saving"
@@ -226,6 +226,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useSnackbar } from 'src/composables/useSnackbar'
 import { reportsAPI } from 'src/services/api/reports.js'
 import { useAuthStore } from 'stores/auth.js'
@@ -235,6 +236,7 @@ import MCFSelect from 'src/components/forms/MCFSelect.vue'
 import MCFDatePicker from 'src/components/MCFDatePicker.vue'
 
 const $q = useQuasar()
+const { t } = useI18n()
 const snackbar = useSnackbar()
 
 // Stato reattivo
@@ -253,16 +255,15 @@ const newBudget = ref({
   total_amount: null
 })
 
-// Opzioni per il tipo budget
-const budgetTypeOptions = [
-  { label: 'Mensile', value: 'monthly' },
-  { label: 'Stagionale', value: 'seasonal' },
-  { label: 'Evento/Occasione', value: 'event' },
-  { label: 'Annuale', value: 'yearly' },
-  { label: 'Personalizzato', value: 'custom' }
-]
-
 // Computed
+const budgetTypeOptions = computed(() => [
+  { label: t('budget.planTypes.monthly'), value: 'monthly' },
+  { label: t('budget.planTypes.seasonal'), value: 'seasonal' },
+  { label: t('budget.planTypes.event'), value: 'event' },
+  { label: t('budget.planTypes.yearly'), value: 'yearly' },
+  { label: t('budget.planTypes.custom'), value: 'custom' }
+])
+
 const canCreateBudget = computed(() => {
   return newBudget.value.name &&
          newBudget.value.start_date &&
@@ -279,7 +280,7 @@ const loadBudgets = async () => {
     console.log('📊 Budget caricati:', budgets.value.length)
   } catch (error) {
     console.error('Errore nel caricamento dei budget:', error)
-    snackbar.error('Errore nel caricamento dei budget')
+    snackbar.error(t('budget.errorLoadingBudgets'))
   } finally {
     loading.value = false
   }
@@ -292,7 +293,7 @@ const createBudget = async () => {
   try {
     await reportsAPI.createBudget(newBudget.value)
 
-    snackbar.success('Piano di spesa creato con successo!')
+    snackbar.success(t('budget.budgetCreatedSuccess'))
 
     showCreateDialog.value = false
     resetForm()
@@ -301,7 +302,7 @@ const createBudget = async () => {
   } catch (error) {
     console.error('Errore nella creazione del budget:', error)
 
-    let errorMessage = 'Errore nella creazione del piano di spesa'
+    let errorMessage = t('budget.errorCreatingBudget')
     if (error.response?.data?.detail) {
       errorMessage = error.response.data.detail
     } else if (error.message) {
@@ -328,25 +329,25 @@ const resetForm = () => {
 // eslint-disable-next-line no-unused-vars
 const editBudget = (budget) => {
   // TODO: Implementare modifica budget
-  snackbar.info('Funzione in sviluppo')
+  snackbar.info(t('budget.featureInDevelopment'))
 }
 
 const deleteBudget = (budget) => {
   $q.dialog({
-    title: 'Conferma Eliminazione',
-    message: `Sei sicuro di voler eliminare il piano di spesa "${budget.name}"?`,
+    title: t('budget.confirmDeleteBudget'),
+    message: t('budget.confirmDeleteBudgetMessage', { name: budget.name }),
     cancel: true,
     persistent: true
   }).onOk(async () => {
     try {
       await reportsAPI.deleteBudget(budget.id)
 
-      snackbar.success('Piano di spesa eliminato con successo')
+      snackbar.success(t('budget.budgetDeletedSuccess'))
 
       await loadBudgets()
     } catch (error) {
       console.error('Errore nell\'eliminazione del budget:', error)
-      snackbar.error('Errore nell\'eliminazione del budget')
+      snackbar.error(t('budget.errorDeletingBudget'))
     }
   })
 }
@@ -391,7 +392,7 @@ const remainingClass = (budget) => {
 }
 
 const getBudgetTypeLabel = (type) => {
-  const option = budgetTypeOptions.find(opt => opt.value === type)
+  const option = budgetTypeOptions.value.find(opt => opt.value === type)
   return option ? option.label : type
 }
 

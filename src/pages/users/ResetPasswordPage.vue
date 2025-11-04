@@ -1,107 +1,139 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="mcf-reset-password-page">
-    <div class="mcf-reset-password-container">
-      <!-- Header -->
-      <div class="mcf-header">
-        <div class="mcf-header-content">
-          <h1 class="mcf-page-title">Nuova Password</h1>
-          <p class="mcf-page-subtitle">Inserisci la tua nuova password</p>
-        </div>
-      </div>
-
-      <!-- Main Content -->
-      <div class="mcf-content">
-        <div class="mcf-reset-card">
-          <div class="mcf-card-header">
-            <q-icon name="lock_open" class="mcf-card-icon" />
-            <h2 class="mcf-card-title">Reimposta Password</h2>
-          </div>
-
-          <!-- Token Error -->
-          <div v-if="tokenError" class="mcf-error-message">
-            <q-icon name="error" />
-            <div>
-              <h3>Link non valido</h3>
-              <p>{{ tokenError }}</p>
-              <router-link to="/forgot-password" class="mcf-link">
-                Richiedi un nuovo link
-              </router-link>
-            </div>
-          </div>
-
-          <!-- Reset Form -->
-          <q-form v-else @submit="handleSubmit" class="mcf-form">
-            <div class="mcf-form-field">
-              <q-input
-                v-model="formData.new_password"
-                type="password"
-                label="Nuova Password *"
-                outlined
-                required
-                :error="!!errors.new_password"
-                :error-message="errors.new_password"
-                class="mcf-input"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
+      <q-page class="flex flex-center ticket-page">
+        <div class="ticket-container">
+          <!-- Ticket Card -->
+          <div class="ticket-card shadow-24">
+            <!-- Header Section -->
+            <div class="ticket-header">
+              <div class="ticket-logo">
+                <img src="~/assets/wallet-icon-only.svg" alt="Logo" class="logo-img" />
+                <div class="brand-section">
+                  <div class="brand-badge">
+                    <span class="logo-text">MyCrisisFamily</span>
+                  </div>
+                  <svg class="barcode" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="5" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="9" y="0" width="4" height="30" fill="#000"/>
+                    <rect x="15" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="19" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="24" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="28" y="0" width="5" height="30" fill="#000"/>
+                    <rect x="35" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="39" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="44" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="48" y="0" width="4" height="30" fill="#000"/>
+                    <rect x="54" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="58" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="63" y="0" width="5" height="30" fill="#000"/>
+                    <rect x="70" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="74" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="79" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="83" y="0" width="4" height="30" fill="#000"/>
+                    <rect x="89" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="93" y="0" width="3" height="30" fill="#000"/>
+                    <rect x="98" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="102" y="0" width="5" height="30" fill="#000"/>
+                    <rect x="109" y="0" width="2" height="30" fill="#000"/>
+                    <rect x="113" y="0" width="4" height="30" fill="#000"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="checkin-code">
+                <img src="~/assets/wallet-icon-only.svg" alt="Logo" class="logo-img-right" />
+              </div>
             </div>
 
-            <div class="mcf-form-field">
-              <q-input
-                v-model="formData.new_password2"
-                type="password"
-                label="Conferma Nuova Password *"
-                outlined
-                required
-                :error="!!errors.new_password2"
-                :error-message="errors.new_password2"
-                class="mcf-input"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-            </div>
-
-            <div class="mcf-form-actions">
-              <q-btn
-                type="submit"
-                unelevated
-                color="primary"
-                :loading="loading"
-                :disable="!isFormValid"
-                class="mcf-submit-btn"
-              >
-                Cambia Password
-              </q-btn>
-
-              <div class="mcf-login-link">
-                <span>Password cambiata?</span>
-                <router-link to="/login" class="mcf-link">
-                  Accedi ora
+            <!-- Token Error -->
+            <div v-if="tokenError" class="event-info">
+              <div class="info-label">{{ $t('auth.errorLabel') }}</div>
+              <div class="error-box">
+                <p class="error-text">{{ tokenError }}</p>
+                <router-link to="/forgot-password" class="reset-link">
+                  {{ $t('auth.requestNewLink') }}
                 </router-link>
               </div>
             </div>
-          </q-form>
 
-          <!-- Success message -->
-          <div v-if="showSuccess" class="mcf-success-message">
-            <q-icon name="check_circle" />
-            <div>
-              <h3>Password cambiata!</h3>
-              <p>La tua password è stata cambiata con successo. Ora puoi effettuare il login.</p>
-              <router-link to="/login" class="mcf-btn-link">
-                Vai al Login
-              </router-link>
+            <!-- Success message -->
+            <div v-else-if="showSuccess" class="event-info">
+              <div class="info-label">{{ $t('auth.successLabel') }}</div>
+              <div class="success-box">
+                <p class="success-text">{{ $t('auth.passwordChangedSuccess') }}</p>
+                <p class="success-subtext">{{ $t('auth.canLoginNow') }}</p>
+                <router-link to="/login" class="reset-link">
+                  {{ $t('auth.goToLogin') }}
+                </router-link>
+              </div>
+            </div>
+
+            <!-- Reset Form -->
+            <q-form v-else @submit.prevent="handleSubmit" class="event-info">
+              <div class="info-label">{{ $t('auth.newPassword').toUpperCase() }}</div>
+              <q-input
+                v-model="formData.new_password"
+                type="password"
+                outlined
+                dense
+                class="reset-input"
+                :placeholder="$t('auth.newPasswordPlaceholder')"
+                :error="!!errors.new_password"
+                :error-message="errors.new_password"
+              />
+
+              <div class="info-label">{{ $t('auth.confirmPassword').toUpperCase() }}</div>
+              <q-input
+                v-model="formData.new_password2"
+                type="password"
+                outlined
+                dense
+                class="reset-input"
+                :placeholder="$t('auth.confirmNewPasswordPlaceholder')"
+                :error="!!errors.new_password2"
+                :error-message="errors.new_password2"
+              />
+
+              <div class="form-actions">
+                <q-btn
+                  type="submit"
+                  flat
+                  icon-right="arrow_forward"
+                  class="submit-btn"
+                  :loading="loading"
+                  :disable="!isFormValid"
+                >
+                  {{ $t('auth.changePassword').toUpperCase() }}
+                </q-btn>
+              </div>
+            </q-form>
+
+            <!-- Dashed Line Separator -->
+            <div class="ticket-separator">
+              <div class="dashed-line"></div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="ticket-bottom">
+              <div class="bottom-left">
+                <div class="info-label">{{ $t('auth.havePassword').toUpperCase() }}</div>
+                <router-link to="/login" class="info-value reset-link">{{ $t('auth.login').toUpperCase() }}</router-link>
+              </div>
+              <div class="bottom-right">
+                <div class="info-label">{{ $t('auth.security') }}</div>
+                <div class="seat-number">
+                  <q-icon name="lock_reset" size="48px" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="ticket-footer">
+              <div class="footer-text">MUMBLE.GROUP</div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -112,10 +144,12 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usersAPI } from 'src/services/api/users.js'
 import { useSnackbar } from 'src/composables/useSnackbar'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const snackbar = useSnackbar()
+const { t } = useI18n()
 
 // Form data
 const formData = ref({
@@ -140,7 +174,7 @@ const isFormValid = computed(() => {
 const handleSubmit = async () => {
   if (!isFormValid.value) {
     if (formData.value.new_password !== formData.value.new_password2) {
-      errors.value.new_password2 = 'Le password non corrispondono'
+      errors.value.new_password2 = t('auth.passwordMismatch')
     }
     return
   }
@@ -156,7 +190,7 @@ const handleSubmit = async () => {
     })
 
     showSuccess.value = true
-    snackbar.success('Password cambiata con successo!')
+    snackbar.success(t('auth.passwordChangedSuccess'))
 
     // Redirect to login after 3 seconds
     setTimeout(() => {
@@ -180,10 +214,10 @@ const handleSubmit = async () => {
             : errorData.token
         }
       } else {
-        snackbar.error(errorData.detail || 'Errore durante il reset della password')
+        snackbar.error(errorData.detail || t('auth.passwordResetError'))
       }
     } else {
-      snackbar.error('Errore di connessione durante il reset della password')
+      snackbar.error(t('auth.passwordResetNetworkError'))
     }
   } finally {
     loading.value = false
@@ -194,7 +228,7 @@ const handleSubmit = async () => {
 onMounted(() => {
   const token = route.query.token
   if (!token) {
-    tokenError.value = 'Token mancante nell\'URL'
+    tokenError.value = t('auth.tokenMissing')
   } else {
     formData.value.token = token
   }
@@ -202,217 +236,317 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.mcf-reset-password-page {
+.ticket-page {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8eef3 100%);
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 0;
+}
+
+.ticket-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+
+  @media (min-width: 1024px) {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+.ticket-card {
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 25px 20px;
+  position: relative;
+  overflow: visible;
+
+  @media (min-width: 768px) {
+    padding: 30px 25px;
+  }
+
+  @media (min-width: 1024px) {
+    /* Create notches with mask */
+    -webkit-mask-image:
+      radial-gradient(circle 13px at 0 63%, transparent 0, transparent 13px, black 13px),
+      radial-gradient(circle 13px at 100% 63%, transparent 0, transparent 13px, black 13px);
+    mask-image:
+      radial-gradient(circle 13px at 0 63%, transparent 0, transparent 13px, black 13px),
+      radial-gradient(circle 13px at 100% 63%, transparent 0, transparent 13px, black 13px);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+}
+
+/* Header */
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ticket-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  gap: 8px;
+  margin-left: -20px;
 }
 
-.mcf-reset-password-container {
-  width: 100%;
-  max-width: 480px;
+.logo-img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  margin-left: 20px;
 }
 
-.mcf-header {
-  text-align: center;
-  margin-bottom: 32px;
-  color: white;
-}
-
-.mcf-page-title {
-  font-size: 28px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-  color: white;
-}
-
-.mcf-page-subtitle {
-  font-size: 16px;
-  opacity: 0.9;
-  margin: 0;
-  color: white;
-}
-
-.mcf-content {
-  width: 100%;
-}
-
-.mcf-reset-card {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.mcf-card-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.mcf-card-icon {
-  font-size: 48px;
-  color: var(--mcf-primary);
-  margin-bottom: 16px;
-}
-
-.mcf-card-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0;
-  color: var(--mcf-text-primary);
-}
-
-.mcf-form {
+.brand-section {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 4px;
 }
 
-.mcf-form-field {
-  width: 100%;
+.brand-badge {
+  background: #2a5f82;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-left: -40px;
+  padding-left: 20px;
 }
 
-.mcf-input {
-  width: 100%;
-}
-
-.mcf-form-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.mcf-submit-btn {
-  width: 100%;
-  padding: 12px 0;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-transform: none;
-}
-
-.mcf-login-link {
-  text-align: center;
+.logo-text {
   font-size: 14px;
-  color: var(--mcf-text-secondary);
-
-  .mcf-link {
-    color: var(--mcf-primary);
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 4px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
 }
 
-.mcf-error-message {
+.barcode {
+  width: 100px;
+  height: 20px;
+  margin-left: -40px;
+  padding-left: 20px;
+}
+
+.checkin-code {
+  text-align: right;
+  margin-right: -10px;
+  padding-right: 0;
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background: rgba(244, 67, 54, 0.1);
-  border: 1px solid rgba(244, 67, 54, 0.3);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
 
-  .q-icon {
-    font-size: 24px;
-    color: #f44336;
-    margin-top: 2px;
-  }
+.logo-img-right {
+  width: 80px;
+  height: 80px;
+  margin-top: -20px;
+  position: relative;
+  filter: brightness(0) saturate(100%) invert(32%) sepia(38%) saturate(863%) hue-rotate(162deg) brightness(93%) contrast(87%);
+  border: 1px solid #2a5f82;
+  border-radius: 25px;
+}
 
-  h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    color: #c62828;
-  }
+/* Event Info */
+.event-info {
+  margin-bottom: 20px;
+}
 
-  p {
-    font-size: 14px;
-    margin: 0 0 8px 0;
-    color: #d32f2f;
-    line-height: 1.4;
-  }
+.info-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: #666666;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  margin-top: 10px;
 
-  .mcf-link {
-    color: var(--mcf-primary);
-    text-decoration: none;
-    font-weight: 500;
-
-    &:hover {
-      text-decoration: underline;
-    }
+  &:first-child {
+    margin-top: 0;
   }
 }
 
-.mcf-success-message {
+.info-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+.reset-link {
+  text-decoration: none;
+  color: #000000;
+  display: block;
+  transition: opacity 0.2s;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.reset-input {
+  margin-bottom: 6px;
+
+  :deep(.q-field__control) {
+    background: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    min-height: 40px;
+  }
+
+  :deep(.q-field__native) {
+    font-weight: 500;
+    color: #000000;
+  }
+
+  :deep(input::placeholder) {
+    color: #999999;
+    font-weight: 400;
+  }
+}
+
+.form-actions {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background: rgba(76, 175, 80, 0.1);
-  border: 1px solid rgba(76, 175, 80, 0.3);
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.submit-btn {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  color: #000000;
+}
+
+/* Error & Success Boxes */
+.error-box,
+.success-box {
+  background: #ffffff;
   border-radius: 8px;
-  padding: 16px;
-  margin-top: 24px;
+  padding: 15px;
+  margin-top: 5px;
+}
 
-  .q-icon {
-    font-size: 24px;
-    color: #4caf50;
-    margin-top: 2px;
+.error-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d32f2f;
+  margin: 0 0 10px 0;
+}
+
+.success-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin: 0 0 5px 0;
+}
+
+.success-subtext {
+  font-size: 13px;
+  color: #666666;
+  margin: 0 0 10px 0;
+}
+
+/* Dashed Separator */
+.ticket-separator {
+  margin: 20px -20px;
+  padding: 0 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background: #B4B8BB;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   }
 
-  h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    color: #2e7d32;
-  }
+  &::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background: #B4B8BB;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 20;
 
-  p {
-    font-size: 14px;
-    margin: 0 0 12px 0;
-    color: #388e3c;
-    line-height: 1.4;
-  }
-
-  .mcf-btn-link {
-    display: inline-block;
-    background: var(--mcf-primary);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.3s ease;
-
-    &:hover {
-      background: #1e7a8c;
+    @media (min-width: 1024px) {
+      display: none;
     }
   }
 }
 
-@media (max-width: 600px) {
-  .mcf-reset-password-page {
-    padding: 16px;
-  }
+.dashed-line {
+  width: 100%;
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    to right,
+    #cccccc 0,
+    #cccccc 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
 
-  .mcf-page-title {
-    font-size: 24px;
-  }
+/* Bottom Section */
+.ticket-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
 
-  .mcf-reset-card {
-    padding: 24px;
-  }
+.bottom-left {
+  flex: 1;
+}
 
-  .mcf-card-title {
-    font-size: 20px;
-  }
+.bottom-right {
+  text-align: right;
+}
+
+.seat-number {
+  font-size: 48px;
+  font-weight: 900;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+/* Footer */
+.ticket-footer {
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.5px;
 }
 </style>

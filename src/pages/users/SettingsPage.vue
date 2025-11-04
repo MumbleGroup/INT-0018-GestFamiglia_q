@@ -14,9 +14,9 @@
         </div>
 
         <div class="mcf-settings-content">
-          <h2 class="mcf-settings-title">Impostazioni</h2>
+          <h2 class="mcf-settings-title">{{ $t('settings.pageTitle') }}</h2>
           <p class="mcf-settings-description">
-            Configura l'app, visualizza informazioni di sistema e gestisci le preferenze.
+            {{ $t('settings.pageDescription') }}
           </p>
         </div>
       </div>
@@ -28,7 +28,7 @@
         <div class="mcf-settings-section">
           <q-expansion-item
             icon="family_restroom"
-            label="Gestione Famiglia"
+            :label="$t('users.familyManagement')"
             header-class="mcf-expansion-header"
             expand-icon-class="mcf-expansion-icon"
           >
@@ -39,20 +39,20 @@
               <div class="mcf-family-header">
                 <div class="mcf-family-main">
                   <div class="mcf-family-name">{{ currentFamily.name }}</div>
-                  <div class="mcf-family-members">{{ currentFamily.members?.length || 0 }} membri</div>
+                  <div class="mcf-family-members">{{ currentFamily.members?.length || 0 }} {{ $t('users.members') }}</div>
                 </div>
                 <q-chip
                   color="primary"
                   text-color="white"
                   icon="shield"
-                  :label="currentFamily.created_by === authStore.user?.id ? 'Amministratore' : 'Membro'"
+                  :label="currentFamily.created_by === authStore.user?.id ? $t('users.administrator') : $t('users.member')"
                 />
               </div>
 
               <!-- Family Members -->
               <div class="mcf-family-members-list">
                 <div class="mcf-members-header">
-                  <span>Membri della famiglia</span>
+                  <span>{{ $t('users.familyMembersList') }}</span>
                 </div>
                 <div
                   v-for="member in currentFamily.members_detail"
@@ -82,7 +82,7 @@
                 <q-btn
                   class="mcf-btn-primary"
                   icon="person_add"
-                  label="Invita Membro"
+                  :label="$t('users.inviteMember')"
                   @click="showInviteDialog = true"
                   no-caps
                   unelevated
@@ -90,7 +90,7 @@
                 <q-btn
                   class="mcf-btn-secondary"
                   icon="mail"
-                  label="Inviti Inviati"
+                  :label="$t('users.sentInvitations')"
                   @click="loadFamilyInvitations"
                   no-caps
                   outline
@@ -99,7 +99,7 @@
                   v-if="currentFamily.created_by === authStore.user?.id"
                   class="mcf-btn-secondary"
                   icon="settings"
-                  label="Gestisci Famiglia"
+                  :label="$t('users.manageFamily')"
                   @click="showManageFamilyDialog = true"
                   no-caps
                   outline
@@ -109,7 +109,7 @@
               <!-- Invitations List -->
               <div v-if="familyInvitations && familyInvitations.length > 0" class="mcf-invitations-section">
                 <div class="mcf-invitations-header">
-                  <span>Inviti inviati</span>
+                  <span>{{ $t('users.sentInvitationsTitle') }}</span>
                   <q-btn
                     flat
                     round
@@ -118,7 +118,7 @@
                     @click="loadFamilyInvitations"
                     :loading="invitationsLoading"
                   >
-                    <q-tooltip>Aggiorna inviti</q-tooltip>
+                    <q-tooltip>{{ $t('users.refreshInvitations') }}</q-tooltip>
                   </q-btn>
                 </div>
                 <div class="mcf-invitations-list">
@@ -142,7 +142,7 @@
                         size="sm"
                       />
                       <div v-if="invitation.status === 'pending'" class="mcf-invitation-expires">
-                        Scade: {{ formatDate(invitation.expires_at) }}
+                        {{ $t('users.invitationExpires') }}: {{ formatDate(invitation.expires_at) }}
                       </div>
                     </div>
                   </div>
@@ -156,7 +156,7 @@
               <div v-if="receivedInvitations && receivedInvitations.length > 0" class="mcf-received-invitations">
                 <div class="mcf-invitations-header">
                   <q-icon name="mail" class="mcf-section-icon" />
-                  <span class="mcf-section-title">Inviti Ricevuti</span>
+                  <span class="mcf-section-title">{{ $t('users.receivedInvitations') }}</span>
                   <q-btn
                     flat
                     round
@@ -165,7 +165,7 @@
                     @click="loadReceivedInvitations"
                     :loading="receivedInvitationsLoading"
                   >
-                    <q-tooltip>Aggiorna inviti ricevuti</q-tooltip>
+                    <q-tooltip>{{ $t('users.refreshReceivedInvitations') }}</q-tooltip>
                   </q-btn>
                 </div>
                 <div class="mcf-received-invitations-list">
@@ -180,25 +180,25 @@
                         <div class="mcf-invitation-family-info">
                           <span class="mcf-invitation-family-name">{{ invitation.family.name }}</span>
                           <span class="mcf-invitation-invited-by">
-                            Invitato da {{ invitation.invited_by_first_name }} {{ invitation.invited_by_last_name }}
+                            {{ $t('users.invitedBy') }} {{ invitation.invited_by_first_name }} {{ invitation.invited_by_last_name }}
                           </span>
                         </div>
                       </div>
                       <div class="mcf-invitation-details">
                         <span class="mcf-invitation-role">
-                          <strong>Ruolo:</strong> {{ invitation.family_role }}
+                          <strong>{{ $t('users.invitationRole') }}:</strong> {{ invitation.family_role }}
                         </span>
                         <span class="mcf-invitation-from-detail">
-                          <strong>Da:</strong> {{ invitation.invited_by_first_name }} {{ invitation.invited_by_last_name }}
+                          <strong>{{ $t('users.invitedByLabel') }}:</strong> {{ invitation.invited_by_first_name }} {{ invitation.invited_by_last_name }}
                         </span>
-                        <span class="mcf-invitation-code">Codice: {{ invitation.token }}</span>
+                        <span class="mcf-invitation-code">{{ $t('users.invitationCode') }}: {{ invitation.token }}</span>
                       </div>
                     </div>
                     <div class="mcf-invitation-actions">
                       <q-btn
                         class="mcf-btn-primary"
                         icon="check"
-                        label="Accetta"
+                        :label="$t('users.accept')"
                         @click="acceptInvitation(invitation)"
                         :loading="acceptingInvitation === invitation.id"
                         no-caps
@@ -214,15 +214,15 @@
                 <q-icon name="family_restroom" size="48px" class="text-grey-4" />
               </div>
               <div class="mcf-no-family-content">
-                <h4 class="mcf-no-family-title">Non fai parte di nessuna famiglia</h4>
+                <h4 class="mcf-no-family-title">{{ $t('users.noFamily') }}</h4>
                 <p class="mcf-no-family-description">
-                  Crea una nuova famiglia o unisciti a una esistente usando un codice invito.
+                  {{ $t('users.noFamilyDescription') }}
                 </p>
                 <div class="mcf-no-family-actions">
                   <q-btn
                     class="mcf-btn-primary"
                     icon="add"
-                    label="Crea Famiglia"
+                    :label="$t('users.createFamily')"
                     @click="showCreateFamilyDialog = true"
                     no-caps
                     unelevated
@@ -230,7 +230,7 @@
                   <q-btn
                     class="mcf-btn-secondary"
                     icon="vpn_key"
-                    label="Unisciti con Codice"
+                    :label="$t('users.joinWithCode')"
                     @click="showJoinFamilyDialog = true"
                     no-caps
                     outline
@@ -247,7 +247,7 @@
         <div class="mcf-settings-section">
           <q-expansion-item
             icon="security"
-            label="Sicurezza e Account"
+            :label="$t('settings.securityAccount')"
             header-class="mcf-expansion-header"
             expand-icon-class="mcf-expansion-icon"
           >
@@ -258,9 +258,9 @@
               <div class="mcf-password-header">
                 <q-icon name="lock" class="mcf-password-icon" />
                 <div class="mcf-password-info">
-                  <h4 class="mcf-password-title">Cambia Password</h4>
+                  <h4 class="mcf-password-title">{{ $t('settings.changePasswordTitle') }}</h4>
                   <p class="mcf-password-description">
-                    Aggiorna la tua password per mantenere il tuo account sicuro
+                    {{ $t('settings.changePasswordDescription') }}
                   </p>
                 </div>
                 <q-btn
@@ -271,7 +271,7 @@
                   @click="showPasswordDialog = true"
                   class="mcf-password-edit-btn"
                 >
-                  <q-tooltip>Cambia Password</q-tooltip>
+                  <q-tooltip>{{ $t('settings.changePasswordButton') }}</q-tooltip>
                 </q-btn>
               </div>
             </div>
@@ -284,7 +284,7 @@
         <div class="mcf-settings-section">
           <q-expansion-item
             icon="info"
-            label="Informazioni Sistema"
+            :label="$t('settings.systemInformation')"
             header-class="mcf-expansion-header"
             expand-icon-class="mcf-expansion-icon"
           >
@@ -293,7 +293,7 @@
                 <div class="mcf-info-card">
                   <div class="mcf-info-header">
                     <q-icon name="dns" class="mcf-info-icon" />
-                    <span class="mcf-info-label">Server API</span>
+                    <span class="mcf-info-label">{{ $t('settings.apiServer') }}</span>
                     <q-btn
                       round
                       flat
@@ -304,7 +304,7 @@
                       :loading="refreshing"
                       class="mcf-refresh-btn"
                     >
-                      <q-tooltip>Aggiorna informazioni</q-tooltip>
+                      <q-tooltip>{{ $t('settings.refreshInfo') }}</q-tooltip>
                     </q-btn>
                   </div>
                   <div class="mcf-info-value" :class="serverClass">{{ apiServer }}</div>
@@ -317,7 +317,7 @@
                 <div class="mcf-info-card">
                   <div class="mcf-info-header">
                     <q-icon name="wifi" class="mcf-info-icon" />
-                    <span class="mcf-info-label">IP Pubblico</span>
+                    <span class="mcf-info-label">{{ $t('settings.publicIP') }}</span>
                   </div>
                   <div class="mcf-info-value">{{ publicIP }}</div>
                 </div>
@@ -325,7 +325,7 @@
                 <div class="mcf-info-card">
                   <div class="mcf-info-header">
                     <q-icon name="devices" class="mcf-info-icon" />
-                    <span class="mcf-info-label">IP Dispositivo</span>
+                    <span class="mcf-info-label">{{ $t('settings.deviceIP') }}</span>
                   </div>
                   <div class="mcf-info-value">{{ deviceIP }}</div>
                 </div>
@@ -333,7 +333,7 @@
                 <div class="mcf-info-card">
                   <div class="mcf-info-header">
                     <q-icon name="smartphone" class="mcf-info-icon" />
-                    <span class="mcf-info-label">Piattaforma</span>
+                    <span class="mcf-info-label">{{ $t('settings.platform') }}</span>
                   </div>
                   <div class="mcf-info-value">{{ platform }}</div>
                 </div>
@@ -341,23 +341,58 @@
                 <div class="mcf-info-card">
                   <div class="mcf-info-header">
                     <q-icon name="info" class="mcf-info-icon" />
-                    <span class="mcf-info-label">Versione App</span>
+                    <span class="mcf-info-label">{{ $t('settings.appVersion') }}</span>
                   </div>
                   <div class="mcf-info-value">{{ appVersion }}</div>
+                </div>
+
+                <!-- Language Selector -->
+                <div class="mcf-info-card">
+                  <div class="mcf-info-header">
+                    <q-icon name="language" class="mcf-info-icon" />
+                    <span class="mcf-info-label">{{ $t('settings.language') }} / Language</span>
+                  </div>
+                  <q-select
+                    v-model="selectedLanguage"
+                    :options="languageOptions"
+                    option-value="value"
+                    option-label="label"
+                    emit-value
+                    map-options
+                    outlined
+                    dense
+                    @update:model-value="changeLanguage"
+                    class="mcf-language-select"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="translate" />
+                    </template>
+                    <template v-slot:option="scope">
+                      <q-item v-bind="scope.itemProps">
+                        <q-item-section avatar>
+                          <q-icon :name="scope.opt.icon" />
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>{{ scope.opt.label }}</q-item-label>
+                          <q-item-label caption>{{ scope.opt.native }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
                 </div>
 
                 <!-- Download APK for Android -->
                 <div v-if="isAndroidDevice" class="mcf-info-card mcf-download-card">
                   <div class="mcf-info-header">
                     <q-icon name="android" class="mcf-info-icon" />
-                    <span class="mcf-info-label">App Android</span>
+                    <span class="mcf-info-label">{{ $t('settings.androidApp') }}</span>
                   </div>
-                  <div class="mcf-info-value">Migliore esperienza</div>
+                  <div class="mcf-info-value">{{ $t('settings.betterExperience') }}</div>
                   <q-btn
                     flat
                     dense
                     color="primary"
-                    label="Scarica APK"
+                    :label="$t('settings.downloadAPK')"
                     icon="download"
                     @click="downloadAPK"
                     class="mcf-download-btn"
@@ -368,14 +403,14 @@
                 <div class="mcf-info-card mcf-force-refresh-card">
                   <div class="mcf-info-header">
                     <q-icon name="refresh" class="mcf-info-icon" />
-                    <span class="mcf-info-label">Forza Aggiornamento</span>
+                    <span class="mcf-info-label">{{ $t('settings.forceRefresh') }}</span>
                   </div>
-                  <div class="mcf-info-value">Risolve problemi di cache PWA</div>
+                  <div class="mcf-info-value">{{ $t('settings.forceRefreshDescription') }}</div>
                   <q-btn
                     flat
                     dense
                     color="warning"
-                    label="Force Refresh"
+                    :label="$t('settings.forceRefreshButton')"
                     icon="cached"
                     @click="forceAppRefresh"
                     :loading="forceRefreshing"
@@ -454,22 +489,22 @@
         <div class="mcf-settings-section">
           <q-expansion-item
             icon="screen_rotation"
-            label="Visualizzazione"
+            :label="$t('settings.displaySettings')"
             header-class="mcf-expansion-header"
             expand-icon-class="mcf-expansion-icon"
           >
             <div class="mcf-expansion-content">
               <div class="mcf-display-section">
                 <p class="mcf-section-description">
-                  Personalizza l'orientamento dello schermo per una migliore esperienza su tablet.
+                  {{ $t('settings.displayDescription') }}
                 </p>
 
                 <div class="mcf-display-option">
                   <div class="mcf-option-info">
                     <q-icon name="screen_rotation" class="mcf-option-icon" />
                     <div class="mcf-option-text">
-                      <span class="mcf-option-label">Modalità Landscape</span>
-                      <span class="mcf-option-desc">Blocca l'orientamento in orizzontale per tablet</span>
+                      <span class="mcf-option-label">{{ $t('settings.landscapeMode') }}</span>
+                      <span class="mcf-option-desc">{{ $t('settings.landscapeModeDesc') }}</span>
                     </div>
                   </div>
                   <q-toggle
@@ -488,20 +523,20 @@
         <div class="mcf-settings-section" v-if="isAndroidDevice">
           <q-expansion-item
             icon="system_update"
-            label="Aggiornamenti"
+            :label="$t('settings.updates')"
             header-class="mcf-expansion-header"
             expand-icon-class="mcf-expansion-icon"
           >
             <div class="mcf-expansion-content">
               <div class="mcf-updates-section">
             <p class="mcf-section-description">
-              Controlla e installa gli aggiornamenti dell'applicazione per avere sempre le ultime funzionalità.
+              {{ $t('settings.updatesDescription') }}
             </p>
 
             <div class="mcf-update-controls">
               <q-btn
                 class="mcf-btn-primary mcf-update-btn"
-                label="Controlla Aggiornamenti"
+                :label="$t('settings.checkForUpdates')"
                 icon="system_update"
                 @click="checkForUpdates"
                 :loading="updateChecking"
@@ -514,7 +549,7 @@
               <div class="mcf-version-current">
                 <q-icon name="info" class="mcf-version-icon" />
                 <span class="mcf-version-text">
-                  Versione corrente: {{ appVersion }}
+                  {{ $t('settings.currentVersion') }}: {{ appVersion }}
                 </span>
               </div>
             </div>
@@ -611,9 +646,9 @@
     >
       <q-card :style="$q.screen.lt.md ? '' : 'min-width: 400px; max-width: 500px;'">
         <q-card-section>
-          <div class="text-h6">Crea Nuova Famiglia</div>
+          <div class="text-h6">{{ $t('users.createFamilyTitle') }}</div>
           <div class="text-caption text-grey-6">
-            Crea una famiglia per condividere le spese con i tuoi cari
+            {{ $t('users.noFamilyDescription') }}
           </div>
         </q-card-section>
 
@@ -621,29 +656,29 @@
           <q-form @submit.prevent="createFamily" class="q-gutter-md">
             <q-input
               v-model="newFamily.name"
-              label="Nome Famiglia *"
+              :label="$t('users.familyName')"
               required
               outlined
-              placeholder="es. Famiglia Serra, Famiglia Rossi..."
-              :rules="[val => val && val.length > 0 || 'Nome famiglia richiesto']"
+              :placeholder="$t('users.familyNamePlaceholder')"
+              :rules="[val => val && val.length > 0 || $t('validation.required')]"
             />
 
             <q-input
               v-model="newFamily.description"
-              label="Descrizione (opzionale)"
+              :label="$t('users.familyDescription')"
               outlined
               type="textarea"
               rows="2"
-              placeholder="Una breve descrizione della famiglia..."
+              :placeholder="$t('users.familyDescriptionPlaceholder')"
             />
           </q-form>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Annulla" v-close-popup @click="resetFamilyForms" />
+          <q-btn flat :label="$t('common.cancel')" v-close-popup @click="resetFamilyForms" />
           <q-btn
             flat
-            label="Crea Famiglia"
+            :label="$t('users.createFamily')"
             color="primary"
             @click="createFamily"
             :loading="familyLoading"
@@ -661,9 +696,9 @@
     >
       <q-card :style="$q.screen.lt.md ? '' : 'min-width: 400px; max-width: 500px;'">
         <q-card-section>
-          <div class="text-h6">Unisciti a una Famiglia</div>
+          <div class="text-h6">{{ $t('users.joinFamilyTitle') }}</div>
           <div class="text-caption text-grey-6">
-            Inserisci il codice invito che hai ricevuto
+            {{ $t('users.inviteCode') }}
           </div>
         </q-card-section>
 
@@ -671,11 +706,11 @@
           <q-form @submit.prevent="joinFamily" class="q-gutter-md">
             <q-input
               v-model="joinFamilyCode"
-              label="Codice Invito *"
+              :label="$t('users.inviteCode')"
               required
               outlined
-              placeholder="es. FAM-ABC123"
-              :rules="[val => val && val.length > 0 || 'Codice invito richiesto']"
+              :placeholder="$t('users.inviteCodePlaceholder')"
+              :rules="[val => val && val.length > 0 || $t('validation.required')]"
               mask="AAA-AAAAAA"
               uppercase
             />
@@ -683,10 +718,10 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Annulla" v-close-popup @click="resetFamilyForms" />
+          <q-btn flat :label="$t('common.cancel')" v-close-popup @click="resetFamilyForms" />
           <q-btn
             flat
-            label="Unisciti"
+            :label="$t('users.join')"
             color="primary"
             @click="joinFamily"
             :loading="familyLoading"
@@ -704,9 +739,9 @@
     >
       <q-card :style="$q.screen.lt.md ? '' : 'min-width: 400px; max-width: 500px;'">
         <q-card-section>
-          <div class="text-h6">Invita Membro</div>
+          <div class="text-h6">{{ $t('users.inviteMemberTitle') }}</div>
           <div class="text-caption text-grey-6">
-            Genera un codice invito per aggiungere un nuovo membro alla famiglia
+            {{ $t('users.inviteDescription') }}
           </div>
         </q-card-section>
 
@@ -714,13 +749,13 @@
           <div v-if="inviteCode" class="mcf-invite-code-display">
             <div class="mcf-invite-header">
               <q-icon name="vpn_key" class="mcf-invite-icon" />
-              <span class="mcf-invite-label">Codice Invito Generato</span>
+              <span class="mcf-invite-label">{{ $t('users.inviteLink') }}</span>
             </div>
             <div class="mcf-invite-code">{{ inviteCode }}</div>
             <div class="mcf-invite-actions">
               <q-btn
                 icon="content_copy"
-                label="Copia"
+                :label="$t('users.copy')"
                 color="primary"
                 outline
                 @click="copyInviteCode"
@@ -728,38 +763,38 @@
               />
               <q-btn
                 icon="share"
-                label="Condividi"
+                :label="$t('users.share')"
                 color="secondary"
                 outline
                 @click="shareInviteCode"
               />
             </div>
             <div class="mcf-invite-instructions">
-              <p>Condividi questo codice con la persona che vuoi invitare.</p>
+              <p>{{ $t('users.inviteDescription') }}</p>
               <p class="text-caption text-grey-6">
-                Il codice scade tra 7 giorni dalla generazione.
+                {{ $t('users.invitationExpires') }}: 7 {{ $t('time.days') }}
               </p>
             </div>
           </div>
 
           <div v-else class="mcf-invite-generate">
-            <p>Genera un nuovo codice invito per aggiungere un membro alla tua famiglia.</p>
+            <p>{{ $t('users.inviteDescription') }}</p>
 
             <q-form @submit.prevent="generateInviteCode" class="q-gutter-md">
               <q-input
                 v-model="inviteEmail"
-                label="Email del nuovo membro *"
+                :label="$t('users.newMemberEmail')"
                 type="email"
                 required
                 outlined
-                placeholder="es. sara@email.com"
-                :rules="[val => val && val.length > 0 || 'Email richiesta']"
+                :placeholder="$t('users.newMemberEmailPlaceholder')"
+                :rules="[val => val && val.length > 0 || $t('validation.required')]"
               />
 
               <q-btn
                 class="mcf-btn-primary"
                 icon="add"
-                label="Genera Codice Invito"
+                :label="$t('users.generateInviteCode')"
                 @click="generateInviteCode"
                 :loading="familyLoading"
                 :disable="!inviteEmail"
@@ -771,7 +806,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Chiudi" v-close-popup @click="resetInviteDialog" />
+          <q-btn flat :label="$t('common.close')" v-close-popup @click="resetInviteDialog" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -784,9 +819,9 @@
     >
       <q-card :style="$q.screen.lt.md ? '' : 'min-width: 500px; max-width: 600px;'">
         <q-card-section>
-          <div class="text-h6">Gestisci Famiglia</div>
+          <div class="text-h6">{{ $t('users.manageFamilyTitle') }}</div>
           <div class="text-caption text-grey-6">
-            Modifica le impostazioni della famiglia
+            {{ $t('users.familySettings') }}
           </div>
         </q-card-section>
 
@@ -794,14 +829,14 @@
           <q-form @submit.prevent="updateFamily" class="q-gutter-md">
             <q-input
               v-model="familyEditForm.name"
-              label="Nome Famiglia"
+              :label="$t('users.familyName')"
               outlined
-              :rules="[val => val && val.length > 0 || 'Nome famiglia richiesto']"
+              :rules="[val => val && val.length > 0 || $t('validation.required')]"
             />
 
             <q-input
               v-model="familyEditForm.description"
-              label="Descrizione"
+              :label="$t('users.familyDescription')"
               outlined
               type="textarea"
               rows="2"
@@ -811,15 +846,15 @@
           <div class="mcf-danger-zone">
             <div class="mcf-danger-header">
               <q-icon name="warning" class="mcf-danger-icon" />
-              <span class="mcf-danger-title">Zona Pericolosa</span>
+              <span class="mcf-danger-title">{{ $t('messages.warning') }}</span>
             </div>
             <p class="mcf-danger-description">
-              Elimina la famiglia. Questa azione non può essere annullata.
+              {{ $t('users.deleteFamilyMessage') }}
             </p>
             <q-btn
               color="red"
               icon="delete"
-              label="Elimina Famiglia"
+              :label="$t('users.deleteFamily')"
               @click="confirmDeleteFamily"
               outline
               no-caps
@@ -828,10 +863,10 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Annulla" v-close-popup @click="resetFamilyForms" />
+          <q-btn flat :label="$t('common.cancel')" v-close-popup @click="resetFamilyForms" />
           <q-btn
             flat
-            label="Salva Modifiche"
+            :label="$t('users.saveChanges')"
             color="primary"
             @click="updateFamily"
             :loading="familyLoading"
@@ -848,8 +883,8 @@
           <div class="mcf-dialog-title-section">
             <q-icon name="lock" class="mcf-dialog-icon" />
             <div>
-              <h6 class="mcf-dialog-title">Cambia Password</h6>
-              <p class="mcf-dialog-subtitle">Inserisci la tua password attuale e quella nuova</p>
+              <h6 class="mcf-dialog-title">{{ $t('settings.changePasswordTitle') }}</h6>
+              <p class="mcf-dialog-subtitle">{{ $t('settings.changePasswordDescription') }}</p>
             </div>
           </div>
           <q-btn
@@ -870,7 +905,7 @@
               <q-input
                 v-model="passwordForm.old_password"
                 type="password"
-                label="Password Attuale *"
+                :label="$t('settings.currentPasswordRequired')"
                 outlined
                 required
                 :error="!!passwordErrors.old_password"
@@ -887,7 +922,7 @@
               <q-input
                 v-model="passwordForm.new_password"
                 type="password"
-                label="Nuova Password *"
+                :label="$t('settings.newPasswordRequired')"
                 outlined
                 required
                 :error="!!passwordErrors.new_password"
@@ -904,7 +939,7 @@
               <q-input
                 v-model="passwordForm.new_password2"
                 type="password"
-                label="Conferma Nuova Password *"
+                :label="$t('settings.confirmNewPasswordRequired')"
                 outlined
                 required
                 :error="!!passwordErrors.new_password2"
@@ -924,13 +959,13 @@
         <q-card-actions align="right" class="mcf-dialog-actions">
           <q-btn
             flat
-            label="Annulla"
+            :label="$t('common.cancel')"
             @click="closePasswordDialog"
             class="mcf-btn-secondary"
           />
           <q-btn
             unelevated
-            label="Cambia Password"
+            :label="$t('settings.changePasswordButton')"
             color="primary"
             @click="changePassword"
             :loading="passwordLoading"
@@ -946,7 +981,8 @@
 
 <script setup>
 import { ref, computed, onUnmounted, onMounted } from 'vue'
-import { useQuasar } from 'quasar'
+import { useQuasar, LocalStorage } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { updateService } from 'src/services/updateService.js'
 import { usersAPI } from 'src/services/api/users.js'
 import { useAuthStore } from 'stores/auth.js'
@@ -956,6 +992,7 @@ import { useAppVersion } from 'src/composables/useAppVersion'
 const $q = useQuasar()
 const authStore = useAuthStore()
 const snackbar = useSnackbar()
+const { locale, t } = useI18n({ useScope: 'global' })
 
 // Camera refs
 const videoElement = ref(null)
@@ -983,7 +1020,7 @@ const publicIP = ref('Rilevamento...')
 const deviceIP = ref('Rilevamento...')
 const platform = ref('Sconosciuto')
 const { fullVersion: appVersion } = useAppVersion()  // Usa composable per versione app
-const serverStatus = ref({ text: 'Controllo...', color: 'grey' })
+const serverStatus = ref({ text: t('settings.serverStatus.checking'), color: 'grey' })
 const refreshing = ref(false)
 
 // Display settings refs
@@ -1033,6 +1070,26 @@ const appFontOptions = [
   { label: 'Inter', value: 'Inter' },
   { label: 'Roboto', value: 'Roboto' },
   { label: 'Quicksand', value: 'Quicksand' }
+]
+
+// Language settings
+const selectedLanguage = ref(LocalStorage.getItem('user-locale') || 'it-IT')
+
+const languageOptions = [
+  {
+    value: 'it-IT',
+    label: 'Italiano',
+    native: 'Italian',
+    icon: 'flag',
+    quasarLang: 'it'
+  },
+  {
+    value: 'en-US',
+    label: 'English',
+    native: 'English (US)',
+    icon: 'flag',
+    quasarLang: 'en-US'
+  }
 ]
 
 // Theme palette settings
@@ -1222,7 +1279,7 @@ async function forceAppRefresh() {
   try {
     // Mostra messaggio informativo
     $q.notify({
-      message: '🔄 Cancellazione cache e riavvio...',
+      message: t('messages.clearingCacheRestart'),
       color: 'info',
       position: 'top',
       timeout: 2000,
@@ -1247,13 +1304,82 @@ async function forceAppRefresh() {
   } catch (error) {
     console.error('Error during force refresh:', error)
     $q.notify({
-      message: '❌ Errore durante il refresh forzato',
+      message: t('messages.errorForceRefresh'),
       color: 'negative',
       position: 'top',
       timeout: 3000
     })
   } finally {
     forceRefreshing.value = false
+  }
+}
+
+// Language management
+async function changeLanguage(newLocale) {
+  try {
+    console.log('🌍 Changing language to:', newLocale)
+
+    // 1. Update vue-i18n locale
+    locale.value = newLocale
+
+    // 2. Update Quasar language pack
+    const langOption = languageOptions.find(opt => opt.value === newLocale)
+    if (langOption?.quasarLang) {
+      try {
+        // Dynamic import del Quasar language pack
+        const langModule = await import(
+          `quasar/lang/${langOption.quasarLang}`
+        )
+        $q.lang.set(langModule.default)
+        console.log('✅ Quasar lang pack loaded:', langOption.quasarLang)
+      } catch (error) {
+        console.error('❌ Error loading Quasar lang pack:', error)
+      }
+    }
+
+    // 3. Save preference to LocalStorage (fallback)
+    LocalStorage.set('user-locale', newLocale)
+
+    // 4. Sync with backend if user is logged in
+    if (authStore.user?.id) {
+      try {
+        const updatedUser = await usersAPI.updateCurrentUserProfile({
+          preferred_language: newLocale
+        })
+        console.log('✅ Language preference saved to backend:', updatedUser)
+
+        // Update auth store user data with the response from backend
+        authStore.user = { ...authStore.user, ...updatedUser }
+
+        // Save updated user data to storage
+        const { storage } = await import('src/services/storage')
+        await storage.saveUserData(authStore.user)
+        console.log('✅ User data saved to storage')
+      } catch (backendError) {
+        console.error('⚠️ Failed to save language to backend (falling back to LocalStorage):', backendError)
+        // Non blocchiamo l'utente se il backend fallisce, LocalStorage è già impostato
+      }
+    }
+
+    // 5. Show success notification
+    $q.notify({
+      message: newLocale === 'it-IT' ? t('messages.languageChangedIt') : t('messages.languageChangedEn'),
+      color: 'positive',
+      position: 'top',
+      icon: 'language',
+      timeout: 2000
+    })
+
+    console.log('✅ Language changed successfully to:', newLocale)
+  } catch (error) {
+    console.error('❌ Error changing language:', error)
+    $q.notify({
+      message: t('messages.errorChangingLanguage'),
+      color: 'negative',
+      position: 'top',
+      icon: 'error',
+      timeout: 3000
+    })
   }
 }
 
@@ -1270,7 +1396,7 @@ const closePasswordDialog = () => {
 
 const changePassword = async () => {
   if (!isPasswordFormValid.value) {
-    snackbar.error('Compila tutti i campi correttamente')
+    snackbar.error(t('validation.required'))
     return
   }
 
@@ -1280,7 +1406,7 @@ const changePassword = async () => {
   try {
     await usersAPI.changePassword(passwordForm.value)
 
-    snackbar.success('Password cambiata con successo!')
+    snackbar.success(t('users.passwordChanged'))
     closePasswordDialog()
   } catch (error) {
     console.error('Password change error:', error)
@@ -1291,10 +1417,10 @@ const changePassword = async () => {
       if (typeof errorData === 'object') {
         passwordErrors.value = errorData
       } else {
-        snackbar.error(errorData.detail || 'Errore durante il cambio password')
+        snackbar.error(errorData.detail || t('errors.genericError'))
       }
     } else {
-      snackbar.error('Errore di connessione durante il cambio password')
+      snackbar.error(t('errors.networkError'))
     }
   } finally {
     passwordLoading.value = false
@@ -1359,7 +1485,7 @@ const getDeviceInfo = async () => {
 }
 
 const testServerConnection = async () => {
-  serverStatus.value = { text: 'Test...', color: 'orange' }
+  serverStatus.value = { text: t('settings.serverStatus.testing'), color: 'orange' }
 
   try {
     const baseUrl = process.env.API_BASE_URL || 'http://localhost:8000'
@@ -1370,13 +1496,13 @@ const testServerConnection = async () => {
     })
 
     if (response.ok || response.status === 200 || response.status === 405) {
-      serverStatus.value = { text: 'Connesso', color: 'green' }
+      serverStatus.value = { text: t('settings.serverStatus.connected'), color: 'green' }
     } else {
       serverStatus.value = { text: `Errore ${response.status}`, color: 'red' }
     }
   } catch (error) {
     console.error('Server test error:', error)
-    serverStatus.value = { text: 'Non raggiungibile', color: 'red' }
+    serverStatus.value = { text: t('settings.serverStatus.unreachable'), color: 'red' }
   }
 }
 
@@ -1384,10 +1510,10 @@ const refreshNetworkInfo = async () => {
   refreshing.value = true
   try {
     await getDeviceInfo()
-    snackbar.success('Informazioni aggiornate')
+    snackbar.success(t('settings.refreshInfo'))
   } catch (error) {
     console.error('Error refreshing network info:', error)
-    snackbar.error('Errore durante l\'aggiornamento')
+    snackbar.error(t('messages.errorRefreshingInfo'))
   } finally {
     refreshing.value = false
   }
@@ -1497,7 +1623,7 @@ const toggleLandscapeMode = async (enabled) => {
     console.log('✅ Landscape mode:', enabled ? 'enabled' : 'disabled')
   } catch (error) {
     console.error('❌ Error toggling landscape mode:', error)
-    snackbar.error('Errore durante l\'aggiornamento dell\'orientamento')
+    snackbar.error(t('messages.errorOrientationUpdate'))
   }
 }
 
@@ -1918,10 +2044,10 @@ const getStatusColor = (status) => {
 
 const getStatusLabel = (status) => {
   const labels = {
-    'pending': 'In Attesa',
-    'accepted': 'Accettato',
-    'declined': 'Rifiutato',
-    'expired': 'Scaduto'
+    'pending': t('users.invitationStatus.pending'),
+    'accepted': t('users.invitationStatus.accepted'),
+    'declined': t('users.invitationStatus.declined'),
+    'expired': t('users.invitationStatus.expired')
   }
   return labels[status] || status
 }

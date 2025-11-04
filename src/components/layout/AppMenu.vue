@@ -26,45 +26,47 @@
 <script setup>
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 
-const menuItems = [
+const menuItems = computed(() => [
   {
     name: 'dashboard',
     icon: 'dashboard',
-    label: 'Home',
+    label: t('layout.bottomNav.home'),
     route: '/'
   },
   {
     name: 'expenses',
     icon: 'receipt_long',
-    label: 'Spese',
+    label: t('layout.bottomNav.expenses'),
     route: '/expenses'
   },
   {
     name: 'spending-plans',
     icon: 'list_alt',
-    label: 'Piani',
+    label: t('layout.bottomNav.plans'),
     route: '/budget'
   },
   {
     name: 'scanner',
     icon: 'document_scanner',
-    label: 'Scanner',
+    label: t('layout.bottomNav.scanner'),
     route: '/scanner'
   },
   {
     name: 'settings',
     icon: 'settings',
-    label: 'Settings',
+    label: t('layout.bottomNav.settings'),
     route: '/settings'
   }
-]
+])
 
 const currentTab = computed(() => {
-  const currentItem = menuItems.find(item => {
+  const currentItem = menuItems.value.find(item => {
     if (item.route === '/' && route.path === '/') {
       return true
     }

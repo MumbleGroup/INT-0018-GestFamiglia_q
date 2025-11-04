@@ -49,7 +49,7 @@
 
             <!-- PIN Login (se configurato) -->
             <div v-if="hasPinSetup && !showEmailLogin" class="event-info">
-              <div class="info-label">INSERT PIN</div>
+              <div class="info-label">{{ $t('auth.insertPin') }}</div>
 
               <!-- PIN Input Fields -->
               <div class="pin-input-container">
@@ -72,7 +72,7 @@
               <!-- Switch to Email & Delete PIN -->
               <div class="login-actions" style="margin-top: 15px;">
                 <q-btn
-                  label="Usa Email"
+                  :label="$t('auth.useEmail')"
                   flat
                   dense
                   color="grey-7"
@@ -81,7 +81,7 @@
                   class="switch-btn"
                 />
                 <q-btn
-                  label="Cancella PIN"
+                  :label="$t('auth.deletePin')"
                   flat
                   dense
                   color="negative"
@@ -94,23 +94,23 @@
 
             <!-- Email/Password Login -->
             <div v-else class="event-info">
-              <div class="info-label">INSERT EMAIL</div>
+              <div class="info-label">{{ $t('auth.insertEmail') }}</div>
               <q-input
                 v-model="email"
                 type="email"
                 outlined
                 dense
                 class="login-input"
-                placeholder="your.email@example.com"
+                :placeholder="$t('auth.emailPlaceholder')"
               />
-              <div class="info-label">INSERT PASSWORD</div>
+              <div class="info-label">{{ $t('auth.insertPassword') }}</div>
               <q-input
                 v-model="password"
                 type="password"
                 outlined
                 dense
                 class="login-input"
-                placeholder="Enter your password"
+                :placeholder="$t('auth.passwordPlaceholder')"
                 @keyup.enter="handleLogin"
               />
 
@@ -118,12 +118,12 @@
               <div class="login-actions">
                 <q-checkbox
                   v-model="rememberMe"
-                  label="Ricordami"
+                  :label="$t('auth.rememberMe')"
                   dense
                   class="remember-checkbox"
                 />
                 <q-btn
-                  label="ACCEDI"
+                  :label="$t('auth.login').toUpperCase()"
                   flat
                   icon-right="arrow_forward"
                   class="login-btn"
@@ -135,7 +135,7 @@
               <!-- Back to PIN (if available) -->
               <div v-if="hasPinSetup" class="text-center" style="margin-top: 10px;">
                 <q-btn
-                  label="Usa PIN"
+                  :label="$t('auth.usePin')"
                   flat
                   dense
                   color="grey-7"
@@ -153,13 +153,13 @@
             <!-- Bottom Section -->
             <div class="ticket-bottom">
               <div class="bottom-left">
-                <div class="info-label">PASSWORD DIMENTICATA?</div>
-                <router-link to="/forgot-password" class="info-value reset-link">REIMPOSTA PASSWORD</router-link>
-                <div class="info-label">NON HAI UN ACCOUNT?</div>
-                <router-link to="/register" class="info-value reset-link">REGISTRATI</router-link>
+                <div class="info-label">{{ $t('auth.forgotPassword').toUpperCase() }}</div>
+                <router-link to="/forgot-password" class="info-value reset-link">{{ $t('auth.resetPassword').toUpperCase() }}</router-link>
+                <div class="info-label">{{ $t('auth.dontHaveAccount').toUpperCase() }}</div>
+                <router-link to="/register" class="info-value reset-link">{{ $t('auth.register').toUpperCase() }}</router-link>
               </div>
               <div class="bottom-right">
-                <div class="info-label">APP VERSION</div>
+                <div class="info-label">{{ $t('auth.appVersion') }}</div>
                 <div class="seat-number">{{ versionNumber }}</div>
               </div>
             </div>
@@ -197,6 +197,7 @@ import { useAuthStore } from 'stores/auth.js'
 import { useSnackbar } from 'src/composables/useSnackbar'
 import { useAppVersion } from 'src/composables/useAppVersion'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import PinActionModals2 from 'components/users/PinActionModals2.vue'
 import PinSetupModal from 'components/users/PinSetupModal.vue'
 
@@ -204,6 +205,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 const snackbar = useSnackbar()
 const $q = useQuasar()
+const { t } = useI18n()
 
 const email = ref('')
 const password = ref('')
@@ -297,7 +299,7 @@ const loginWithPin = async () => {
         await router.push('/dashboard')
       }
     } else {
-      snackbar.error('PIN non corretto')
+      snackbar.error(t('auth.pinIncorrect'))
       pin.value = ''
       pinDigits.value = ['', '', '', '']
     }
@@ -313,14 +315,14 @@ const confirmDeletePin = async () => {
     showEmailLogin.value = true
   } catch (error) {
     console.error('Errore cancellazione PIN:', error)
-    snackbar.error('Errore nella cancellazione del PIN')
+    snackbar.error(t('auth.pinDeleteError'))
   }
 }
 
 // Email Login Function
 const handleLogin = async () => {
   if (!email.value || !password.value) {
-    snackbar.error('Inserisci email e password')
+    snackbar.error(t('auth.enterEmailPassword'))
     return
   }
 
@@ -330,7 +332,7 @@ const handleLogin = async () => {
     const success = await authStore.login(email.value, password.value)
 
     if (!success) {
-      snackbar.error('Credenziali non valide')
+      snackbar.error(t('auth.invalidCredentials'))
       return
     }
 
@@ -342,7 +344,7 @@ const handleLogin = async () => {
 
     // Verifica immediata dopo login
     if (!authStore.isAuthenticated || !authStore.accessToken) {
-      snackbar.error('Auth state non valido dopo login')
+      snackbar.error(t('errors.authStateInvalid'))
       return
     }
 
@@ -357,7 +359,7 @@ const handleLogin = async () => {
 
     // Verifica ancora una volta prima del redirect
     if (!authStore.isAuthenticated || !authStore.accessToken) {
-      snackbar.error('Token perso dopo delay')
+      snackbar.error(t('errors.tokenLost'))
       return
     }
 
@@ -382,7 +384,7 @@ const handleLogin = async () => {
     }
   } catch (error) {
     console.error('❌ Errore login:', error)
-    snackbar.error('Errore: ' + (error.message || 'Riprova'))
+    snackbar.error(t('common.error') + ': ' + (error.message || t('errors.tryAgain')))
   } finally {
     loading.value = false
   }
@@ -408,10 +410,10 @@ const confirmSetupPin = async (pin) => {
   setupPinLoading.value = true
   try {
     await authStore.setupPin(pin)
-    snackbar.success('PIN impostato con successo!')
+    snackbar.success(t('auth.pinSetupSuccess'))
   } catch (error) {
     console.error('Errore setup PIN:', error)
-    snackbar.error('Errore durante l\'impostazione del PIN')
+    snackbar.error(t('auth.pinSetupError'))
   } finally {
     setupPinLoading.value = false
     showPinSetupModal.value = false

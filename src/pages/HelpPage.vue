@@ -4,191 +4,171 @@
 
       <!-- Header -->
       <div class="help-header">
-        <div class="help-title">Aiuto e Documentazione</div>
+        <div class="help-title">{{ $t('help.header.title') }}</div>
         <div class="help-subtitle">
-          Tutto quello che devi sapere per utilizzare al meglio l'app di gestione spese
+          {{ $t('help.header.subtitle') }}
         </div>
       </div>
 
       <!-- FAQ Sections -->
       <div class="faq-sections">
 
-        <!-- Primi Passi -->
+        <!-- Getting Started -->
         <q-expansion-item
           icon="rocket_launch"
-          label="Primi Passi"
-          caption="Come iniziare a usare l'app"
+          :label="$t('help.sections.gettingStarted.title')"
+          :caption="$t('help.sections.gettingStarted.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="person_add"
-              label="Come registro un nuovo account?"
+              :label="$t('help.sections.gettingStarted.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Per registrarti:</p>
+                <p>{{ $t('help.sections.gettingStarted.q1.answer') }}</p>
                 <ol>
-                  <li>Vai alla pagina di login</li>
-                  <li>Clicca su "Registrati"</li>
-                  <li>Inserisci nome, email e password</li>
-                  <li>Seleziona il tuo ruolo in famiglia (Padre, Madre, Figlio, Altro)</li>
-                  <li>Conferma la registrazione</li>
+                  <li v-for="(step, index) in $tm('help.sections.gettingStarted.q1.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="family_restroom"
-              label="Come aggiungo altri membri della famiglia?"
+              :label="$t('help.sections.gettingStarted.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Ogni membro della famiglia deve registrarsi autonomamente con il proprio account. Non è possibile aggiungere altri utenti dal proprio profilo per motivi di sicurezza.</p>
-                <p>Una volta registrati, potrete condividere le spese tra voi.</p>
+                <p>{{ $t('help.sections.gettingStarted.q2.answer1') }}</p>
+                <p>{{ $t('help.sections.gettingStarted.q2.answer2') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="dashboard"
-              label="Cosa vedo nella dashboard principale?"
+              :label="$t('help.sections.gettingStarted.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>La dashboard ti mostra:</p>
+                <p>{{ $t('help.sections.gettingStarted.q3.answer') }}</p>
                 <ul>
-                  <li>Riepilogo spese del mese corrente</li>
-                  <li>Ultime spese inserite</li>
-                  <li>Quote in scadenza</li>
-                  <li>Budget mensile e quanto hai speso</li>
-                  <li>Grafici delle categorie più utilizzate</li>
+                  <li v-for="(item, index) in $tm('help.sections.gettingStarted.q3.items')" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Gestione Spese -->
+        <!-- Expense Management -->
         <q-expansion-item
           icon="receipt_long"
-          label="Gestione Spese"
-          caption="Come inserire e gestire le tue spese"
+          :label="$t('help.sections.expenseManagement.title')"
+          :caption="$t('help.sections.expenseManagement.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="add_circle"
-              label="Come inserisco una nuova spesa?"
+              :label="$t('help.sections.expenseManagement.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Per aggiungere una spesa:</p>
+                <p>{{ $t('help.sections.expenseManagement.q1.answer') }}</p>
                 <ol>
-                  <li>Vai alla sezione "Spese"</li>
-                  <li>Clicca sul pulsante "Nuova Spesa"</li>
-                  <li>Inserisci la descrizione (es. "Spesa al supermercato")</li>
-                  <li>Scegli l'importo</li>
-                  <li>Seleziona la categoria</li>
-                  <li>Scegli la data (di default è oggi)</li>
-                  <li>Se vuoi, aggiungi una nota</li>
-                  <li>Salva la spesa</li>
+                  <li v-for="(step, index) in $tm('help.sections.expenseManagement.q1.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="group"
-              label="Come condivido una spesa con altri?"
+              :label="$t('help.sections.expenseManagement.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Durante la creazione della spesa:</p>
+                <p>{{ $t('help.sections.expenseManagement.q2.answer') }}</p>
                 <ol>
-                  <li>Nella sezione "Condividi con", seleziona i membri della famiglia</li>
-                  <li>L'importo verrà diviso automaticamente tra tutti i selezionati</li>
-                  <li>Ogni persona vedrà la sua quota nella sezione "Le mie quote"</li>
+                  <li v-for="(step, index) in $tm('help.sections.expenseManagement.q2.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p><strong>Esempio:</strong> Spesa di 100€ condivisa tra 4 persone = 25€ a testa</p>
+                <p><strong>{{ $t('help.sections.expenseManagement.q2.example') }}</strong></p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="schedule"
-              label="Come funzionano le spese ricorrenti?"
+              :label="$t('help.sections.expenseManagement.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Le spese ricorrenti sono perfette per bollette, affitti, abbonamenti:</p>
+                <p>{{ $t('help.sections.expenseManagement.q3.answer') }}</p>
                 <ol>
-                  <li>Crea una "Spesa Ricorrente"</li>
-                  <li>Imposta la frequenza (settimanale, mensile, annuale)</li>
-                  <li>L'app creerà automaticamente le spese alle date stabilite</li>
-                  <li>Puoi modificare o interrompere la ricorrenza in qualsiasi momento</li>
+                  <li v-for="(step, index) in $tm('help.sections.expenseManagement.q3.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="payments"
-              label="Come funziona il pagamento a rate?"
+              :label="$t('help.sections.expenseManagement.q4.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Per spese grandi che vuoi pagare a rate:</p>
+                <p>{{ $t('help.sections.expenseManagement.q4.answer') }}</p>
                 <ol>
-                  <li>Inserisci la spesa normalmente</li>
-                  <li>Clicca su "Crea Quote" nella spesa</li>
-                  <li>Scegli numero di rate e date di scadenza</li>
-                  <li>Segna come pagate man mano che paghi</li>
+                  <li v-for="(step, index) in $tm('help.sections.expenseManagement.q4.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p>L'app ti ricorderà le rate in scadenza nella dashboard.</p>
+                <p>{{ $t('help.sections.expenseManagement.q4.note') }}</p>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Categorie -->
+        <!-- Categories & Budget -->
         <q-expansion-item
           icon="category"
-          label="Categorie e Budget"
-          caption="Come organizzare le spese per tipologia"
+          :label="$t('help.sections.categoriesBudget.title')"
+          :caption="$t('help.sections.categoriesBudget.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="list_alt"
-              label="Che categorie ci sono disponibili?"
+              :label="$t('help.sections.categoriesBudget.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>L'app include categorie predefinite per famiglie italiane:</p>
+                <p>{{ $t('help.sections.categoriesBudget.q1.answer') }}</p>
                 <div class="categories-list">
                   <div class="category-group">
-                    <strong>Categorie Necessarie:</strong>
+                    <strong>{{ $t('help.sections.categoriesBudget.q1.necessary.title') }}</strong>
                     <ul>
-                      <li>Casa e Abitazione</li>
-                      <li>Alimentari e Bevande</li>
-                      <li>Trasporti</li>
-                      <li>Salute e Benessere</li>
-                      <li>Assicurazioni</li>
-                      <li>Tasse e Imposte</li>
-                      <li>Educazione e Formazione</li>
+                      <li v-for="(item, index) in $tm('help.sections.categoriesBudget.q1.necessary.items')" :key="index">
+                        {{ item }}
+                      </li>
                     </ul>
                   </div>
                   <div class="category-group">
-                    <strong>Categorie Extra:</strong>
+                    <strong>{{ $t('help.sections.categoriesBudget.q1.extra.title') }}</strong>
                     <ul>
-                      <li>Tempo Libero</li>
-                      <li>Viaggi e Vacanze</li>
-                      <li>Abbigliamento</li>
-                      <li>Elettronica e Tecnologia</li>
-                      <li>Casa Extra</li>
-                      <li>Sport e Fitness</li>
-                      <li>Regali e Eventi</li>
-                      <li>Animali Domestici</li>
+                      <li v-for="(item, index) in $tm('help.sections.categoriesBudget.q1.extra.items')" :key="index">
+                        {{ item }}
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -197,460 +177,431 @@
 
             <q-expansion-item
               icon="account_balance_wallet"
-              label="Come imposto un budget mensile?"
+              :label="$t('help.sections.categoriesBudget.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Per gestire il budget:</p>
+                <p>{{ $t('help.sections.categoriesBudget.q2.answer') }}</p>
                 <ol>
-                  <li>Vai alla sezione "Budget"</li>
-                  <li>Clicca "Nuovo Budget"</li>
-                  <li>Imposta l'importo totale mensile</li>
-                  <li>Distribuisci l'importo tra le varie categorie</li>
-                  <li>L'app ti mostrerà quanto hai speso vs budget</li>
+                  <li v-for="(step, index) in $tm('help.sections.categoriesBudget.q2.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p>Il budget viene rinnovato automaticamente ogni mese.</p>
+                <p>{{ $t('help.sections.categoriesBudget.q2.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="trending_up"
-              label="Come vedo se sto sforando il budget?"
+              :label="$t('help.sections.categoriesBudget.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>L'app ti avvisa in diversi modi:</p>
+                <p>{{ $t('help.sections.categoriesBudget.q3.answer') }}</p>
                 <ul>
-                  <li>Barre di progresso colorate nella dashboard</li>
-                  <li>Notifiche quando superi il 80% del budget</li>
-                  <li>Colori rossi per categorie in sovrabudget</li>
-                  <li>Report mensili dettagliati</li>
+                  <li v-for="(item, index) in $tm('help.sections.categoriesBudget.q3.items')" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Piani di Spesa -->
+        <!-- Spending Plans -->
         <q-expansion-item
           icon="event_note"
-          label="Piani di Spesa"
-          caption="Pianifica spese future per eventi o progetti"
+          :label="$t('help.sections.spendingPlans.title')"
+          :caption="$t('help.sections.spendingPlans.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="add_task"
-              label="Cosa sono i piani di spesa?"
+              :label="$t('help.sections.spendingPlans.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>I piani di spesa ti aiutano a organizzare spese future per:</p>
+                <p>{{ $t('help.sections.spendingPlans.q1.answer') }}</p>
                 <ul>
-                  <li>Vacanze (hotel, voli, ristoranti)</li>
-                  <li>Eventi (matrimoni, feste, compleanni)</li>
-                  <li>Progetti casa (ristrutturazioni, arredamento)</li>
-                  <li>Spese stagionali (back to school, Natale)</li>
+                  <li v-for="(item, index) in $tm('help.sections.spendingPlans.q1.items')" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
-                <p>Puoi vedere il progresso e tenere tutto sotto controllo.</p>
+                <p>{{ $t('help.sections.spendingPlans.q1.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="create"
-              label="Come creo un piano di spesa?"
+              :label="$t('help.sections.spendingPlans.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
                 <ol>
-                  <li>Vai alla sezione "Piani di Spesa"</li>
-                  <li>Clicca "Nuovo Piano di Spesa"</li>
-                  <li>Dai un nome al piano (es. "Vacanze Estate 2025")</li>
-                  <li>Scegli il tipo (Mensile, Stagionale, Evento, etc.)</li>
-                  <li>Imposta le date di inizio e fine</li>
-                  <li>Aggiungi una descrizione opzionale</li>
+                  <li v-for="(step, index) in $tm('help.sections.spendingPlans.q2.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="playlist_add"
-              label="Come aggiungo spese a un piano?"
+              :label="$t('help.sections.spendingPlans.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Ci sono due modi:</p>
+                <p>{{ $t('help.sections.spendingPlans.q3.answer') }}</p>
                 <ol>
-                  <li><strong>Dalla lista piani:</strong> Clicca sul piano e aggiungi spese pianificate</li>
-                  <li><strong>Durante l'inserimento spesa:</strong> Seleziona il piano nel campo apposito</li>
+                  <li><strong>{{ $t('help.sections.spendingPlans.q3.method1') }}</strong></li>
+                  <li><strong>{{ $t('help.sections.spendingPlans.q3.method2') }}</strong></li>
                 </ol>
-                <p>Le spese pianificate sono stime - quando le spendi realmente, verranno marcate come completate.</p>
+                <p>{{ $t('help.sections.spendingPlans.q3.note') }}</p>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Spese Ricorrenti -->
+        <!-- Recurring Expenses -->
         <q-expansion-item
           icon="repeat"
-          label="Spese Ricorrenti"
-          caption="Gestisci spese a rate con controllo visivo dello stato"
+          :label="$t('help.sections.recurringExpenses.title')"
+          :caption="$t('help.sections.recurringExpenses.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="schedule"
-              label="Cosa sono le spese ricorrenti nei piani?"
+              :label="$t('help.sections.recurringExpenses.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Le spese ricorrenti nei piani di spesa ti permettono di pianificare spese da pagare a rate:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q1.answer') }}</p>
                 <ul>
-                  <li><strong>Acquisti a rate:</strong> Elettrodomestici, mobili, tecnologia</li>
-                  <li><strong>Pagamenti dilazionati:</strong> Corsi, iscrizioni, abbonamenti</li>
-                  <li><strong>Progetti a fasi:</strong> Ristrutturazione, matrimonio, vacanze</li>
-                  <li><strong>Spese stagionali:</strong> Tasse, assicurazioni, rate annuali</li>
+                  <li v-for="(item, index) in $tm('help.sections.recurringExpenses.q1.items')" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
-                <p>Ogni rata ha una data di scadenza e puoi monitorare il progresso dei pagamenti.</p>
+                <p>{{ $t('help.sections.recurringExpenses.q1.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="add_task"
-              label="Come creo una spesa ricorrente?"
+              :label="$t('help.sections.recurringExpenses.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
                 <ol>
-                  <li>Vai al piano di spesa desiderato</li>
-                  <li>Clicca "Nuova Spesa Pianificata"</li>
-                  <li>Compila descrizione, importo, categoria e data scadenza</li>
-                  <li>Attiva l'opzione "Spesa ricorrente"</li>
-                  <li>Scegli il numero totale di rate (da 2 a 120)</li>
-                  <li>Seleziona la frequenza (mensile, bimestrale, trimestrale)</li>
-                  <li>Salva la spesa - sarà creata solo la prima rata</li>
+                  <li v-for="(step, index) in $tm('help.sections.recurringExpenses.q2.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p><strong>Nota:</strong> Inizialmente viene creata solo la prima rata, poi generi le altre quando necessario.</p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q2.note') }}</strong></p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="playlist_add"
-              label="Come genero le rate successive?"
+              :label="$t('help.sections.recurringExpenses.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Dopo aver creato la prima rata, puoi generare tutte le altre:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q3.answer') }}</p>
                 <ol>
-                  <li>Trova la spesa ricorrente nella lista (ha il badge "RICORRENTE 1/X")</li>
-                  <li>Clicca sull'icona arancione "🔄" per generare le rate</li>
-                  <li>L'app creerà automaticamente tutte le rate rimanenti</li>
-                  <li>Ogni rata avrà la data corretta basata sulla frequenza scelta</li>
+                  <li v-for="(step, index) in $tm('help.sections.recurringExpenses.q3.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p><strong>Desktop:</strong> L'icona 🔄 appare dopo i pulsanti principali</p>
-                <p><strong>Mobile:</strong> L'icona 🔄 appare tra i pulsanti delle azioni</p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q3.desktop') }}</strong></p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q3.mobile') }}</strong></p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="check_box"
-              label="Come funzionano gli indicatori visivi?"
+              :label="$t('help.sections.recurringExpenses.q4.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Le spese ricorrenti hanno indicatori visivi per controllare lo stato a colpo d'occhio:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q4.answer') }}</p>
                 <div class="visual-indicators">
                   <div class="indicator-item">
-                    <strong>☑️ Checkbox Verde:</strong> Rate già pagate/completate
+                    <strong>{{ $t('help.sections.recurringExpenses.q4.indicators.paid') }}</strong>
                   </div>
                   <div class="indicator-item">
-                    <strong>☐ Checkbox Blu:</strong> Rata corrente (in scadenza ora)
+                    <strong>{{ $t('help.sections.recurringExpenses.q4.indicators.current') }}</strong>
                   </div>
                   <div class="indicator-item">
-                    <strong>☐ Checkbox Grigia:</strong> Rate future ancora da pagare
+                    <strong>{{ $t('help.sections.recurringExpenses.q4.indicators.future') }}</strong>
                   </div>
                 </div>
-                <p><strong>Desktop:</strong> Le checkbox appaiono in linea dopo il pulsante chevron</p>
-                <p><strong>Mobile:</strong> Tocca l'icona chevron per espandere e vedere i dettagli</p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q4.desktop') }}</strong></p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q4.mobile') }}</strong></p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="expand_more"
-              label="Come vedo i dettagli delle rate?"
+              :label="$t('help.sections.recurringExpenses.q5.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Puoi vedere tutti i dettagli delle rate in una vista espandibile:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q5.answer') }}</p>
                 <ol>
-                  <li>Clicca sul pulsante chevron (▽) accanto alle checkbox</li>
-                  <li>Si aprirà una sezione con tutti i dettagli:</li>
+                  <li v-for="(step, index) in $tm('help.sections.recurringExpenses.q5.steps')" :key="index">
+                    {{ step }}
+                  </li>
                   <ul>
-                    <li>Numero rata (1, 2, 3...)</li>
-                    <li>Stato (Pagata, Da pagare, Parziale)</li>
-                    <li>Importo di ogni rata</li>
-                    <li>Checkbox colorate per stato visivo</li>
+                    <li v-for="(detail, index) in $tm('help.sections.recurringExpenses.q5.details')" :key="index">
+                      {{ detail }}
+                    </li>
                   </ul>
-                  <li>Clicca di nuovo il chevron per nascondere i dettagli</li>
+                  <li>{{ $t('help.sections.recurringExpenses.q5.step3') }}</li>
                 </ol>
-                <p>Questa vista è disponibile sia su desktop che mobile con lo stesso layout.</p>
+                <p>{{ $t('help.sections.recurringExpenses.q5.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="edit"
-              label="Posso modificare una spesa ricorrente?"
+              :label="$t('help.sections.recurringExpenses.q6.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Sì! Nella modale di modifica puoi:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q6.answer') }}</p>
                 <ul>
-                  <li><strong>Attivare la ricorrenza:</strong> Su spese normali già create</li>
-                  <li><strong>Cambiare numero rate:</strong> Aumentare o diminuire le rate totali</li>
-                  <li><strong>Modificare frequenza:</strong> Da mensile a trimestrale, etc.</li>
-                  <li><strong>Disattivare ricorrenza:</strong> Tornare a spesa singola</li>
+                  <li v-for="(option, index) in $tm('help.sections.recurringExpenses.q6.options')" :key="index">
+                    <strong>{{ option }}</strong>
+                  </li>
                 </ul>
-                <p><strong>Attenzione:</strong> Se hai già generato le rate, le modifiche influenzeranno solo la rata corrente. Per cambi importanti, considera di creare una nuova spesa ricorrente.</p>
+                <p><strong>{{ $t('help.sections.recurringExpenses.q6.warning') }}</strong></p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="payment"
-              label="Come marco una rata come pagata?"
+              :label="$t('help.sections.recurringExpenses.q7.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Per segnare il pagamento di una rata:</p>
+                <p>{{ $t('help.sections.recurringExpenses.q7.answer') }}</p>
                 <ol>
-                  <li>Clicca su "Aggiungi Pagamento" sulla rata corrente</li>
-                  <li>Inserisci l'importo pagato e la data</li>
-                  <li>Conferma il pagamento</li>
-                  <li>La checkbox diventerà verde automaticamente</li>
-                  <li>La prossima rata diventerà blu (corrente)</li>
+                  <li v-for="(step, index) in $tm('help.sections.recurringExpenses.q7.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p>Il sistema aggiorna automaticamente gli indicatori visivi e il progresso complessivo del piano.</p>
+                <p>{{ $t('help.sections.recurringExpenses.q7.note') }}</p>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Report e Analisi -->
+        <!-- Reports & Analysis -->
         <q-expansion-item
           icon="analytics"
-          label="Report e Analisi"
-          caption="Monitora le tue finanze con grafici e statistiche"
+          :label="$t('help.sections.reportsAnalysis.title')"
+          :caption="$t('help.sections.reportsAnalysis.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="bar_chart"
-              label="Che tipo di report posso vedere?"
+              :label="$t('help.sections.reportsAnalysis.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>L'app offre diversi tipi di report:</p>
+                <p>{{ $t('help.sections.reportsAnalysis.q1.answer') }}</p>
                 <ul>
-                  <li><strong>Report Mensile:</strong> Spese totali del mese per categoria</li>
-                  <li><strong>Report Annuale:</strong> Andamento delle spese durante l'anno</li>
-                  <li><strong>Confronto Budget:</strong> Quanto hai speso vs quanto avevi pianificato</li>
-                  <li><strong>Analisi per Utente:</strong> Chi spende di più in famiglia</li>
-                  <li><strong>Trend Categoria:</strong> Quali categorie costano di più</li>
+                  <li v-for="(type, index) in $tm('help.sections.reportsAnalysis.q1.types')" :key="index">
+                    <strong>{{ type }}</strong>
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="calendar_month"
-              label="Come cambio il periodo di analisi?"
+              :label="$t('help.sections.reportsAnalysis.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Nella sezione Report puoi:</p>
+                <p>{{ $t('help.sections.reportsAnalysis.q2.answer') }}</p>
                 <ul>
-                  <li>Selezionare mese e anno specifici</li>
-                  <li>Confrontare più mesi</li>
-                  <li>Vedere l'andamento annuale</li>
-                  <li>Filtrare per categorie specifiche</li>
-                  <li>Filtrare per membri della famiglia</li>
+                  <li v-for="(option, index) in $tm('help.sections.reportsAnalysis.q2.options')" :key="index">
+                    {{ option }}
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="download"
-              label="Posso esportare i dati?"
+              :label="$t('help.sections.reportsAnalysis.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Sì! Puoi esportare:</p>
+                <p>{{ $t('help.sections.reportsAnalysis.q3.answer') }}</p>
                 <ul>
-                  <li>Lista spese in formato CSV</li>
-                  <li>Report mensili in PDF</li>
-                  <li>Grafici e statistiche come immagini</li>
+                  <li v-for="(format, index) in $tm('help.sections.reportsAnalysis.q3.formats')" :key="index">
+                    {{ format }}
+                  </li>
                 </ul>
-                <p>Utile per condividere con commercialista o per backup personali.</p>
+                <p>{{ $t('help.sections.reportsAnalysis.q3.note') }}</p>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Impostazioni e Sicurezza -->
+        <!-- Settings & Security -->
         <q-expansion-item
           icon="settings"
-          label="Impostazioni e Sicurezza"
-          caption="Personalizza l'app e proteggi i tuoi dati"
+          :label="$t('help.sections.settingsSecurity.title')"
+          :caption="$t('help.sections.settingsSecurity.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="lock"
-              label="I miei dati sono sicuri?"
+              :label="$t('help.sections.settingsSecurity.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>La sicurezza è una priorità:</p>
+                <p>{{ $t('help.sections.settingsSecurity.q1.answer') }}</p>
                 <ul>
-                  <li>Tutti i dati sono criptati</li>
-                  <li>Password protette con hash sicuri</li>
-                  <li>Sessioni con timeout automatico</li>
-                  <li>Backup automatici del database</li>
-                  <li>Accesso protetto tramite autenticazione</li>
+                  <li v-for="(feature, index) in $tm('help.sections.settingsSecurity.q1.features')" :key="index">
+                    {{ feature }}
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="person"
-              label="Come cambio la password?"
+              :label="$t('help.sections.settingsSecurity.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
                 <ol>
-                  <li>Vai al tuo profilo utente</li>
-                  <li>Clicca "Cambia Password"</li>
-                  <li>Inserisci la password attuale</li>
-                  <li>Inserisci la nuova password (min 8 caratteri)</li>
-                  <li>Conferma la modifica</li>
+                  <li v-for="(step, index) in $tm('help.sections.settingsSecurity.q2.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="notifications"
-              label="Come gestisco le notifiche?"
+              :label="$t('help.sections.settingsSecurity.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Nelle impostazioni puoi configurare:</p>
+                <p>{{ $t('help.sections.settingsSecurity.q3.answer') }}</p>
                 <ul>
-                  <li>Notifiche per quote in scadenza</li>
-                  <li>Avvisi di sforamento budget</li>
-                  <li>Reminder per spese ricorrenti</li>
-                  <li>Riepiloghi mensili automatici</li>
+                  <li v-for="(type, index) in $tm('help.sections.settingsSecurity.q3.types')" :key="index">
+                    {{ type }}
+                  </li>
                 </ul>
-                <p>Puoi attivare/disattivare ogni tipo di notifica.</p>
+                <p>{{ $t('help.sections.settingsSecurity.q3.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="smartphone"
-              label="Come installo l'app sul telefono?"
+              :label="$t('help.sections.settingsSecurity.q4.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p><strong>Su iPhone:</strong></p>
+                <p><strong>{{ $t('help.sections.settingsSecurity.q4.iphone.title') }}</strong></p>
                 <ol>
-                  <li>Apri l'app con Safari</li>
-                  <li>Tocca il pulsante di condivisione</li>
-                  <li>Seleziona "Aggiungi alla schermata Home"</li>
-                  <li>Conferma l'installazione</li>
+                  <li v-for="(step, index) in $tm('help.sections.settingsSecurity.q4.iphone.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p><strong>Su Android:</strong></p>
+                <p><strong>{{ $t('help.sections.settingsSecurity.q4.android.title') }}</strong></p>
                 <ol>
-                  <li>Apri l'app con Chrome</li>
-                  <li>Tocca il menu (3 puntini)</li>
-                  <li>Seleziona "Installa app"</li>
-                  <li>Conferma l'installazione</li>
+                  <li v-for="(step, index) in $tm('help.sections.settingsSecurity.q4.android.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
               </div>
             </q-expansion-item>
           </div>
         </q-expansion-item>
 
-        <!-- Risoluzione Problemi -->
+        <!-- Troubleshooting -->
         <q-expansion-item
           icon="help_outline"
-          label="Risoluzione Problemi"
-          caption="Soluzioni ai problemi più comuni"
+          :label="$t('help.sections.troubleshooting.title')"
+          :caption="$t('help.sections.troubleshooting.caption')"
           class="faq-section"
           header-class="faq-header"
         >
           <div class="faq-content">
             <q-expansion-item
               icon="sync_problem"
-              label="L'app non si sincronizza"
+              :label="$t('help.sections.troubleshooting.q1.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Prova questi passaggi:</p>
+                <p>{{ $t('help.sections.troubleshooting.q1.answer') }}</p>
                 <ol>
-                  <li>Controlla la connessione internet</li>
-                  <li>Chiudi e riapri l'app</li>
-                  <li>Fai logout e login nuovamente</li>
-                  <li>Aggiorna il browser/app</li>
+                  <li v-for="(step, index) in $tm('help.sections.troubleshooting.q1.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p>Se il problema persiste, contatta il supporto.</p>
+                <p>{{ $t('help.sections.troubleshooting.q1.note') }}</p>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="error_outline"
-              label="Vedo un errore durante il salvataggio"
+              :label="$t('help.sections.troubleshooting.q2.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Gli errori più comuni:</p>
+                <p>{{ $t('help.sections.troubleshooting.q2.answer') }}</p>
                 <ul>
-                  <li><strong>Campi obbligatori:</strong> Controlla di aver compilato tutti i campi richiesti</li>
-                  <li><strong>Importo non valido:</strong> Usa il punto per i decimali (es. 10.50)</li>
-                  <li><strong>Data non valida:</strong> Controlla che la data sia nel formato corretto</li>
-                  <li><strong>Sessione scaduta:</strong> Fai login nuovamente</li>
+                  <li v-for="(error, index) in $tm('help.sections.troubleshooting.q2.errors')" :key="index">
+                    <strong>{{ error }}</strong>
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="refresh"
-              label="Come aggiorno l'app?"
+              :label="$t('help.sections.troubleshooting.q3.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>L'app si aggiorna automaticamente! Quando disponibili:</p>
+                <p>{{ $t('help.sections.troubleshooting.q3.answer') }}</p>
                 <ul>
-                  <li>Ricarica la pagina nel browser</li>
-                  <li>O chiudi e riapri l'app installata</li>
-                  <li>Vedrai una notifica per le nuove funzionalità</li>
+                  <li v-for="(step, index) in $tm('help.sections.troubleshooting.q3.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ul>
               </div>
             </q-expansion-item>
 
             <q-expansion-item
               icon="restore"
-              label="Ho cancellato una spesa per sbaglio"
+              :label="$t('help.sections.troubleshooting.q4.question')"
               class="faq-item"
             >
               <div class="faq-answer">
-                <p>Se hai appena cancellato la spesa:</p>
+                <p>{{ $t('help.sections.troubleshooting.q4.answer') }}</p>
                 <ol>
-                  <li>Controlla se c'è un pulsante "Annulla" nella notifica</li>
-                  <li>Altrimenti, dovrai ricreare la spesa manualmente</li>
-                  <li>Per il futuro, l'app chiede sempre conferma prima di cancellare</li>
+                  <li v-for="(step, index) in $tm('help.sections.troubleshooting.q4.steps')" :key="index">
+                    {{ step }}
+                  </li>
                 </ol>
-                <p><strong>Consiglio:</strong> Invece di cancellare, puoi modificare una spesa esistente.</p>
+                <p><strong>{{ $t('help.sections.troubleshooting.q4.tip') }}</strong></p>
               </div>
             </q-expansion-item>
           </div>
@@ -658,13 +609,12 @@
 
       </div>
 
-      <!-- Contatti -->
+      <!-- Contact -->
       <div class="help-footer">
         <div class="help-contact">
-          <div class="contact-title">Hai ancora bisogno di aiuto?</div>
+          <div class="contact-title">{{ $t('help.footer.title') }}</div>
           <div class="contact-text">
-            Questa documentazione non ha risposto alla tua domanda?
-            Contatta il supporto tecnico per assistenza personalizzata.
+            {{ $t('help.footer.text') }}
           </div>
         </div>
       </div>
@@ -674,7 +624,9 @@
 </template>
 
 <script setup>
-// No script logic needed for static FAQ page
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style lang="scss" scoped>

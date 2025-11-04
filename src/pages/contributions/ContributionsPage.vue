@@ -7,16 +7,16 @@
           <div>
             <h1 class="text-h4 q-ma-none">
               <q-icon name="account_balance_wallet" class="q-mr-sm" />
-              Contributi Famiglia
+              {{ t('contributions.familyContributions') }}
             </h1>
             <p class="text-body2 text-grey-6 q-ma-none q-mt-sm">
-              Gestisci le entrate e i contributi della famiglia
+              {{ t('contributions.manageIncomeDescription') }}
             </p>
           </div>
           <q-btn-dropdown
             color="primary"
             icon="add"
-            label="Azioni"
+            :label="t('common.actions')"
             auto-close
           >
             <q-list>
@@ -25,7 +25,7 @@
                   <q-icon name="add" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Nuovo Contributo</q-item-label>
+                  <q-item-label>{{ t('contributions.newContribution') }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item clickable @click="currentView = 'dashboard'">
@@ -33,7 +33,7 @@
                   <q-icon name="dashboard" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Dashboard</q-item-label>
+                  <q-item-label>{{ t('contributions.dashboard') }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item clickable @click="currentView = 'list'">
@@ -41,7 +41,7 @@
                   <q-icon name="list" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Lista Completa</q-item-label>
+                  <q-item-label>{{ t('contributions.fullList') }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -57,8 +57,8 @@
           indicator-color="primary"
           align="left"
         >
-          <q-tab name="dashboard" icon="dashboard" label="Dashboard" />
-          <q-tab name="list" icon="list" label="Lista Contributi" />
+          <q-tab name="dashboard" icon="dashboard" :label="t('contributions.dashboard')" />
+          <q-tab name="list" icon="list" :label="t('contributions.contributionsList')" />
         </q-tabs>
 
         <q-separator class="q-mb-lg" />
@@ -104,7 +104,7 @@
         color="primary"
         @click="openAddContribution"
       >
-        <q-tooltip>Nuovo Contributo</q-tooltip>
+        <q-tooltip>{{ t('contributions.newContribution') }}</q-tooltip>
       </q-btn>
     </q-page-sticky>
   </q-page>
@@ -112,6 +112,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useContributionsStore } from '@/stores/contributions'
 import ContributionsDashboard from '@/components/contributions/ContributionsDashboard.vue'
 import ContributionsList from '@/components/contributions/ContributionsList.vue'
@@ -129,6 +130,7 @@ export default defineComponent({
   },
 
   setup() {
+    const { t } = useI18n()
     const contributionsStore = useContributionsStore()
 
     const currentView = ref('dashboard')
@@ -175,6 +177,7 @@ export default defineComponent({
     }
 
     return {
+      t,
       currentView,
       showAddContribution,
       showReportDialog,
