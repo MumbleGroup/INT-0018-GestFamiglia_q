@@ -8,8 +8,8 @@
           <div class="app-icon">
             <q-icon name="account_balance_wallet" size="80px" color="white" />
           </div>
-          <h1 class="hero-title">MyCrisisFamily</h1>
-          <p class="hero-subtitle">La gestione delle spese familiari non è mai stata così semplice</p>
+          <h1 class="hero-title">{{ $t('landing.hero.title') }}</h1>
+          <p class="hero-subtitle">{{ $t('landing.hero.subtitle') }}</p>
         </div>
 
         <!-- CTA principale -->
@@ -18,7 +18,7 @@
             size="lg"
             class="download-btn primary-btn"
             icon="download"
-            label="Scarica l'App"
+            :label="$t('landing.hero.downloadBtn')"
             @click="downloadApp"
             no-caps
           />
@@ -26,7 +26,7 @@
             size="lg"
             class="demo-btn secondary-btn"
             icon="login"
-            label="Prova la Demo"
+            :label="$t('landing.hero.demoBtn')"
             @click="goToLogin"
             outline
             no-caps
@@ -37,15 +37,15 @@
         <div class="hero-features">
           <div class="feature-badge">
             <q-icon name="family_restroom" size="20px" />
-            <span>Condividi con la famiglia</span>
+            <span>{{ $t('landing.hero.features.family') }}</span>
           </div>
           <div class="feature-badge">
             <q-icon name="trending_up" size="20px" />
-            <span>Budget intelligenti</span>
+            <span>{{ $t('landing.hero.features.budget') }}</span>
           </div>
           <div class="feature-badge">
             <q-icon name="schedule" size="20px" />
-            <span>Spese ricorrenti</span>
+            <span>{{ $t('landing.hero.features.recurring') }}</span>
           </div>
         </div>
       </div>
@@ -54,12 +54,12 @@
     <!-- Features Section -->
     <section class="features-section">
       <div class="section-container">
-        <h2 class="section-title">Perché scegliere MyCrisisFamily?</h2>
+        <h2 class="section-title">{{ $t('landing.featuresSection.title') }}</h2>
 
         <div class="features-grid">
           <!-- Feature 1: Gestione Familiare -->
           <div class="feature-card mcf-feature-family">
-            <div class="feature-badge">Famiglia</div>
+            <div class="feature-badge">{{ $t('landing.featuresSection.family.badge') }}</div>
             <div class="feature-header">
               <div class="feature-icon-container">
                 <div class="feature-icon">
@@ -68,40 +68,34 @@
               </div>
             </div>
             <div class="feature-content">
-              <h3 class="feature-title">Gestione Familiare</h3>
+              <h3 class="feature-title">{{ $t('landing.featuresSection.family.title') }}</h3>
               <p class="feature-description">
-                Coinvolgi tutti i membri della famiglia. Condividi spese, budget e pianificazioni in tempo reale con ruoli personalizzati.
+                {{ $t('landing.featuresSection.family.description') }}
               </p>
               <div class="feature-highlights">
-                <div class="highlight-item">
-                  <q-icon name="person_add" size="16px" />
-                  <span>Profili multipli per ogni membro</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="sync" size="16px" />
-                  <span>Sincronizzazione istantanea</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="admin_panel_settings" size="16px" />
-                  <span>Sistema ruoli e permessi</span>
+                <div class="highlight-item" v-for="(highlight, index) in $tm('landing.featuresSection.family.highlights')" :key="index">
+                  <q-icon name="person_add" size="16px" v-if="index === 0" />
+                  <q-icon name="sync" size="16px" v-else-if="index === 1" />
+                  <q-icon name="admin_panel_settings" size="16px" v-else />
+                  <span>{{ highlight }}</span>
                 </div>
               </div>
             </div>
             <div class="feature-stats">
               <div class="stat-mini">
                 <span class="stat-number">∞</span>
-                <span class="stat-label">Membri</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.family.stats.members') }}</span>
               </div>
               <div class="stat-mini">
                 <span class="stat-number">100%</span>
-                <span class="stat-label">Condiviso</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.family.stats.shared') }}</span>
               </div>
             </div>
           </div>
 
           <!-- Feature 2: Budget Intelligenti -->
           <div class="feature-card mcf-feature-budget">
-            <div class="feature-badge">Smart</div>
+            <div class="feature-badge">{{ $t('landing.featuresSection.budget.badge') }}</div>
             <div class="feature-header">
               <div class="feature-icon-container">
                 <div class="feature-icon">
@@ -110,40 +104,34 @@
               </div>
             </div>
             <div class="feature-content">
-              <h3 class="feature-title">Budget Intelligenti</h3>
+              <h3 class="feature-title">{{ $t('landing.featuresSection.budget.title') }}</h3>
               <p class="feature-description">
-                Sistema completo di categorizzazione con 15 categorie principali e 93 sottocategorie per una gestione precisa e dettagliata.
+                {{ $t('landing.featuresSection.budget.description') }}
               </p>
               <div class="feature-highlights">
-                <div class="highlight-item">
-                  <q-icon name="category" size="16px" />
-                  <span>15 categorie + 93 sottocategorie</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="auto_graph" size="16px" />
-                  <span>Monitoraggio automatico progressi</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="assessment" size="16px" />
-                  <span>Report e analytics avanzati</span>
+                <div class="highlight-item" v-for="(highlight, index) in $tm('landing.featuresSection.budget.highlights')" :key="index">
+                  <q-icon name="category" size="16px" v-if="index === 0" />
+                  <q-icon name="auto_graph" size="16px" v-else-if="index === 1" />
+                  <q-icon name="assessment" size="16px" v-else />
+                  <span>{{ highlight }}</span>
                 </div>
               </div>
             </div>
             <div class="feature-stats">
               <div class="stat-mini">
                 <span class="stat-number">15</span>
-                <span class="stat-label">Categorie</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.budget.stats.categories') }}</span>
               </div>
               <div class="stat-mini">
                 <span class="stat-number">93</span>
-                <span class="stat-label">Sottocategorie</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.budget.stats.subcategories') }}</span>
               </div>
             </div>
           </div>
 
           <!-- Feature 3: Spese Ricorrenti -->
           <div class="feature-card mcf-feature-recurring">
-            <div class="feature-badge">Auto</div>
+            <div class="feature-badge">{{ $t('landing.featuresSection.recurring.badge') }}</div>
             <div class="feature-header">
               <div class="feature-icon-container">
                 <div class="feature-icon">
@@ -152,40 +140,34 @@
               </div>
             </div>
             <div class="feature-content">
-              <h3 class="feature-title">Spese Ricorrenti</h3>
+              <h3 class="feature-title">{{ $t('landing.featuresSection.recurring.title') }}</h3>
               <p class="feature-description">
-                Automatizza completamente bollette, rate e abbonamenti. Il sistema genera automaticamente le scadenze e ti avvisa in tempo.
+                {{ $t('landing.featuresSection.recurring.description') }}
               </p>
               <div class="feature-highlights">
-                <div class="highlight-item">
-                  <q-icon name="auto_awesome" size="16px" />
-                  <span>Generazione automatica pianificata</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="notifications_active" size="16px" />
-                  <span>Notifiche e promemoria integrati</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="payments" size="16px" />
-                  <span>Gestione rate multiple e dilazioni</span>
+                <div class="highlight-item" v-for="(highlight, index) in $tm('landing.featuresSection.recurring.highlights')" :key="index">
+                  <q-icon name="auto_awesome" size="16px" v-if="index === 0" />
+                  <q-icon name="notifications_active" size="16px" v-else-if="index === 1" />
+                  <q-icon name="payments" size="16px" v-else />
+                  <span>{{ highlight }}</span>
                 </div>
               </div>
             </div>
             <div class="feature-stats">
               <div class="stat-mini">
                 <span class="stat-number">7</span>
-                <span class="stat-label">Frequenze</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.recurring.stats.frequencies') }}</span>
               </div>
               <div class="stat-mini">
                 <span class="stat-number">∞</span>
-                <span class="stat-label">Rate</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.recurring.stats.installments') }}</span>
               </div>
             </div>
           </div>
 
           <!-- Feature 4: Mobile First -->
           <div class="feature-card mcf-feature-mobile">
-            <div class="feature-badge">Mobile</div>
+            <div class="feature-badge">{{ $t('landing.featuresSection.mobile.badge') }}</div>
             <div class="feature-header">
               <div class="feature-icon-container">
                 <div class="feature-icon">
@@ -194,33 +176,27 @@
               </div>
             </div>
             <div class="feature-content">
-              <h3 class="feature-title">Mobile First</h3>
+              <h3 class="feature-title">{{ $t('landing.featuresSection.mobile.title') }}</h3>
               <p class="feature-description">
-                App nativa Android con scanner ricevute, OCR avanzato e aggiornamenti automatici OTA. Tutto sempre a portata di mano.
+                {{ $t('landing.featuresSection.mobile.description') }}
               </p>
               <div class="feature-highlights">
-                <div class="highlight-item">
-                  <q-icon name="document_scanner" size="16px" />
-                  <span>Scanner ricevute con AI integrata</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="text_fields" size="16px" />
-                  <span>OCR automatico per digitazione</span>
-                </div>
-                <div class="highlight-item">
-                  <q-icon name="system_update_alt" size="16px" />
-                  <span>Aggiornamenti OTA automatici</span>
+                <div class="highlight-item" v-for="(highlight, index) in $tm('landing.featuresSection.mobile.highlights')" :key="index">
+                  <q-icon name="document_scanner" size="16px" v-if="index === 0" />
+                  <q-icon name="text_fields" size="16px" v-else-if="index === 1" />
+                  <q-icon name="system_update_alt" size="16px" v-else />
+                  <span>{{ highlight }}</span>
                 </div>
               </div>
             </div>
             <div class="feature-stats">
               <div class="stat-mini">
                 <span class="stat-number">APK</span>
-                <span class="stat-label">Nativo</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.mobile.stats.native') }}</span>
               </div>
               <div class="stat-mini">
                 <span class="stat-number">OTA</span>
-                <span class="stat-label">Updates</span>
+                <span class="stat-label">{{ $t('landing.featuresSection.mobile.stats.updates') }}</span>
               </div>
             </div>
           </div>
@@ -231,23 +207,23 @@
     <!-- Statistics Section -->
     <section class="stats-section">
       <div class="section-container">
-        <h2 class="section-title white">La famiglia ideale per le tue finanze</h2>
+        <h2 class="section-title white">{{ $t('landing.statsSection.title') }}</h2>
         <div class="stats-grid">
           <div class="stat-item">
             <div class="stat-number">15+</div>
-            <div class="stat-label">Categorie Predefinite</div>
+            <div class="stat-label">{{ $t('landing.statsSection.categories') }}</div>
           </div>
           <div class="stat-item">
             <div class="stat-number">100%</div>
-            <div class="stat-label">Condivisione Familiare</div>
+            <div class="stat-label">{{ $t('landing.statsSection.sharing') }}</div>
           </div>
           <div class="stat-item">
             <div class="stat-number">24/7</div>
-            <div class="stat-label">Sincronizzazione</div>
+            <div class="stat-label">{{ $t('landing.statsSection.sync') }}</div>
           </div>
           <div class="stat-item">
             <div class="stat-number">∞</div>
-            <div class="stat-label">Spese Tracciabili</div>
+            <div class="stat-label">{{ $t('landing.statsSection.expenses') }}</div>
           </div>
         </div>
       </div>
@@ -257,22 +233,22 @@
     <section class="cta-section">
       <div class="section-container">
         <div class="cta-content">
-          <h2 class="cta-title">Pronto per iniziare?</h2>
+          <h2 class="cta-title">{{ $t('landing.ctaSection.title') }}</h2>
           <p class="cta-description">
-            Unisciti alle famiglie che hanno già scelto MyCrisisFamily per organizzare le loro finanze.
+            {{ $t('landing.ctaSection.description') }}
           </p>
           <div class="cta-buttons">
             <q-btn
               size="xl"
               class="download-btn-large primary-btn"
               icon="download"
-              label="Scarica Ora Gratis"
+              :label="$t('landing.ctaSection.downloadBtn')"
               @click="downloadApp"
               no-caps
             />
             <div class="cta-note">
               <q-icon name="info" size="16px" />
-              <span>Disponibile per Android • Aggiornamenti automatici</span>
+              <span>{{ $t('landing.ctaSection.note') }}</span>
             </div>
           </div>
         </div>
@@ -284,9 +260,9 @@
       <q-card class="download-card">
         <q-card-section class="text-center">
           <q-icon name="download" size="64px" color="primary" />
-          <div class="text-h5 q-mt-md">Scarica MyCrisisFamily</div>
+          <div class="text-h5 q-mt-md">{{ $t('landing.downloadDialog.title') }}</div>
           <div class="text-body2 text-grey-6 q-mt-sm">
-            Versione corrente: v{{ latestVersion }}
+            {{ $t('landing.downloadDialog.version') }}: v{{ latestVersion }}
           </div>
         </q-card-section>
 
@@ -296,20 +272,20 @@
               class="full-width q-mb-sm"
               color="primary"
               icon="android"
-              label="Download APK"
+              :label="$t('landing.downloadDialog.downloadBtn')"
               @click="downloadAPK"
               :loading="downloading"
               no-caps
             />
             <div class="text-caption text-center text-grey-6">
-              File APK per dispositivi Android<br>
-              Dimensione: ~15MB
+              {{ $t('landing.downloadDialog.fileInfo') }}<br>
+              {{ $t('landing.downloadDialog.fileSize') }}
             </div>
           </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Chiudi" @click="showDownloadDialog = false" />
+          <q-btn flat :label="$t('landing.downloadDialog.close')" @click="showDownloadDialog = false" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -320,9 +296,11 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const $q = useQuasar()
+const { t } = useI18n()
 
 const showDownloadDialog = ref(false)
 const downloading = ref(false)
@@ -343,16 +321,16 @@ const downloadAPK = async () => {
 
     $q.notify({
       type: 'positive',
-      message: 'Download avviato!',
-      caption: 'Controlla la cartella Download'
+      message: t('landing.downloadDialog.downloadStarted'),
+      caption: t('landing.downloadDialog.checkFolder')
     })
 
     showDownloadDialog.value = false
   } catch (error) {
     $q.notify({
       type: 'negative',
-      message: 'Errore nel download',
-      caption: 'Riprova più tardi'
+      message: t('landing.downloadDialog.downloadError'),
+      caption: t('landing.downloadDialog.retryLater')
     })
   } finally {
     downloading.value = false

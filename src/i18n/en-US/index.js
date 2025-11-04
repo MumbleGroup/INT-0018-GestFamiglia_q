@@ -1337,5 +1337,104 @@ export default {
       pending: 'Pending',
       unpaid: 'To Pay'
     }
+  },
+
+  // Landing Page
+  landing: {
+    hero: {
+      title: 'MyCrisisFamily',
+      subtitle: 'Family expense management has never been easier',
+      downloadBtn: 'Download App',
+      demoBtn: 'Try Demo',
+      features: {
+        family: 'Share with family',
+        budget: 'Smart budgets',
+        recurring: 'Recurring expenses'
+      }
+    },
+    featuresSection: {
+      title: 'Why choose MyCrisisFamily?',
+      family: {
+        badge: 'Family',
+        title: 'Family Management',
+        description: 'Involve all family members. Share expenses, budgets and plans in real-time with customized roles.',
+        highlights: [
+          'Multiple profiles for each member',
+          'Instant synchronization',
+          'Roles and permissions system'
+        ],
+        stats: {
+          members: 'Members',
+          shared: 'Shared'
+        }
+      },
+      budget: {
+        badge: 'Smart',
+        title: 'Smart Budgets',
+        description: 'Complete categorization system with 15 main categories and 93 subcategories for precise and detailed management.',
+        highlights: [
+          '15 categories + 93 subcategories',
+          'Automatic progress monitoring',
+          'Advanced reports and analytics'
+        ],
+        stats: {
+          categories: 'Categories',
+          subcategories: 'Subcategories'
+        }
+      },
+      recurring: {
+        badge: 'Auto',
+        title: 'Recurring Expenses',
+        description: 'Fully automate bills, installments and subscriptions. The system automatically generates deadlines and notifies you in time.',
+        highlights: [
+          'Scheduled automatic generation',
+          'Integrated notifications and reminders',
+          'Multiple installments and payment plans management'
+        ],
+        stats: {
+          frequencies: 'Frequencies',
+          installments: 'Installments'
+        }
+      },
+      mobile: {
+        badge: 'Mobile',
+        title: 'Mobile First',
+        description: 'Native Android app with receipt scanner, advanced OCR and automatic OTA updates. Everything always at hand.',
+        highlights: [
+          'Receipt scanner with integrated AI',
+          'Automatic OCR for digitization',
+          'Automatic OTA updates'
+        ],
+        stats: {
+          native: 'Native',
+          updates: 'Updates'
+        }
+      }
+    },
+    statsSection: {
+      title: 'The ideal family for your finances',
+      categories: 'Predefined Categories',
+      sharing: 'Family Sharing',
+      sync: 'Synchronization',
+      expenses: 'Trackable Expenses'
+    },
+    ctaSection: {
+      title: 'Ready to get started?',
+      description: 'Join the families who have already chosen MyCrisisFamily to organize their finances.',
+      downloadBtn: 'Download Now Free',
+      note: 'Available for Android • Automatic updates'
+    },
+    downloadDialog: {
+      title: 'Download MyCrisisFamily',
+      version: 'Current version',
+      downloadBtn: 'Download APK',
+      fileInfo: 'APK file for Android devices',
+      fileSize: 'Size: ~15MB',
+      close: 'Close',
+      downloadStarted: 'Download started!',
+      checkFolder: 'Check Download folder',
+      downloadError: 'Download error',
+      retryLater: 'Try again later'
+    }
   }
 }

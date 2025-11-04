@@ -1334,5 +1334,104 @@ export default {
       pending: 'In Sospeso',
       unpaid: 'Da Pagare'
     }
+  },
+
+  // Landing Page
+  landing: {
+    hero: {
+      title: 'MyCrisisFamily',
+      subtitle: 'La gestione delle spese familiari non è mai stata così semplice',
+      downloadBtn: 'Scarica l\'App',
+      demoBtn: 'Prova la Demo',
+      features: {
+        family: 'Condividi con la famiglia',
+        budget: 'Budget intelligenti',
+        recurring: 'Spese ricorrenti'
+      }
+    },
+    featuresSection: {
+      title: 'Perché scegliere MyCrisisFamily?',
+      family: {
+        badge: 'Famiglia',
+        title: 'Gestione Familiare',
+        description: 'Coinvolgi tutti i membri della famiglia. Condividi spese, budget e pianificazioni in tempo reale con ruoli personalizzati.',
+        highlights: [
+          'Profili multipli per ogni membro',
+          'Sincronizzazione istantanea',
+          'Sistema ruoli e permessi'
+        ],
+        stats: {
+          members: 'Membri',
+          shared: 'Condiviso'
+        }
+      },
+      budget: {
+        badge: 'Smart',
+        title: 'Budget Intelligenti',
+        description: 'Sistema completo di categorizzazione con 15 categorie principali e 93 sottocategorie per una gestione precisa e dettagliata.',
+        highlights: [
+          '15 categorie + 93 sottocategorie',
+          'Monitoraggio automatico progressi',
+          'Report e analytics avanzati'
+        ],
+        stats: {
+          categories: 'Categorie',
+          subcategories: 'Sottocategorie'
+        }
+      },
+      recurring: {
+        badge: 'Auto',
+        title: 'Spese Ricorrenti',
+        description: 'Automatizza completamente bollette, rate e abbonamenti. Il sistema genera automaticamente le scadenze e ti avvisa in tempo.',
+        highlights: [
+          'Generazione automatica pianificata',
+          'Notifiche e promemoria integrati',
+          'Gestione rate multiple e dilazioni'
+        ],
+        stats: {
+          frequencies: 'Frequenze',
+          installments: 'Rate'
+        }
+      },
+      mobile: {
+        badge: 'Mobile',
+        title: 'Mobile First',
+        description: 'App nativa Android con scanner ricevute, OCR avanzato e aggiornamenti automatici OTA. Tutto sempre a portata di mano.',
+        highlights: [
+          'Scanner ricevute con AI integrata',
+          'OCR automatico per digitazione',
+          'Aggiornamenti OTA automatici'
+        ],
+        stats: {
+          native: 'Nativo',
+          updates: 'Updates'
+        }
+      }
+    },
+    statsSection: {
+      title: 'La famiglia ideale per le tue finanze',
+      categories: 'Categorie Predefinite',
+      sharing: 'Condivisione Familiare',
+      sync: 'Sincronizzazione',
+      expenses: 'Spese Tracciabili'
+    },
+    ctaSection: {
+      title: 'Pronto per iniziare?',
+      description: 'Unisciti alle famiglie che hanno già scelto MyCrisisFamily per organizzare le loro finanze.',
+      downloadBtn: 'Scarica Ora Gratis',
+      note: 'Disponibile per Android • Aggiornamenti automatici'
+    },
+    downloadDialog: {
+      title: 'Scarica MyCrisisFamily',
+      version: 'Versione corrente',
+      downloadBtn: 'Download APK',
+      fileInfo: 'File APK per dispositivi Android',
+      fileSize: 'Dimensione: ~15MB',
+      close: 'Chiudi',
+      downloadStarted: 'Download avviato!',
+      checkFolder: 'Controlla la cartella Download',
+      downloadError: 'Errore nel download',
+      retryLater: 'Riprova più tardi'
+    }
   }
 }

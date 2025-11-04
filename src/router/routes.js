@@ -1,5 +1,46 @@
 const routes = [
-  // Landing pages Vue (per riferimento sviluppo)
+  // Landing page - Root redirect with language detection
+  {
+    path: '/',
+    redirect: () => {
+      // Check for saved locale preference
+      const savedLocale = localStorage.getItem('user-locale')
+      if (savedLocale === 'en-US') {
+        return '/en'
+      }
+
+      // Check browser language
+      const browserLang = navigator.language || navigator.userLanguage
+      if (browserLang.startsWith('en')) {
+        return '/en'
+      }
+
+      // Default to Italian
+      return '/it'
+    }
+  },
+
+  // Landing page - Italian
+  {
+    path: '/it',
+    component: () => import('layouts/LandingLayout.vue'),
+    meta: { locale: 'it-IT' },
+    children: [
+      { path: '', component: () => import('pages/LandingPage.vue') }
+    ]
+  },
+
+  // Landing page - English
+  {
+    path: '/en',
+    component: () => import('layouts/LandingLayout.vue'),
+    meta: { locale: 'en-US' },
+    children: [
+      { path: '', component: () => import('pages/LandingPage.vue') }
+    ]
+  },
+
+  // Old landing pages (per riferimento sviluppo)
   {
     path: '/landing-vue',
     component: () => import('layouts/LandingLayout.vue'),
@@ -48,21 +89,62 @@ const routes = [
 
   // Main app routes (with layout)
   {
-    path: '/',
+    path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: '/dashboard' },
-      { path: '/dashboard', component: () => import('pages/DashboardPage.vue') },
-      { path: '/expenses', component: () => import('pages/expenses/ExpensesPage.vue') },
-      { path: '/expenses/add', component: () => import('pages/expenses/ExpensesPage.vue') },
-      { path: '/budget', component: () => import('pages/reports/SpendingPlanPage.vue') },
-      { path: '/spending-plans', component: () => import('pages/reports/SpendingPlanPage.vue') },
-      { path: '/spending-plans/:id', component: () => import('pages/reports/PlannedExpenseDetailPage.vue') },
-      { path: '/scanner', component: () => import('pages/expenses/ScannerPage.vue') },
-      { path: '/ocr-test', component: () => import('pages/expenses/OCRTestPage.vue') },
-      { path: '/settings', component: () => import('pages/users/SettingsPage.vue') },
-      { path: '/help', component: () => import('pages/HelpPage.vue') }
-    ],
+      { path: '', component: () => import('pages/DashboardPage.vue') }
+    ]
+  },
+  {
+    path: '/expenses',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/expenses/ExpensesPage.vue') },
+      { path: 'add', component: () => import('pages/expenses/ExpensesPage.vue') }
+    ]
+  },
+  {
+    path: '/budget',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/reports/SpendingPlanPage.vue') }
+    ]
+  },
+  {
+    path: '/spending-plans',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/reports/SpendingPlanPage.vue') },
+      { path: ':id', component: () => import('pages/reports/PlannedExpenseDetailPage.vue') }
+    ]
+  },
+  {
+    path: '/scanner',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/expenses/ScannerPage.vue') }
+    ]
+  },
+  {
+    path: '/ocr-test',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/expenses/OCRTestPage.vue') }
+    ]
+  },
+  {
+    path: '/settings',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/SettingsPage.vue') }
+    ]
+  },
+  {
+    path: '/help',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/HelpPage.vue') }
+    ]
   },
 
   // Always leave this as last one,
