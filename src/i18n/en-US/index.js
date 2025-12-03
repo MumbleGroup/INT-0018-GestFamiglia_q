@@ -106,7 +106,7 @@ export default {
     requestNewLink: 'Request a new link',
     passwordChangedSuccess: 'Password changed successfully!',
     canLoginNow: 'You can now log in.',
-    goToLogin: 'Go to Login →',
+    goToLogin: 'Go to Login',
     newPassword: 'New password',
     newPasswordPlaceholder: 'Enter new password',
     confirmNewPasswordPlaceholder: 'Confirm new password',
@@ -467,7 +467,7 @@ export default {
     newPlanDialogTitle: 'New Spending Plan',
     newPlanDialogSubtitle: 'Create a custom spending plan for your preferred period',
     confirmDeleteBudget: 'Confirm Deletion',
-    confirmDeleteBudgetMessage: 'Are you sure you want to delete the spending plan "{name}"?',
+    confirmDeleteBudgetMessage: 'Are you sure you want to delete the spending plan {name}?',
     budgetDeletedSuccess: 'Spending plan deleted successfully',
     budgetCreatedSuccess: 'Spending plan created successfully!',
     errorCreatingBudget: 'Error creating spending plan',
@@ -515,7 +515,7 @@ export default {
     planCreatedSuccess: '{type} created successfully!',
     planUpdatedSuccess: 'Spending plan updated successfully!',
     planDeletedSuccess: 'Plan deleted successfully',
-    planClonedSuccess: 'Plan "{name}" cloned successfully!',
+    planClonedSuccess: 'Plan {name} cloned successfully!',
     planPinned: 'Plan pinned successfully',
     planUnpinned: 'Plan unpinned successfully',
     errorLoadingPlans: 'Error loading spending plans',
@@ -523,7 +523,7 @@ export default {
     errorUpdatingPlan: 'Error updating plan',
     errorDeletingPlan: 'Error deleting plan',
     confirmDeletePlan: 'Confirm Deletion',
-    confirmDeletePlanMessage: 'Are you sure you want to delete the plan "{name}"?'
+    confirmDeletePlanMessage: 'Are you sure you want to delete the plan {name}?'
   },
 
   // Reports
@@ -939,9 +939,9 @@ export default {
           question: 'How do visual indicators work?',
           answer: 'Recurring expenses have visual indicators to check status at a glance:',
           indicators: {
-            paid: '☑️ Green Checkbox: Already paid/completed installments',
-            current: '☐ Blue Checkbox: Current installment (due now)',
-            future: '☐ Gray Checkbox: Future installments yet to be paid'
+            paid: 'Green Checkbox: Already paid/completed installments',
+            current: 'Blue Checkbox: Current installment (due now)',
+            future: 'Gray Checkbox: Future installments yet to be paid'
           },
           desktop: 'Desktop: Checkboxes appear inline after the chevron button',
           mobile: 'Mobile: Tap the chevron icon to expand and see details'
@@ -1184,8 +1184,8 @@ export default {
     developmentFeature: 'Feature in Development',
 
     // Settings Page Messages
-    clearingCacheRestart: '🔄 Clearing cache and restarting...',
-    errorForceRefresh: '❌ Error during forced refresh',
+    clearingCacheRestart: 'Clearing cache and restarting...',
+    errorForceRefresh: 'Error during forced refresh',
     languageChangedIt: 'Lingua modificata in Italiano',
     languageChangedEn: 'Language changed to English',
     errorChangingLanguage: 'Error changing language',
