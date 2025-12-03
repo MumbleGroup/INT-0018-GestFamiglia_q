@@ -10,6 +10,57 @@ export const Capacitor = {
   convertFileSrc: (filePath) => filePath
 }
 
+// Mock WebPlugin class per plugins Capacitor
+export class WebPlugin {
+  constructor() {
+    this.listeners = {}
+  }
+
+  addListener(eventName, listenerFunc) {
+    if (!this.listeners[eventName]) {
+      this.listeners[eventName] = []
+    }
+    this.listeners[eventName].push(listenerFunc)
+    return {
+      remove: () => {
+        const index = this.listeners[eventName].indexOf(listenerFunc)
+        if (index > -1) {
+          this.listeners[eventName].splice(index, 1)
+        }
+      }
+    }
+  }
+
+  removeAllListeners() {
+    this.listeners = {}
+  }
+}
+
+// Mock CapacitorException class
+export class CapacitorException extends Error {
+  constructor(message, code, data) {
+    super(message)
+    this.name = 'CapacitorException'
+    this.code = code
+    this.data = data
+  }
+}
+
+// Mock ExceptionCode enum
+export const ExceptionCode = {
+  Unimplemented: 'UNIMPLEMENTED',
+  Unavailable: 'UNAVAILABLE',
+  Unauthorized: 'UNAUTHORIZED',
+  InvalidArguments: 'INVALID_ARGUMENTS'
+}
+
+// Mock PluginListenerHandle
+export class PluginListenerHandle {
+  constructor(remove) {
+    this.remove = remove || (() => {})
+  }
+}
+
 // registerPlugin è necessario per altri plugin Capacitor come Preferences
 export const registerPlugin = (pluginName, options = {}) => {
   // Ritorna un proxy che intercetta tutte le chiamate
