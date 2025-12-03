@@ -464,7 +464,7 @@ export default {
     newPlanDialogTitle: 'Nuovo Piano di Spesa',
     newPlanDialogSubtitle: 'Crea un piano di spesa personalizzato per il periodo che preferisci',
     confirmDeleteBudget: 'Conferma Eliminazione',
-    confirmDeleteBudgetMessage: 'Sei sicuro di voler eliminare il piano di spesa "{name}"?',
+    confirmDeleteBudgetMessage: 'Sei sicuro di voler eliminare il piano di spesa {name}?',
     budgetDeletedSuccess: 'Piano di spesa eliminato con successo',
     budgetCreatedSuccess: 'Piano di spesa creato con successo!',
     errorCreatingBudget: 'Errore nella creazione del piano di spesa',
@@ -512,7 +512,7 @@ export default {
     planCreatedSuccess: '{type} creato con successo!',
     planUpdatedSuccess: 'Piano di spesa aggiornato con successo!',
     planDeletedSuccess: 'Piano eliminato con successo',
-    planClonedSuccess: 'Piano "{name}" clonato con successo!',
+    planClonedSuccess: 'Piano {name} clonato con successo!',
     planPinned: 'Piano pinnato con successo',
     planUnpinned: 'Piano spinnato con successo',
     errorLoadingPlans: 'Errore nel caricamento dei piani di spesa',
@@ -520,7 +520,7 @@ export default {
     errorUpdatingPlan: 'Errore nell\'aggiornamento del piano',
     errorDeletingPlan: 'Errore nell\'eliminazione del piano',
     confirmDeletePlan: 'Conferma Eliminazione',
-    confirmDeletePlanMessage: 'Sei sicuro di voler eliminare il piano "{name}"?'
+    confirmDeletePlanMessage: 'Sei sicuro di voler eliminare il piano {name}?'
   },
 
   // Reports
