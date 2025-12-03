@@ -10,6 +10,20 @@ export const Capacitor = {
   convertFileSrc: (filePath) => filePath
 }
 
+// registerPlugin è necessario per altri plugin Capacitor come Preferences
+export const registerPlugin = (pluginName, options = {}) => {
+  // Ritorna un proxy che intercetta tutte le chiamate
+  return new Proxy({}, {
+    get: (target, prop) => {
+      // Se è una funzione, ritorna un async stub
+      return async (...args) => {
+        console.warn(`Capacitor plugin "${pluginName}.${String(prop)}" not available on web`)
+        return null
+      }
+    }
+  })
+}
+
 export const App = {
   getInfo: async () => ({
     version: '1.0.0',
