@@ -47,28 +47,31 @@ LocalStorage.set('user-locale', initialLocale)
 const i18nInstance = createI18n({
   locale: initialLocale,
   fallbackLocale: fallbackLocale,
-  legacy: true, // CRITICAL FIX: usa parser legacy che è più permissivo
+  legacy: false, // DRASTIC FIX: Switch to Composition API mode
   globalInjection: true,
   messages,
-  // Disabilita parsing avanzato per evitare errori sintassi
+  // EXTREME FIX: Disabilita TUTTO
   warnHtmlMessage: false,
   missingWarn: false,
-  fallbackWarn: false
+  fallbackWarn: false,
+  silentTranslationWarn: true,
+  silentFallbackWarn: true
 })
 
 export default boot(({ app }) => {
   // Set i18n instance on app
   app.use(i18nInstance)
 
-  // Set Quasar lang pack to match user locale
-  const quasarLangMap = {
-    'it-IT': quasarLangIt,
-    'en-US': quasarLangEnUS
-  }
+  // TEMPORARY: Disable Quasar lang packs to test if they cause the issue
+  // const quasarLangMap = {
+  //   'it-IT': quasarLangIt,
+  //   'en-US': quasarLangEnUS
+  // }
 
-  const langPack = quasarLangMap[initialLocale] || quasarLangIt
-  Quasar.lang.set(langPack)
-  console.log('✅ Quasar language pack loaded:', initialLocale)
+  // const langPack = quasarLangMap[initialLocale] || quasarLangIt
+  // Quasar.lang.set(langPack)
+  console.log('⚠️ Quasar language packs DISABLED for debugging')
+  console.log('✅ i18n instance loaded with locale:', initialLocale)
 })
 
 export { i18nInstance, supportedLocales }
