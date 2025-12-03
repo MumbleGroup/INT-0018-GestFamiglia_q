@@ -47,7 +47,7 @@ LocalStorage.set('user-locale', initialLocale)
 const i18nInstance = createI18n({
   locale: initialLocale,
   fallbackLocale: fallbackLocale,
-  legacy: false,
+  legacy: true, // CRITICAL FIX: usa parser legacy che è più permissivo
   globalInjection: true,
   messages,
   // Disabilita parsing avanzato per evitare errori sintassi
