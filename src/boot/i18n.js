@@ -55,7 +55,12 @@ const i18nInstance = createI18n({
   missingWarn: false,
   fallbackWarn: false,
   silentTranslationWarn: true,
-  silentFallbackWarn: true
+  silentFallbackWarn: true,
+  // CRITICAL: Return key as-is for missing translations instead of trying to parse it
+  missing: (locale, key) => {
+    console.warn(`Missing translation: ${key}`)
+    return key
+  }
 })
 
 export default boot(({ app }) => {

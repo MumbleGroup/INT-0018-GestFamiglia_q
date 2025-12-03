@@ -1,0 +1,88 @@
+# Fastlane Fastfile for Android
+# https://docs.fastlane.tools
+
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Build a release APK"
+  lane :build do
+    gradle(
+      task: "clean assembleRelease",
+      project_dir: "."
+    )
+  end
+
+  desc "Build a release AAB (Android App Bundle)"
+  lane :bundle do
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "."
+    )
+  end
+
+  desc "Deploy a new version to the Google Play Store (production track)"
+  lane :deploy do
+    # Build the release AAB
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "."
+    )
+
+    # Upload to Google Play Store
+    upload_to_play_store(
+      track: 'production',
+      aab: 'app/build/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deploy to internal testing track"
+  lane :internal do
+    # Build the release AAB
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "."
+    )
+
+    # Upload to internal testing
+    upload_to_play_store(
+      track: 'internal',
+      aab: 'app/build/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deploy to beta testing track"
+  lane :beta do
+    # Build the release AAB
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "."
+    )
+
+    # Upload to beta testing
+    upload_to_play_store(
+      track: 'beta',
+      aab: 'app/build/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Increment version code"
+  lane :bump_version do
+    increment_version_code(
+      gradle_file_path: "app/build.gradle"
+    )
+  end
+
+end

@@ -1,0 +1,8 @@
+# Fastlane Appfile for Android
+# https://docs.fastlane.tools/advanced/Appfile/
+
+# Package name of your Android app
+package_name("com.mumble.crazyfamily")
+
+# Google Play Console Service Account JSON (stesso account di Realtor)
+json_key_file("/Users/mas/Documents/MumbleProjects/INT-0013-Realtor/INT-0013-Realtor_b/config/realtoro-443007-4b638fff1cd0.json")
