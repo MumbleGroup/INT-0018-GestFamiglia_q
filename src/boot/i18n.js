@@ -49,7 +49,11 @@ const i18nInstance = createI18n({
   fallbackLocale: fallbackLocale,
   legacy: false,
   globalInjection: true,
-  messages
+  messages,
+  // Disabilita parsing avanzato per evitare errori sintassi
+  warnHtmlMessage: false,
+  missingWarn: false,
+  fallbackWarn: false
 })
 
 export default boot(({ app }) => {

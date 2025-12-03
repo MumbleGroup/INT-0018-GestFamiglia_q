@@ -106,7 +106,7 @@ export default {
     requestNewLink: 'Richiedi un nuovo link',
     passwordChangedSuccess: 'Password cambiata con successo!',
     canLoginNow: 'Ora puoi effettuare il login.',
-    goToLogin: 'Vai al Login →',
+    goToLogin: 'Vai al Login',
     newPassword: 'Nuova password',
     newPasswordPlaceholder: 'Inserisci nuova password',
     confirmNewPasswordPlaceholder: 'Conferma nuova password',
@@ -936,9 +936,9 @@ export default {
           question: 'Come funzionano gli indicatori visivi?',
           answer: 'Le spese ricorrenti hanno indicatori visivi per controllare lo stato a colpo d\'occhio:',
           indicators: {
-            paid: '☑️ Checkbox Verde: Rate già pagate/completate',
-            current: '☐ Checkbox Blu: Rata corrente (in scadenza ora)',
-            future: '☐ Checkbox Grigia: Rate future ancora da pagare'
+            paid: 'Checkbox Verde: Rate già pagate/completate',
+            current: 'Checkbox Blu: Rata corrente (in scadenza ora)',
+            future: 'Checkbox Grigia: Rate future ancora da pagare'
           },
           desktop: 'Desktop: Le checkbox appaiono in linea dopo il pulsante chevron',
           mobile: 'Mobile: Tocca l\'icona chevron per espandere e vedere i dettagli'
@@ -1181,8 +1181,8 @@ export default {
     developmentFeature: 'Funzionalità in Sviluppo',
 
     // Settings Page Messages
-    clearingCacheRestart: '🔄 Cancellazione cache e riavvio...',
-    errorForceRefresh: '❌ Errore durante il refresh forzato',
+    clearingCacheRestart: 'Cancellazione cache e riavvio...',
+    errorForceRefresh: 'Errore durante il refresh forzato',
     languageChangedIt: 'Lingua modificata in Italiano',
     languageChangedEn: 'Language changed to English',
     errorChangingLanguage: 'Error changing language',
