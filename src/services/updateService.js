@@ -2,14 +2,42 @@
  * Update Service - Gestione aggiornamenti automatici dell'app
  */
 
-import { Capacitor } from '@capacitor/core'
-import { App } from '@capacitor/app'
-import { Filesystem, Directory } from '@capacitor/filesystem'
-import { FileOpener } from '@capacitor-community/file-opener'
 import { Dialog } from 'quasar'
 import { API } from './api/index.js'
 import { useAppStore } from '../stores/useAppStore.js'
 import ConfigService from './config.js'
+
+// Import Capacitor dinamicamente per evitare errori nel build SPA
+let Capacitor = null
+let App = null
+let Filesystem = null
+let Directory = null
+let FileOpener = null
+
+// Helper per caricare Capacitor solo quando disponibile
+async function loadCapacitor() {
+  if (Capacitor !== null) return
+
+  try {
+    const capacitorCore = await import('@capacitor/core')
+    Capacitor = capacitorCore.Capacitor
+
+    if (Capacitor.isNativePlatform()) {
+      const appModule = await import('@capacitor/app')
+      App = appModule.App
+
+      const fsModule = await import('@capacitor/filesystem')
+      Filesystem = fsModule.Filesystem
+      Directory = fsModule.Directory
+
+      const fileOpenerModule = await import('@capacitor-community/file-opener')
+      FileOpener = fileOpenerModule.FileOpener
+    }
+  } catch (error) {
+    // Capacitor non disponibile (build SPA)
+    Capacitor = { isNativePlatform: () => false }
+  }
+}
 
 class UpdateService {
   constructor() {
@@ -19,9 +47,10 @@ class UpdateService {
   }
 
   async init() {
+    await loadCapacitor()
     const appStore = useAppStore()
 
-    if (Capacitor.isNativePlatform()) {
+    if (Capacitor && Capacitor.isNativePlatform()) {
       // Ottieni info app corrente da Capacitor
       const appInfo = await App.getInfo()
       this.currentVersion = {
@@ -187,7 +216,7 @@ ${updateInfo.is_mandatory ? '\n⚠️ Questo aggiornamento è obbligatorio.' : '
       // Chiudi progress dialog
       progressDialog.hide()
 
-      if (Capacitor.isNativePlatform()) {
+      if (Capacitor && Capacitor.isNativePlatform()) {
         // MOBILE NATIVO: Salva nel filesystem e installa
         const arrayBuffer = await blob.arrayBuffer()
 
@@ -252,7 +281,7 @@ ${updateInfo.is_mandatory ? '\n⚠️ Questo aggiornamento è obbligatorio.' : '
    */
   async installApk(fileName) {
     try {
-      if (!Capacitor.isNativePlatform()) {
+      if (!Capacitor || !Capacitor.isNativePlatform()) {
         console.log('🌐 Cannot install APK on web platform')
         return
       }
