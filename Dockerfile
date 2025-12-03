@@ -11,18 +11,10 @@ COPY . .
 # ✅ Installa le dipendenze del progetto
 RUN npm install --legacy-peer-deps
 
-# ✅ PWA build supporta Capacitor nativamente - non servono mock
-
-# ✅ Forza ricreazione PWA mode sempre
-RUN rm -rf src-pwa && quasar mode add pwa
-
-# 🔎 Debug: Controlla che il progetto sia valido
-RUN ls -la /app
-
-# ✅ Build per produzione PWA (supporta Capacitor plugins)
+# ✅ Build per produzione SPA (più leggero e veloce)
 ENV NODE_ENV=production
 ENV CI=true
-RUN quasar build -m pwa --skip-pkg-version-check || quasar build -m pwa
+RUN quasar build -m spa --skip-pkg-version-check || quasar build -m spa
 # 🔹 2️⃣ STAGE DI PRODUZIONE CON NGINX
 FROM nginx:1.25.0-alpine AS production-stage
 
@@ -32,8 +24,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # ✅ Copia landing page SEO-friendly nel root
 COPY landing-seo/ /usr/share/nginx/html/
 
-# ✅ Copia i file buildati PWA nella sottocartella app
-COPY --from=build-stage /app/dist/pwa /usr/share/nginx/html/app
+# ✅ Copia i file buildati SPA nella sottocartella app
+COPY --from=build-stage /app/dist/spa /usr/share/nginx/html/app
 
 # ✅ Aggiungi curl per health check
 RUN apk add --no-cache curl
