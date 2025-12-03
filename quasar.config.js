@@ -65,7 +65,20 @@ export default defineConfig((ctx) => {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      // Configurazione Vite personalizzata per build SPA
+      extendViteConf (viteConf) {
+        // In modalità SPA, ignora gli import Capacitor falliti
+        if (ctx.modeName === 'spa') {
+          viteConf.resolve = viteConf.resolve || {}
+          viteConf.resolve.alias = viteConf.resolve.alias || {}
+
+          // Alias vuoti per Capacitor in modalità SPA
+          viteConf.resolve.alias['@capacitor/core'] = fileURLToPath(new URL('./src/mocks/capacitor-mock.js', import.meta.url))
+          viteConf.resolve.alias['@capacitor/app'] = fileURLToPath(new URL('./src/mocks/capacitor-mock.js', import.meta.url))
+          viteConf.resolve.alias['@capacitor/filesystem'] = fileURLToPath(new URL('./src/mocks/capacitor-mock.js', import.meta.url))
+          viteConf.resolve.alias['@capacitor-community/file-opener'] = fileURLToPath(new URL('./src/mocks/capacitor-mock.js', import.meta.url))
+        }
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [
