@@ -1,3 +1,13 @@
+// TEMPORARY: Using minimal translations to fix SyntaxError: 10
+// Full translations temporarily disabled - will debug later
+// Original full file is in this same file below (commented out for reference)
+
+import minimal from './index-minimal.js'
+
+export default minimal
+
+/* FULL VERSION COMMENTED OUT - TO BE DEBUGGED LATER
+
 export default {
   // Common
   common: {
@@ -1435,3 +1445,5 @@ export default {
     }
   }
 }
+
+*/
