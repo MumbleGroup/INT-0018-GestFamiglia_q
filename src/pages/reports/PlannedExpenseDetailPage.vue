@@ -244,7 +244,12 @@
                 </div>
               </div>
               <div class="expense-amount">
-                <div class="amount-main">€{{ formatAmount(expense.amount) }}</div>
+                <div class="amount-main">
+                  <span v-if="expense.total_paid > 0" class="amount-paid-partial">
+                    €{{ formatAmount(expense.total_paid) }}/{{ formatAmount(expense.amount) }}
+                  </span>
+                  <span v-else>€{{ formatAmount(expense.amount) }}</span>
+                </div>
                 <div class="amount-mobile-status">
                   <span class="status-badge mobile-status" :class="expense.payment_status">
                     {{ getStatusLabel(expense.payment_status) }}
@@ -294,7 +299,7 @@
             </div>
 
             <!-- Payment Progress -->
-            <div class="payment-progress">
+            <div v-if="expense.total_paid > 0 && expense.payment_status !== 'paid'" class="payment-progress">
               <div class="progress-info">
                 <span class="paid-amount">Pagato: €{{ expense.total_paid }}</span>
                 <span class="remaining-amount">Rimanente: €{{ expense.remaining_amount }}</span>
