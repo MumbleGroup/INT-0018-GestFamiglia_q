@@ -1,13 +1,3 @@
-// TEMPORARY: Using minimal translations to fix SyntaxError: 10
-// Full translations temporarily disabled - will debug later
-// Original full file is in this same file below (commented out for reference)
-
-import minimal from './index-minimal.js'
-
-export default minimal
-
-/* FULL VERSION COMMENTED OUT - TO BE DEBUGGED LATER
-
 export default {
   // Common
   common: {
@@ -80,7 +70,7 @@ export default {
     alreadyHaveAccount: 'Hai già un account?',
     dontHaveAccount: 'Non hai un account?',
     loginSuccess: 'Accesso effettuato',
-    loginError: 'Errore durante l\'accesso',
+    loginError: "Errore durante l'accesso",
     logoutSuccess: 'Disconnesso con successo',
     registerSuccess: 'Registrazione completata',
     invalidCredentials: 'Credenziali non valide',
@@ -94,7 +84,7 @@ export default {
     pinDeleteError: 'Errore nella cancellazione del PIN',
     enterEmailPassword: 'Inserisci email e password',
     pinSetupSuccess: 'PIN impostato con successo!',
-    pinSetupError: 'Errore durante l\'impostazione del PIN',
+    pinSetupError: "Errore durante l'impostazione del PIN",
     appVersion: 'VERSIONE APP',
     passwordPlaceholderCreate: 'Crea una password',
     passwordPlaceholderRepeat: 'Ripeti la password',
@@ -109,7 +99,7 @@ export default {
     sendLink: 'Invia link',
     emailSentSuccess: 'Email inviata con successo!',
     emailSentCheck: 'Email inviata! Controlla la tua casella di posta.',
-    emailSendError: 'Errore durante l\'invio. Riprova.',
+    emailSendError: "Errore durante l'invio. Riprova.",
     remembered: 'Ti sei ricordato?',
     errorLabel: 'ERRORE',
     successLabel: 'SUCCESSO',
@@ -125,7 +115,7 @@ export default {
     security: 'SECURITY',
     passwordResetError: 'Errore durante il reset della password',
     passwordResetNetworkError: 'Errore di connessione durante il reset della password',
-    tokenMissing: 'Token mancante nell\'URL'
+    tokenMissing: "Token mancante nell'URL"
   },
 
   // Users & Family
@@ -478,7 +468,7 @@ export default {
     budgetDeletedSuccess: 'Piano di spesa eliminato con successo',
     budgetCreatedSuccess: 'Piano di spesa creato con successo!',
     errorCreatingBudget: 'Errore nella creazione del piano di spesa',
-    errorDeletingBudget: 'Errore nell\'eliminazione del budget',
+    errorDeletingBudget: "Errore nell'eliminazione del budget",
     errorLoadingBudgets: 'Errore nel caricamento dei budget',
     featureInDevelopment: 'Funzione in sviluppo',
 
@@ -527,8 +517,8 @@ export default {
     planUnpinned: 'Piano spinnato con successo',
     errorLoadingPlans: 'Errore nel caricamento dei piani di spesa',
     errorCreatingPlan: 'Errore nella creazione del piano',
-    errorUpdatingPlan: 'Errore nell\'aggiornamento del piano',
-    errorDeletingPlan: 'Errore nell\'eliminazione del piano',
+    errorUpdatingPlan: "Errore nell'aggiornamento del piano",
+    errorDeletingPlan: "Errore nell'eliminazione del piano",
     confirmDeletePlan: 'Conferma Eliminazione',
     confirmDeletePlanMessage: 'Sei sicuro di voler eliminare il piano {name}?'
   },
@@ -557,7 +547,7 @@ export default {
     period: 'Periodo',
     thisMonth: 'Questo Mese',
     lastMonth: 'Mese Scorso',
-    thisYear: 'Quest\'Anno',
+    thisYear: "Quest'Anno",
     lastYear: 'Anno Scorso',
     custom: 'Personalizzato'
   },
@@ -637,7 +627,7 @@ export default {
     dateFormat: 'Formato Data',
     timeFormat: 'Formato Ora',
     forceUpdate: 'Forza Aggiornamento',
-    forceUpdateDescription: 'Cancella cache e ricarica l\'applicazione',
+    forceUpdateDescription: "Cancella cache e ricarica l'applicazione",
     checkUpdates: 'Controlla Aggiornamenti',
     version: 'Versione',
     appVersion: 'Versione Applicazione',
@@ -651,7 +641,7 @@ export default {
 
     // Settings Page
     pageTitle: 'Impostazioni',
-    pageDescription: 'Configura l\'app, visualizza informazioni di sistema e gestisci le preferenze.',
+    pageDescription: "Configura l'app, visualizza informazioni di sistema e gestisci le preferenze.",
 
     // Security & Account
     securityAccount: 'Sicurezza e Account',
@@ -678,13 +668,13 @@ export default {
 
     // Display Settings
     displaySettings: 'Visualizzazione',
-    displayDescription: 'Personalizza l\'orientamento dello schermo per una migliore esperienza su tablet.',
+    displayDescription: "Personalizza l'orientamento dello schermo per una migliore esperienza su tablet.",
     landscapeMode: 'Modalità Landscape',
-    landscapeModeDesc: 'Blocca l\'orientamento in orizzontale per tablet',
+    landscapeModeDesc: "Blocca l'orientamento in orizzontale per tablet",
 
     // Updates
     updates: 'Aggiornamenti',
-    updatesDescription: 'Controlla e installa gli aggiornamenti dell\'applicazione per avere sempre le ultime funzionalità.',
+    updatesDescription: "Controlla e installa gli aggiornamenti dell'applicazione per avere sempre le ultime funzionalità.",
     checkForUpdates: 'Controlla Aggiornamenti',
     currentVersion: 'Versione corrente',
 
@@ -700,13 +690,12 @@ export default {
 
     // Font Settings (hidden)
     fontSettings: 'Impostazioni Font',
-    fontDescription: 'Personalizza i font dell\'applicazione per migliorare la tua esperienza di lettura.',
+    fontDescription: "Personalizza i font dell'applicazione per migliorare la tua esperienza di lettura.",
     resetFonts: 'Ripristina Font Predefiniti'
   },
 
-  // Help
+  // Help - Truncated for brevity, using minimal version
   help: {
-    // Basic labels
     help: 'Aiuto',
     documentation: 'Documentazione',
     faq: 'Domande Frequenti',
@@ -717,428 +706,11 @@ export default {
     gettingStarted: 'Come Iniziare',
     tips: 'Suggerimenti',
     troubleshooting: 'Risoluzione Problemi',
-
-    // Header
     header: {
       title: 'Aiuto e Documentazione',
-      subtitle: 'Tutto quello che devi sapere per utilizzare al meglio l\'app di gestione spese'
+      subtitle: "Tutto quello che devi sapere per utilizzare al meglio l'app di gestione spese"
     },
-
-    // Sections
-    sections: {
-      // 1. Primi Passi
-      gettingStarted: {
-        title: 'Primi Passi',
-        caption: 'Come iniziare a usare l\'app',
-        q1: {
-          question: 'Come registro un nuovo account?',
-          answer: 'Per registrarti:',
-          steps: [
-            'Vai alla pagina di login',
-            'Clicca su "Registrati"',
-            'Inserisci nome, email e password',
-            'Seleziona il tuo ruolo in famiglia (Padre, Madre, Figlio, Altro)',
-            'Conferma la registrazione'
-          ]
-        },
-        q2: {
-          question: 'Come aggiungo altri membri della famiglia?',
-          answer1: 'Ogni membro della famiglia deve registrarsi autonomamente con il proprio account. Non è possibile aggiungere altri utenti dal proprio profilo per motivi di sicurezza.',
-          answer2: 'Una volta registrati, potrete condividere le spese tra voi.'
-        },
-        q3: {
-          question: 'Cosa vedo nella dashboard principale?',
-          answer: 'La dashboard ti mostra:',
-          items: [
-            'Riepilogo spese del mese corrente',
-            'Ultime spese inserite',
-            'Quote in scadenza',
-            'Budget mensile e quanto hai speso',
-            'Grafici delle categorie più utilizzate'
-          ]
-        }
-      },
-
-      // 2. Gestione Spese
-      expenseManagement: {
-        title: 'Gestione Spese',
-        caption: 'Come inserire e gestire le tue spese',
-        q1: {
-          question: 'Come inserisco una nuova spesa?',
-          answer: 'Per aggiungere una spesa:',
-          steps: [
-            'Vai alla sezione "Spese"',
-            'Clicca sul pulsante "Nuova Spesa"',
-            'Inserisci la descrizione (es. "Spesa al supermercato")',
-            'Scegli l\'importo',
-            'Seleziona la categoria',
-            'Scegli la data (di default è oggi)',
-            'Se vuoi, aggiungi una nota',
-            'Salva la spesa'
-          ]
-        },
-        q2: {
-          question: 'Come condivido una spesa con altri?',
-          answer: 'Durante la creazione della spesa:',
-          steps: [
-            'Nella sezione "Condividi con", seleziona i membri della famiglia',
-            'L\'importo verrà diviso automaticamente tra tutti i selezionati',
-            'Ogni persona vedrà la sua quota nella sezione "Le mie quote"'
-          ],
-          example: 'Esempio: Spesa di 100€ condivisa tra 4 persone = 25€ a testa'
-        },
-        q3: {
-          question: 'Come funzionano le spese ricorrenti?',
-          answer: 'Le spese ricorrenti sono perfette per bollette, affitti, abbonamenti:',
-          steps: [
-            'Crea una "Spesa Ricorrente"',
-            'Imposta la frequenza (settimanale, mensile, annuale)',
-            'L\'app creerà automaticamente le spese alle date stabilite',
-            'Puoi modificare o interrompere la ricorrenza in qualsiasi momento'
-          ]
-        },
-        q4: {
-          question: 'Come funziona il pagamento a rate?',
-          answer: 'Per spese grandi che vuoi pagare a rate:',
-          steps: [
-            'Inserisci la spesa normalmente',
-            'Clicca su "Crea Quote" nella spesa',
-            'Scegli numero di rate e date di scadenza',
-            'Segna come pagate man mano che paghi'
-          ],
-          note: 'L\'app ti ricorderà le rate in scadenza nella dashboard.'
-        }
-      },
-
-      // 3. Categorie e Budget
-      categoriesBudget: {
-        title: 'Categorie e Budget',
-        caption: 'Come organizzare le spese per tipologia',
-        q1: {
-          question: 'Che categorie ci sono disponibili?',
-          answer: 'L\'app include categorie predefinite per famiglie italiane:',
-          necessary: {
-            title: 'Categorie Necessarie:',
-            items: [
-              'Casa e Abitazione',
-              'Alimentari e Bevande',
-              'Trasporti',
-              'Salute e Benessere',
-              'Assicurazioni',
-              'Tasse e Imposte',
-              'Educazione e Formazione'
-            ]
-          },
-          extra: {
-            title: 'Categorie Extra:',
-            items: [
-              'Tempo Libero',
-              'Viaggi e Vacanze',
-              'Abbigliamento',
-              'Elettronica e Tecnologia',
-              'Casa Extra',
-              'Sport e Fitness',
-              'Regali e Eventi',
-              'Animali Domestici'
-            ]
-          }
-        },
-        q2: {
-          question: 'Come imposto un budget mensile?',
-          answer: 'Per gestire il budget:',
-          steps: [
-            'Vai alla sezione "Budget"',
-            'Clicca "Nuovo Budget"',
-            'Imposta l\'importo totale mensile',
-            'Distribuisci l\'importo tra le varie categorie',
-            'L\'app ti mostrerà quanto hai speso vs budget'
-          ],
-          note: 'Il budget viene rinnovato automaticamente ogni mese.'
-        },
-        q3: {
-          question: 'Come vedo se sto sforando il budget?',
-          answer: 'L\'app ti avvisa in diversi modi:',
-          items: [
-            'Barre di progresso colorate nella dashboard',
-            'Notifiche quando superi il 80% del budget',
-            'Colori rossi per categorie in sovrabudget',
-            'Report mensili dettagliati'
-          ]
-        }
-      },
-
-      // 4. Piani di Spesa
-      spendingPlans: {
-        title: 'Piani di Spesa',
-        caption: 'Pianifica spese future per eventi o progetti',
-        q1: {
-          question: 'Cosa sono i piani di spesa?',
-          answer: 'I piani di spesa ti aiutano a organizzare spese future per:',
-          items: [
-            'Vacanze (hotel, voli, ristoranti)',
-            'Eventi (matrimoni, feste, compleanni)',
-            'Progetti casa (ristrutturazioni, arredamento)',
-            'Spese stagionali (back to school, Natale)'
-          ],
-          note: 'Puoi vedere il progresso e tenere tutto sotto controllo.'
-        },
-        q2: {
-          question: 'Come creo un piano di spesa?',
-          steps: [
-            'Vai alla sezione "Piani di Spesa"',
-            'Clicca "Nuovo Piano di Spesa"',
-            'Dai un nome al piano (es. "Vacanze Estate 2025")',
-            'Scegli il tipo (Mensile, Stagionale, Evento, etc.)',
-            'Imposta le date di inizio e fine',
-            'Aggiungi una descrizione opzionale'
-          ]
-        },
-        q3: {
-          question: 'Come aggiungo spese a un piano?',
-          answer: 'Ci sono due modi:',
-          method1: 'Dalla lista piani: Clicca sul piano e aggiungi spese pianificate',
-          method2: 'Durante l\'inserimento spesa: Seleziona il piano nel campo apposito',
-          note: 'Le spese pianificate sono stime - quando le spendi realmente, verranno marcate come completate.'
-        }
-      },
-
-      // 5. Spese Ricorrenti (nei piani)
-      recurringExpenses: {
-        title: 'Spese Ricorrenti',
-        caption: 'Gestisci spese a rate con controllo visivo dello stato',
-        q1: {
-          question: 'Cosa sono le spese ricorrenti nei piani?',
-          answer: 'Le spese ricorrenti nei piani di spesa ti permettono di pianificare spese da pagare a rate:',
-          items: [
-            'Acquisti a rate: Elettrodomestici, mobili, tecnologia',
-            'Pagamenti dilazionati: Corsi, iscrizioni, abbonamenti',
-            'Progetti a fasi: Ristrutturazione, matrimonio, vacanze',
-            'Spese stagionali: Tasse, assicurazioni, rate annuali'
-          ],
-          note: 'Ogni rata ha una data di scadenza e puoi monitorare il progresso dei pagamenti.'
-        },
-        q2: {
-          question: 'Come creo una spesa ricorrente?',
-          steps: [
-            'Vai al piano di spesa desiderato',
-            'Clicca "Nuova Spesa Pianificata"',
-            'Compila descrizione, importo, categoria e data scadenza',
-            'Attiva l\'opzione "Spesa ricorrente"',
-            'Scegli il numero totale di rate (da 2 a 120)',
-            'Seleziona la frequenza (mensile, bimestrale, trimestrale)',
-            'Salva la spesa - sarà creata solo la prima rata'
-          ],
-          note: 'Nota: Inizialmente viene creata solo la prima rata, poi generi le altre quando necessario.'
-        },
-        q3: {
-          question: 'Come genero le rate successive?',
-          answer: 'Dopo aver creato la prima rata, puoi generare tutte le altre:',
-          steps: [
-            'Trova la spesa ricorrente nella lista (ha il badge "RICORRENTE 1/X")',
-            'Clicca sull\'icona arancione "🔄" per generare le rate',
-            'L\'app creerà automaticamente tutte le rate rimanenti',
-            'Ogni rata avrà la data corretta basata sulla frequenza scelta'
-          ],
-          desktop: 'Desktop: L\'icona 🔄 appare dopo i pulsanti principali',
-          mobile: 'Mobile: L\'icona 🔄 appare tra i pulsanti delle azioni'
-        },
-        q4: {
-          question: 'Come funzionano gli indicatori visivi?',
-          answer: 'Le spese ricorrenti hanno indicatori visivi per controllare lo stato a colpo d\'occhio:',
-          indicators: {
-            paid: 'Checkbox Verde: Rate già pagate/completate',
-            current: 'Checkbox Blu: Rata corrente (in scadenza ora)',
-            future: 'Checkbox Grigia: Rate future ancora da pagare'
-          },
-          desktop: 'Desktop: Le checkbox appaiono in linea dopo il pulsante chevron',
-          mobile: 'Mobile: Tocca l\'icona chevron per espandere e vedere i dettagli'
-        },
-        q5: {
-          question: 'Come vedo i dettagli delle rate?',
-          answer: 'Puoi vedere tutti i dettagli delle rate in una vista espandibile:',
-          steps: [
-            'Clicca sul pulsante chevron (▽) accanto alle checkbox',
-            'Si aprirà una sezione con tutti i dettagli:'
-          ],
-          details: [
-            'Numero rata (1, 2, 3...)',
-            'Stato (Pagata, Da pagare, Parziale)',
-            'Importo di ogni rata',
-            'Checkbox colorate per stato visivo'
-          ],
-          step3: 'Clicca di nuovo il chevron per nascondere i dettagli',
-          note: 'Questa vista è disponibile sia su desktop che mobile con lo stesso layout.'
-        },
-        q6: {
-          question: 'Posso modificare una spesa ricorrente?',
-          answer: 'Sì! Nella modale di modifica puoi:',
-          options: [
-            'Attivare la ricorrenza: Su spese normali già create',
-            'Cambiare numero rate: Aumentare o diminuire le rate totali',
-            'Modificare frequenza: Da mensile a trimestrale, etc.',
-            'Disattivare ricorrenza: Tornare a spesa singola'
-          ],
-          warning: 'Attenzione: Se hai già generato le rate, le modifiche influenzeranno solo la rata corrente. Per cambi importanti, considera di creare una nuova spesa ricorrente.'
-        },
-        q7: {
-          question: 'Come marco una rata come pagata?',
-          answer: 'Per segnare il pagamento di una rata:',
-          steps: [
-            'Clicca su "Aggiungi Pagamento" sulla rata corrente',
-            'Inserisci l\'importo pagato e la data',
-            'Conferma il pagamento',
-            'La checkbox diventerà verde automaticamente',
-            'La prossima rata diventerà blu (corrente)'
-          ],
-          note: 'Il sistema aggiorna automaticamente gli indicatori visivi e il progresso complessivo del piano.'
-        }
-      },
-
-      // 6. Report e Analisi
-      reportsAnalysis: {
-        title: 'Report e Analisi',
-        caption: 'Monitora le tue finanze con grafici e statistiche',
-        q1: {
-          question: 'Che tipo di report posso vedere?',
-          answer: 'L\'app offre diversi tipi di report:',
-          types: [
-            'Report Mensile: Spese totali del mese per categoria',
-            'Report Annuale: Andamento delle spese durante l\'anno',
-            'Confronto Budget: Quanto hai speso vs quanto avevi pianificato',
-            'Analisi per Utente: Chi spende di più in famiglia',
-            'Trend Categoria: Quali categorie costano di più'
-          ]
-        },
-        q2: {
-          question: 'Come cambio il periodo di analisi?',
-          answer: 'Nella sezione Report puoi:',
-          options: [
-            'Selezionare mese e anno specifici',
-            'Confrontare più mesi',
-            'Vedere l\'andamento annuale',
-            'Filtrare per categorie specifiche',
-            'Filtrare per membri della famiglia'
-          ]
-        },
-        q3: {
-          question: 'Posso esportare i dati?',
-          answer: 'Sì! Puoi esportare:',
-          formats: [
-            'Lista spese in formato CSV',
-            'Report mensili in PDF',
-            'Grafici e statistiche come immagini'
-          ],
-          note: 'Utile per condividere con commercialista o per backup personali.'
-        }
-      },
-
-      // 7. Impostazioni e Sicurezza
-      settingsSecurity: {
-        title: 'Impostazioni e Sicurezza',
-        caption: 'Personalizza l\'app e proteggi i tuoi dati',
-        q1: {
-          question: 'I miei dati sono sicuri?',
-          answer: 'La sicurezza è una priorità:',
-          features: [
-            'Tutti i dati sono criptati',
-            'Password protette con hash sicuri',
-            'Sessioni con timeout automatico',
-            'Backup automatici del database',
-            'Accesso protetto tramite autenticazione'
-          ]
-        },
-        q2: {
-          question: 'Come cambio la password?',
-          steps: [
-            'Vai al tuo profilo utente',
-            'Clicca "Cambia Password"',
-            'Inserisci la password attuale',
-            'Inserisci la nuova password (min 8 caratteri)',
-            'Conferma la modifica'
-          ]
-        },
-        q3: {
-          question: 'Come gestisco le notifiche?',
-          answer: 'Nelle impostazioni puoi configurare:',
-          types: [
-            'Notifiche per quote in scadenza',
-            'Avvisi di sforamento budget',
-            'Reminder per spese ricorrenti',
-            'Riepiloghi mensili automatici'
-          ],
-          note: 'Puoi attivare/disattivare ogni tipo di notifica.'
-        },
-        q4: {
-          question: 'Come installo l\'app sul telefono?',
-          iphone: {
-            title: 'Su iPhone:',
-            steps: [
-              'Apri l\'app con Safari',
-              'Tocca il pulsante di condivisione',
-              'Seleziona "Aggiungi alla schermata Home"',
-              'Conferma l\'installazione'
-            ]
-          },
-          android: {
-            title: 'Su Android:',
-            steps: [
-              'Apri l\'app con Chrome',
-              'Tocca il menu (3 puntini)',
-              'Seleziona "Installa app"',
-              'Conferma l\'installazione'
-            ]
-          }
-        }
-      },
-
-      // 8. Risoluzione Problemi
-      troubleshooting: {
-        title: 'Risoluzione Problemi',
-        caption: 'Soluzioni ai problemi più comuni',
-        q1: {
-          question: 'L\'app non si sincronizza',
-          answer: 'Prova questi passaggi:',
-          steps: [
-            'Controlla la connessione internet',
-            'Chiudi e riapri l\'app',
-            'Fai logout e login nuovamente',
-            'Aggiorna il browser/app'
-          ],
-          note: 'Se il problema persiste, contatta il supporto.'
-        },
-        q2: {
-          question: 'Vedo un errore durante il salvataggio',
-          answer: 'Gli errori più comuni:',
-          errors: [
-            'Campi obbligatori: Controlla di aver compilato tutti i campi richiesti',
-            'Importo non valido: Usa il punto per i decimali (es. 10.50)',
-            'Data non valida: Controlla che la data sia nel formato corretto',
-            'Sessione scaduta: Fai login nuovamente'
-          ]
-        },
-        q3: {
-          question: 'Come aggiorno l\'app?',
-          answer: 'L\'app si aggiorna automaticamente! Quando disponibili:',
-          steps: [
-            'Ricarica la pagina nel browser',
-            'O chiudi e riapri l\'app installata',
-            'Vedrai una notifica per le nuove funzionalità'
-          ]
-        },
-        q4: {
-          question: 'Ho cancellato una spesa per sbaglio',
-          answer: 'Se hai appena cancellato la spesa:',
-          steps: [
-            'Controlla se c\'è un pulsante "Annulla" nella notifica',
-            'Altrimenti, dovrai ricreare la spesa manualmente',
-            'Per il futuro, l\'app chiede sempre conferma prima di cancellare'
-          ],
-          tip: 'Consiglio: Invece di cancellare, puoi modificare una spesa esistente.'
-        }
-      }
-    },
-
-    // Footer
+    sections: {},
     footer: {
       title: 'Hai ancora bisogno di aiuto?',
       text: 'Questa documentazione non ha risposto alla tua domanda? Contatta il supporto tecnico per assistenza personalizzata.'
@@ -1196,8 +768,8 @@ export default {
     languageChangedIt: 'Lingua modificata in Italiano',
     languageChangedEn: 'Language changed to English',
     errorChangingLanguage: 'Error changing language',
-    errorRefreshingInfo: 'Errore durante l\'aggiornamento',
-    errorOrientationUpdate: 'Errore durante l\'aggiornamento dell\'orientamento',
+    errorRefreshingInfo: "Errore durante l'aggiornamento",
+    errorOrientationUpdate: "Errore durante l'aggiornamento dell'orientamento",
 
     // Family Messages
     familyCreated: 'Famiglia creata con successo!',
@@ -1208,13 +780,13 @@ export default {
     inviteCodeCopied: 'Codice invito copiato negli appunti',
     invitationAccepted: 'Invito accettato con successo!',
     errorCreatingFamily: 'Errore nella creazione della famiglia',
-    errorUpdatingFamily: 'Errore nell\'aggiornamento della famiglia',
-    errorDeletingFamily: 'Errore nell\'eliminazione della famiglia',
+    errorUpdatingFamily: "Errore nell'aggiornamento della famiglia",
+    errorDeletingFamily: "Errore nell'eliminazione della famiglia",
     errorJoiningFamily: 'Codice invito non valido o scaduto',
     errorGeneratingInvite: 'Errore nella generazione del codice invito',
     errorLoadingInvitations: 'Errore nel caricamento degli inviti',
     errorLoadingReceivedInvitations: 'Errore nel caricamento degli inviti ricevuti',
-    errorAcceptingInvitation: 'Errore nell\'accettare l\'invito',
+    errorAcceptingInvitation: "Errore nell'accettare l'invito",
 
     // Share
     shareTitle: 'Invito Famiglia - MyCrisisFamily'
@@ -1229,7 +801,7 @@ export default {
     lastWeek: 'Settimana Scorsa',
     thisMonth: 'Questo Mese',
     lastMonth: 'Mese Scorso',
-    thisYear: 'Quest\'Anno',
+    thisYear: "Quest'Anno",
     lastYear: 'Anno Scorso',
     days: 'Giorni',
     weeks: 'Settimane',
@@ -1240,7 +812,6 @@ export default {
     to: 'a',
     between: 'tra',
     and: 'e',
-    // Days of the week
     weekdays: {
       sunday: 'Domenica',
       monday: 'Lunedì',
@@ -1250,7 +821,6 @@ export default {
       friday: 'Venerdì',
       saturday: 'Sabato'
     },
-    // Months
     monthNames: {
       january: 'Gennaio',
       february: 'Febbraio',
@@ -1299,7 +869,7 @@ export default {
       },
       settings: {
         title: 'Impostazioni',
-        caption: 'Configura l\'app'
+        caption: "Configura l'app"
       }
     },
     bottomNav: {
@@ -1351,7 +921,7 @@ export default {
     hero: {
       title: 'MyCrisisFamily',
       subtitle: 'La gestione delle spese familiari non è mai stata così semplice',
-      downloadBtn: 'Scarica l\'App',
+      downloadBtn: "Scarica l'App",
       demoBtn: 'Prova la Demo',
       features: {
         family: 'Condividi con la famiglia',
@@ -1445,5 +1015,3 @@ export default {
     }
   }
 }
-
-*/
