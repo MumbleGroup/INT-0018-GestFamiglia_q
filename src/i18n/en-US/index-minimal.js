@@ -4,7 +4,8 @@ export default {
     save: 'Save',
     cancel: 'Cancel',
     delete: 'Delete',
-    error: 'Error'
+    error: 'Error',
+    loading: 'Loading...'
   },
   auth: {
     login: 'Login',
@@ -38,5 +39,36 @@ export default {
   },
   dashboard: {
     title: 'Dashboard'
+  },
+  calendar: {
+    title: 'Expense Calendar',
+    addExpense: 'Add expense',
+    newExpense: 'New expense',
+    loadError: 'Error loading expenses',
+    noExpenses: 'No expenses',
+    monthExpenses: 'Month expenses',
+    monthTotal: 'Month total',
+    today: 'Today'
+  },
+  expenses: {
+    amountRequired: 'Amount *',
+    descriptionRequired: 'Description *',
+    categoryRequired: 'Category *',
+    invalidAmount: 'Amount must be greater than 0',
+    expenseCreated: 'Expense created successfully'
+  },
+  validation: {
+    required: 'Required field'
+  },
+  layout: {
+    menu: {
+      calendar: {
+        title: 'Calendar',
+        caption: 'View expenses by date'
+      }
+    },
+    bottomNav: {
+      calendar: 'Calendar'
+    }
   }
 }

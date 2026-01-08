@@ -407,6 +407,18 @@ export default {
     }
   },
 
+  // Calendar
+  calendar: {
+    title: 'Calendario Spese',
+    addExpense: 'Aggiungi spesa',
+    newExpense: 'Nuova spesa',
+    loadError: 'Errore nel caricamento delle spese',
+    noExpenses: 'Nessuna spesa',
+    monthExpenses: 'Spese del mese',
+    monthTotal: 'Totale mese',
+    today: 'Oggi'
+  },
+
   // Budget & Planning
   budget: {
     budget: 'Budget',
@@ -855,6 +867,10 @@ export default {
         title: 'Spese',
         caption: 'Gestisci le spese'
       },
+      calendar: {
+        title: 'Calendario',
+        caption: 'Visualizza spese per data'
+      },
       spendingPlans: {
         title: 'Piani di Spesa',
         caption: 'Organizza le tue spese'
@@ -875,6 +891,7 @@ export default {
     bottomNav: {
       home: 'Home',
       expenses: 'Spese',
+      calendar: 'Calendario',
       plans: 'Piani',
       scanner: 'Scanner',
       settings: 'Settings'

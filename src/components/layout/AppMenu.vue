@@ -46,16 +46,16 @@ const menuItems = computed(() => [
     route: '/expenses'
   },
   {
+    name: 'calendar',
+    icon: 'calendar_month',
+    label: t('layout.bottomNav.calendar'),
+    route: '/calendar'
+  },
+  {
     name: 'spending-plans',
     icon: 'list_alt',
     label: t('layout.bottomNav.plans'),
     route: '/budget'
-  },
-  {
-    name: 'scanner',
-    icon: 'document_scanner',
-    label: t('layout.bottomNav.scanner'),
-    route: '/scanner'
   },
   {
     name: 'settings',

@@ -130,6 +130,12 @@ const mainLinks = computed(() => [
     link: '/expenses',
   },
   {
+    title: t('layout.menu.calendar.title'),
+    caption: t('layout.menu.calendar.caption'),
+    icon: 'calendar_month',
+    link: '/calendar',
+  },
+  {
     title: t('layout.menu.spendingPlans.title'),
     caption: t('layout.menu.spendingPlans.caption'),
     icon: 'list_alt',
