@@ -156,7 +156,8 @@ const daysInMonth = computed(() => {
       dayName: date.toLocaleDateString(locale.value, { weekday: 'short' }),
       isToday: date.getTime() === today.getTime(),
       isWeekend: date.getDay() === 0 || date.getDay() === 6,
-      expenses: expenses.value.filter(e => e.date === dateString)
+      // Confronta solo i primi 10 caratteri (YYYY-MM-DD) per gestire vari formati data
+      expenses: expenses.value.filter(e => e.date && e.date.substring(0, 10) === dateString)
     })
   }
 
